@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "vsShaderLib.h"
+            timestampString = "528755859.339518"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
+            landmarkName = "VSShaderLib"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VSShaderLib::UniformBlock::UniformBlock()"
+                  moduleName = "exercise3"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/luismiguelmoreirafonseca/Desktop/exercise3/vsShaderLib.h"
+                  timestampString = "528765813.765146"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "181"
+                  endingLineNumber = "181"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VSShaderLib::UniformBlock::operator=(VSShaderLib::UniformBlock const&amp;)"
+                  moduleName = "exercise3"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/luismiguelmoreirafonseca/Desktop/exercise3/vsShaderLib.h"
+                  timestampString = "528765813.773256"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "181"
+                  endingLineNumber = "181"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VSShaderLib::UniformBlock::~UniformBlock()"
+                  moduleName = "exercise3"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/luismiguelmoreirafonseca/Desktop/exercise3/vsShaderLib.h"
+                  timestampString = "528765813.778077"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "181"
+                  endingLineNumber = "181"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VSShaderLib::UniformBlock::UniformBlock()"
+                  moduleName = "exercise3"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/luismiguelmoreirafonseca/Desktop/exercise3/vsShaderLib.h"
+                  timestampString = "528765813.782682"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "181"
+                  endingLineNumber = "181"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VSShaderLib::UniformBlock::~UniformBlock()"
+                  moduleName = "exercise3"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/luismiguelmoreirafonseca/Desktop/exercise3/vsShaderLib.h"
+                  timestampString = "528765813.787657"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "181"
+                  endingLineNumber = "181"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
