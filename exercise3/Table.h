@@ -3,6 +3,6 @@
 
 #include "StaticObject.h"
 
-class Table : public StaticObject{}
+class Table : public StaticObject{};
 
 #endif /* Table_h */
