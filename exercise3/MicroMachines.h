@@ -8,17 +8,15 @@
 
 #include "OrthogonalCamera.h"
 #include "PerspectiveCamera.h"
+#include "DynamicObject.h"
+#include "StaticObject.h"
+#include "Car.h"
 
 #include "vsShaderLib.h"
-#include "AVTmathLib.h"
 #include "VertexAttrDef.h"
-#include "basic_geometry.h"
+#include "AVTmathLib.h"
 
-#define OBJECT_NUMBER 4
-
-extern float mMatrix[COUNT_MATRICES][16];
-extern float mCompMatrix[COUNT_COMPUTED_MATRICES][16];
-extern float mNormal3x3[9];
+#define NUM_OBJECTS 2
 
 class MicroMachines
 {
@@ -29,20 +27,23 @@ protected:
     GLint vm_uniformId;
     GLint normal_uniformId;
     GLint lPos_uniformId;
-    
+        
     float lightPos[4] = {4.0f, 6.0f, 2.0f, 1.0f};
     float camX, camY, camZ;
     int startX, startY, tracking = 0;
     float alpha = 39.0f, beta = 51.0f;
     float r = 10.0f;
     
+    Car *_car;
+    
+    std::vector<Object*> _objects;
     std::vector<Camera*> _cameras;
     int _current_camera;
     
 public:
     MicroMachines();
     ~MicroMachines();
-    void load();
+    void init();
     void renderScene();
     void resize(int width, int height);
     void processKeys(unsigned char key, int xx, int yy);

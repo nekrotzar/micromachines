@@ -3,6 +3,13 @@
 
 #include "Object.h"
 
-class DynamicObject : public Object{};
+class DynamicObject : public Object
+{
+private:
+    double _angle;
+public:
+    DynamicObject();
+    double getAngle();
+};
 
 #endif /* DynamicObject_h */

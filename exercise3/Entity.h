@@ -2,6 +2,9 @@
 #define Entity_h
 
 #include "Vector3.h"
+#include "AVTmathLib.h"
+
+extern struct MyMesh mesh[];
 
 class Entity {
 protected:

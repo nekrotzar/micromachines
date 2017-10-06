@@ -1,35 +1,31 @@
 #include "MicroMachines.h"
 
-struct MyMesh mesh[OBJECT_NUMBER];
+struct MyMesh mesh[NUM_OBJECTS];
 int objId = 0;
 
 MicroMachines::MicroMachines()
 {
+    _car = new Car();
+    
+    _objects.push_back(_car);
+    
     _cameras.push_back(new OrthogonalCamera(-5, 5, -5, 5, -50, 50));    // camera option #0
     _cameras.push_back(new PerspectiveCamera(53.13f, 0.1f, 1000.0f));   // camera option #1
     _cameras.push_back(new PerspectiveCamera(53.13f, 0.1f, 1000.0f));   // camera option #2
     
-    _current_camera = 1;
+    _current_camera = 2;
 }
 
 MicroMachines::~MicroMachines(){}
 
 void MicroMachines::renderScene()
 {
-    GLint loc;
-    
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     loadIdentity(VIEW);
     loadIdentity(MODEL);
     
     /*FIXME: Choose lookAt according to selected camera*/
-    //lookAt(camX, camY, camZ, 0, 0, 0, 0, 1, 0);
-    
-    if (_current_camera == 2) {
-            lookAt(camX, camY, camZ, 0, 0, 0, 0, 1, 0);
-    } else {
-        lookAt(0, -10, 0, 0, 0, 0, 0, 0, 1);
-    }
+    lookAt(camX, camY, camZ, 0, 0, 0, 0, 1, 0);
 
     // Use shader program
     glUseProgram(shader.getProgramIndex());
@@ -38,39 +34,8 @@ void MicroMachines::renderScene()
     float res[4];
     multMatrixPoint(VIEW, lightPos, res);
     glUniform4fv(lPos_uniformId, 1, res);
-    
-    /*FIXME: Send the material and apply transformations for each object */
-    objId = 0;
-    for (int i = 0; i < 2; ++i) {
-        for (int j = 0; j < 2; ++j) {
-            loc = glGetUniformLocation(shader.getProgramIndex(), "mat.ambient");
-            glUniform4fv(loc, 1, mesh[objId].mat.ambient);
-            loc = glGetUniformLocation(shader.getProgramIndex(), "mat.diffuse");
-            glUniform4fv(loc, 1, mesh[objId].mat.diffuse);
-            loc = glGetUniformLocation(shader.getProgramIndex(), "mat.specular");
-            glUniform4fv(loc, 1, mesh[objId].mat.specular);
-            loc = glGetUniformLocation(shader.getProgramIndex(), "mat.shininess");
-            glUniform1f(loc,mesh[objId].mat.shininess);
-            
-            pushMatrix(MODEL);
-            translate(MODEL, i * 2.0f, 0.0f, j * 2.0f);
-            
-            // send matrices to OGL
-            computeDerivedMatrix(PROJ_VIEW_MODEL);
-            glUniformMatrix4fv(vm_uniformId, 1, GL_FALSE, mCompMatrix[VIEW_MODEL]);
-            glUniformMatrix4fv(pvm_uniformId, 1, GL_FALSE, mCompMatrix[PROJ_VIEW_MODEL]);
-            computeNormalMatrix3x3();
-            glUniformMatrix3fv(normal_uniformId, 1, GL_FALSE, mNormal3x3);
-            
-            // Render mesh
-            glBindVertexArray(mesh[objId].vao);
-            glDrawElements(mesh[objId].type,mesh[objId].numIndexes, GL_UNSIGNED_INT, 0);
-            glBindVertexArray(0);
-            
-            popMatrix(MODEL);
-            objId++;
-        }
-    }
+   
+    _objects[0]->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId);
 }
 
 void MicroMachines::resize(int width, int height)
@@ -143,7 +108,6 @@ void MicroMachines::processMouseButtons(int button, int state, int xx, int yy){
 
 void MicroMachines::processMouseMotion(int xx, int yy)
 {
-    
     int deltaX, deltaY;
     float alphaAux, betaAux;
     float rAux;
@@ -222,7 +186,7 @@ GLuint MicroMachines::setupShaders()
     return(shader.isProgramLinked());
 }
 
-void MicroMachines::load()
+void MicroMachines::init()
 {
     // set the camera position based on its spherical coordinates
     camX = r * sin(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
@@ -236,51 +200,35 @@ void MicroMachines::load()
     float shininess= 100.0f;
     int texcount = 0;
     
-    // create geometry and VAO of the pawn
-    objId=0;
+    // create geometry and VAO of the car body
+    objId = 0;
     memcpy(mesh[objId].mat.ambient, amb,4*sizeof(float));
     memcpy(mesh[objId].mat.diffuse, diff,4*sizeof(float));
     memcpy(mesh[objId].mat.specular, spec,4*sizeof(float));
     memcpy(mesh[objId].mat.emissive, emissive,4*sizeof(float));
     mesh[objId].mat.shininess = shininess;
     mesh[objId].mat.texCount = texcount;
-    createPawn();
+    createCube();
     
-    // create geometry and VAO of the sphere
-    objId=1;
-    memcpy(mesh[objId].mat.ambient, amb,4*sizeof(float));
-    memcpy(mesh[objId].mat.diffuse, diff,4*sizeof(float));
-    memcpy(mesh[objId].mat.specular, spec,4*sizeof(float));
-    memcpy(mesh[objId].mat.emissive, emissive,4*sizeof(float));
-    mesh[objId].mat.shininess = shininess;
-    mesh[objId].mat.texCount = texcount;
-    createSphere(1.0f, 20);
+    float amb1[] = {0.0f, 0.0f, 0.0f, 1.0f};
+    float diff1[] = {0.1f, 0.1f, 0.1f, 1.0f};
+    float spec1[] = {0.1f, 0.1f, 0.1f, 1.0f};
+    shininess = 300.0f;
     
-    float amb1[]= {0.3f, 0.0f, 0.0f, 1.0f};
-    float diff1[] = {0.8f, 0.1f, 0.1f, 1.0f};
-    float spec1[] = {0.9f, 0.9f, 0.9f, 1.0f};
-    shininess=500.0;
-    
-    // create geometry and VAO of the cylinder
-    objId=2;
+    // create geometry and VAO of the car wheel
+    objId = 1;
     memcpy(mesh[objId].mat.ambient, amb1,4*sizeof(float));
     memcpy(mesh[objId].mat.diffuse, diff1,4*sizeof(float));
     memcpy(mesh[objId].mat.specular, spec1,4*sizeof(float));
     memcpy(mesh[objId].mat.emissive, emissive,4*sizeof(float));
     mesh[objId].mat.shininess = shininess;
     mesh[objId].mat.texCount = texcount;
-    createCylinder(1.5f,0.5f,20);
+    createTorus(0.07, 0.16, 10, 15);
     
-    // create geometry and VAO of the
-    objId=3;
-    memcpy(mesh[objId].mat.ambient, amb1,4*sizeof(float));
-    memcpy(mesh[objId].mat.diffuse, diff1,4*sizeof(float));
-    memcpy(mesh[objId].mat.specular, spec1,4*sizeof(float));
-    memcpy(mesh[objId].mat.emissive, emissive,4*sizeof(float));
-    mesh[objId].mat.shininess = shininess;
-    mesh[objId].mat.texCount = texcount;
-    createCone(1.5f,0.5f, 20);
-    
+    //Assigning meshes to car
+    _objects[0]->assignMesh(&mesh[0]);
+    _objects[0]->assignMesh(&mesh[1]);
+  
     // some GL settings
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);

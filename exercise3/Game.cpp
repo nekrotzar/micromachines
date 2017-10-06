@@ -121,5 +121,5 @@ GLuint setupShaders()
 
 void init()
 {
-    microMachines->load();
+    microMachines->init();
 }
