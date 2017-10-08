@@ -3,7 +3,8 @@
 Butter::Butter() {}
 Butter::~Butter() {}
 
-void Butter::render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformId) {
+void Butter::render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformId)
+{
 
 	pushMatrix(MODEL);
 	translate(MODEL, getPosition().getX(), getPosition().getY(), getPosition().getZ());

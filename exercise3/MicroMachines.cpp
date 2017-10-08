@@ -17,10 +17,10 @@ MicroMachines::MicroMachines()
     
     
     _cameras.push_back(new OrthogonalCamera(-5, 5, -5, 5, -50, 50));    // camera option #0
-    _cameras.push_back(new PerspectiveCamera(103.13f, 0.1f, 1000.0f));   // camera option #1
-    _cameras.push_back(new PerspectiveCamera(103.13f, 0.1f, 1000.0f));   // camera option #2
+    _cameras.push_back(new PerspectiveCamera(93.13f, 0.1f, 1000.0f));   // camera option #1
+   // _cameras.push_back(new PerspectiveCamera(93.13f, 0.1f, 1000.0f));   // camera option #2
     
-    _current_camera = 2;
+    _current_camera = 1;
 }
 
 MicroMachines::~MicroMachines(){}
@@ -257,7 +257,7 @@ void MicroMachines::init()
 	float spec_orange[] = { 1.0f, 0.5f, 0.0f, 1.0f };
 	float emissive_orange[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 	float shininess_orange = 100.0f;
-	//int texcount_orange = 0;
+	int texcount_orange = 0;
 
 	// create geometry and VAO of the orange
 	objId = 3;
@@ -266,7 +266,7 @@ void MicroMachines::init()
 	memcpy(mesh[objId].mat.specular, spec_orange, 4 * sizeof(float));
 	memcpy(mesh[objId].mat.emissive, emissive_orange, 4 * sizeof(float));
 	mesh[objId].mat.shininess = shininess_orange;
-	//mesh[objId].mat.texCount = texcount_orange;
+	mesh[objId].mat.texCount = texcount_orange;
 	createSphere(1.0,70);
 
 
@@ -275,7 +275,7 @@ void MicroMachines::init()
 	float spec_butter[] = { 1.0f, 1.0f, 0.0f, 1.0f };
 	float emissive_butter[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 	float shininess_butter = 100.0f;
-	//int texcount_orange = 0;
+	int texcount_butter = 0;
 
 	// create geometry and VAO of the orange
 	objId = 4;
@@ -284,7 +284,7 @@ void MicroMachines::init()
 	memcpy(mesh[objId].mat.specular, spec_butter, 4 * sizeof(float));
 	memcpy(mesh[objId].mat.emissive, emissive_butter, 4 * sizeof(float));
 	mesh[objId].mat.shininess = shininess_butter;
-	//mesh[objId].mat.texCount = texcount_orange;
+	mesh[objId].mat.texCount = texcount_butter;
 	createCube();
     
     //Assigning meshes to car
