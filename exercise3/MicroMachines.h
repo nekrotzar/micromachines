@@ -11,6 +11,9 @@
 #include "DynamicObject.h"
 #include "StaticObject.h"
 #include "Car.h"
+#include "Table.h"
+#include "Orange.h"
+#include "Butter.h"
 
 #include "vsShaderLib.h"
 #include "VertexAttrDef.h"
@@ -35,6 +38,9 @@ protected:
     float r = 10.0f;
     
     Car *_car;
+	Table *_table;
+	Orange *_orange;
+	Butter *_butter;
     
     std::vector<Object*> _objects;
     std::vector<Camera*> _cameras;

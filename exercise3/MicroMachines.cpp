@@ -6,12 +6,19 @@ int objId = 0;
 MicroMachines::MicroMachines()
 {
     _car = new Car();
+	_table = new Table();
+	_orange = new Orange();
+	_butter = new Butter();
+
+	_objects.push_back(_car);
+	_objects.push_back(_table);
+	_objects.push_back(_orange);
+	_objects.push_back(_butter);
     
-    _objects.push_back(_car);
     
     _cameras.push_back(new OrthogonalCamera(-5, 5, -5, 5, -50, 50));    // camera option #0
-    _cameras.push_back(new PerspectiveCamera(53.13f, 0.1f, 1000.0f));   // camera option #1
-    _cameras.push_back(new PerspectiveCamera(53.13f, 0.1f, 1000.0f));   // camera option #2
+    _cameras.push_back(new PerspectiveCamera(103.13f, 0.1f, 1000.0f));   // camera option #1
+    _cameras.push_back(new PerspectiveCamera(103.13f, 0.1f, 1000.0f));   // camera option #2
     
     _current_camera = 2;
 }
@@ -36,6 +43,9 @@ void MicroMachines::renderScene()
     glUniform4fv(lPos_uniformId, 1, res);
    
     _objects[0]->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId);
+	_objects[1]->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId);
+	_objects[2]->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId);
+	_objects[3]->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId);
 }
 
 void MicroMachines::resize(int width, int height)
@@ -224,11 +234,72 @@ void MicroMachines::init()
     mesh[objId].mat.shininess = shininess;
     mesh[objId].mat.texCount = texcount;
     createTorus(0.07, 0.16, 10, 15);
+
+	float amb_table[] = { 0.1f, 0.5f, 0.1f, 1.0f };
+	float diff_table[] = { 0.1f, 0.5f, 0.1f, 1.0f };
+	float spec_table[] = { 0.1f, 0.5f, 0.1f, 1.0f };
+	float emissive_table[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	float shininess_table = 100.0f;
+	int texcount_table = 0;
+
+	// create geometry and VAO of the table
+	objId = 2;
+	memcpy(mesh[objId].mat.ambient, amb_table, 4 * sizeof(float));
+	memcpy(mesh[objId].mat.diffuse, diff_table, 4 * sizeof(float));
+	memcpy(mesh[objId].mat.specular, spec_table, 4 * sizeof(float));
+	memcpy(mesh[objId].mat.emissive, emissive_table, 4 * sizeof(float));
+	mesh[objId].mat.shininess = shininess_table;
+	mesh[objId].mat.texCount = texcount_table;
+	createCube();
+
+	float amb_orange[] = { 1.0f, 0.5f, 0.0f, 1.0f };
+	float diff_orange[] = { 1.0f, 0.5f, 0.0f, 1.0f };
+	float spec_orange[] = { 1.0f, 0.5f, 0.0f, 1.0f };
+	float emissive_orange[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	float shininess_orange = 100.0f;
+	//int texcount_orange = 0;
+
+	// create geometry and VAO of the orange
+	objId = 3;
+	memcpy(mesh[objId].mat.ambient, amb_orange, 4 * sizeof(float));
+	memcpy(mesh[objId].mat.diffuse, diff_orange, 4 * sizeof(float));
+	memcpy(mesh[objId].mat.specular, spec_orange, 4 * sizeof(float));
+	memcpy(mesh[objId].mat.emissive, emissive_orange, 4 * sizeof(float));
+	mesh[objId].mat.shininess = shininess_orange;
+	//mesh[objId].mat.texCount = texcount_orange;
+	createSphere(1.0,70);
+
+
+	float amb_butter[] = { 1.0f, 1.0f, 0.0f, 1.0f };
+	float diff_butter[] = { 1.0f, 1.0f, 0.0f, 1.0f };
+	float spec_butter[] = { 1.0f, 1.0f, 0.0f, 1.0f };
+	float emissive_butter[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	float shininess_butter = 100.0f;
+	//int texcount_orange = 0;
+
+	// create geometry and VAO of the orange
+	objId = 4;
+	memcpy(mesh[objId].mat.ambient, amb_butter, 4 * sizeof(float));
+	memcpy(mesh[objId].mat.diffuse, diff_butter, 4 * sizeof(float));
+	memcpy(mesh[objId].mat.specular, spec_butter, 4 * sizeof(float));
+	memcpy(mesh[objId].mat.emissive, emissive_butter, 4 * sizeof(float));
+	mesh[objId].mat.shininess = shininess_butter;
+	//mesh[objId].mat.texCount = texcount_orange;
+	createCube();
     
     //Assigning meshes to car
     _objects[0]->assignMesh(&mesh[0]);
     _objects[0]->assignMesh(&mesh[1]);
-  
+
+	//Assigning meshes to table
+	_objects[1]->assignMesh(&mesh[2]);
+
+	//Assigning meshes to orange
+	_objects[2]->assignMesh(&mesh[3]);
+
+	//Assigning meshes to butter
+	_objects[3]->assignMesh(&mesh[4]);
+
     // some GL settings
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
