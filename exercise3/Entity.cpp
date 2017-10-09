@@ -1,6 +1,8 @@
 #include "Entity.h"
 
-Entity::Entity(){}
+Entity::Entity(){
+    setPosition(0, 0, 0);
+}
 Entity::~Entity(){}
 
 vec3 Entity::getPosition()

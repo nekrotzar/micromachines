@@ -13,6 +13,7 @@ OrthogonalCamera::~OrthogonalCamera(){}
 
 void OrthogonalCamera::update(float ratio){
     loadIdentity(PROJECTION);
+    
     if(ratio > 1){
         ortho(_bottom * ratio, _top * ratio, _bottom, _top , _near, _far);
     } else if (ratio < 1) {

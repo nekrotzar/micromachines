@@ -7,25 +7,36 @@ MicroMachines::MicroMachines()
 {
     _camera_trigger = false;
     
+    _table = new Table();
     _car = new Car();
-	_table = new Table();
 	_orange = new Orange();
 	_butter = new Butter();
-
+   
+    _objects.push_back(_table);
 	_objects.push_back(_car);
-	_objects.push_back(_table);
 	_objects.push_back(_orange);
 	_objects.push_back(_butter);
     
     
-    _cameras.push_back(new OrthogonalCamera(-10, 10, -10, 10, -20, 20));    // camera option #0
+    _cameras.push_back(new OrthogonalCamera(-20, 20, -20, 20, -5, 100));    // camera option #0
     _cameras.push_back(new PerspectiveCamera(53.13f, 0.1f, 1000.0f));   // camera option #1
     _cameras.push_back(new PerspectiveCamera(53.13f, 0.1f, 1000.0f));   // camera option #2
     
-    _current_camera = 2;
+    _current_camera = 0;
 }
 
 MicroMachines::~MicroMachines(){}
+
+void MicroMachines::deleteAll(){
+    
+    for (auto &object : _objects) {
+        delete object;
+    }
+    
+    for (auto &camera : _cameras) {
+        delete camera;
+    }
+}
 
 void MicroMachines::renderScene()
 {
@@ -33,9 +44,22 @@ void MicroMachines::renderScene()
     loadIdentity(VIEW);
     loadIdentity(MODEL);
     
+    if (_current_camera == 0) {
+        lookAt(0, 40, 0, 0, 0, 0, 1, 0, 0);
+    }
+    
+    else if (_current_camera == 1) {
+        lookAt(0, 40, 0, 0, 0, 0, 1, 0, 0);
+    }
+    else if (_current_camera == 2)
+    {
+        lookAt(camX, camY, camZ, 0, 0, 0, 0, 1, 0);
+    }
+    
+    
     /*FIXME: Choose lookAt according to selected camera*/
     
-    
+    /*
     if (_camera_trigger == true) {
         _camera_trigger = false;
         
@@ -62,7 +86,7 @@ void MicroMachines::renderScene()
    if (_current_camera == 2) {
         lookAt(camX, camY, camZ, 0, 0, 0, 0, 1, 0);
     }
-    
+    */
 
     // Use shader program
     glUseProgram(shader.getProgramIndex());
@@ -71,11 +95,10 @@ void MicroMachines::renderScene()
     float res[4];
     multMatrixPoint(VIEW, lightPos, res);
     glUniform4fv(lPos_uniformId, 1, res);
-   
-    _objects[0]->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId);
-	_objects[1]->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId);
-	_objects[2]->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId);
-	_objects[3]->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId);
+    
+    for (auto &object : _objects) {
+        object->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId);
+    }
 }
 
 void MicroMachines::resize(int width, int height)
@@ -106,6 +129,7 @@ void MicroMachines::processKeys(unsigned char key, int xx, int yy){
             _camera_trigger = true;
             break;
         case 27:
+            deleteAll();
             exit(1);
             break;
         case 'c':
@@ -318,13 +342,13 @@ void MicroMachines::init()
 	mesh[objId].mat.shininess = shininess_butter;
 	mesh[objId].mat.texCount = texcount_butter;
 	createCube();
+
+    //Assigning meshes to table
+    _objects[0]->assignMesh(&mesh[2]);
     
     //Assigning meshes to car
-    _objects[0]->assignMesh(&mesh[0]);
-    _objects[0]->assignMesh(&mesh[1]);
-
-	//Assigning meshes to table
-	_objects[1]->assignMesh(&mesh[2]);
+    _objects[1]->assignMesh(&mesh[0]);
+    _objects[1]->assignMesh(&mesh[1]);
 
 	//Assigning meshes to orange
 	_objects[2]->assignMesh(&mesh[3]);

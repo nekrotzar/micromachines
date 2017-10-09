@@ -60,7 +60,7 @@ public:
     void processMouseMotion(int xx, int yy);
     void processMouseWheel(int wheel, int direction, int x, int y);
     GLuint setupShaders();
-    
+    void deleteAll();
     void setCamera();
 };
 
