@@ -1,13 +1,15 @@
 #include "Car.h"
 
-Car::Car(){}
+Car::Car(){
+    DynamicObject::setAngle(90);
+}
 Car::~Car(){}
 
 void Car::render(VSShaderLib shader, GLint pvm_uniformId , GLint vm_uniformId, GLint normal_uniformId){
     
     pushMatrix(MODEL);
     translate(MODEL, getPosition().getX(), getPosition().getY(), getPosition().getZ());
-    rotate(MODEL, getAngle(), 0, 0, 1);
+    rotate(MODEL, getAngle(), 0, 1, 0);
     scale(MODEL, 0.5, 0.5, 0.5);
     
     load(shader, 1);    // Load wheel mesh

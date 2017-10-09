@@ -6,9 +6,14 @@
 class DynamicObject : public Object
 {
 private:
-    double _angle;
+    double _angle = 0.0;
+    double _speed;
+    
 public:
     DynamicObject();
+    void setSpeed(double speed);
+    double getSpeed();
+    void setAngle(double angle);
     double getAngle();
 };
 

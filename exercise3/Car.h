@@ -2,6 +2,7 @@
 #define Car_h
 
 #include "DynamicObject.h"
+#define PI 3.14159265
 
 class Car : public DynamicObject
 {

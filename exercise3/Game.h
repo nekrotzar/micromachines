@@ -34,6 +34,8 @@ void refresh(int value);
 void renderScene();
 void resize(int width, int height);
 void processKeys(unsigned char key, int xx, int yy);
+void mySpecialKeys(int key, int x, int y);
+void mySpecialUpKey(int key, int x, int y);
 void processMouseButtons(int buttons, int state, int xx, int yy);
 void processMouseMotion(int xx, int yy);
 void processMouseWheel(int wheel, int direction, int x, int y);

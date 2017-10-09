@@ -40,6 +40,7 @@ void MicroMachines::deleteAll(){
 
 void MicroMachines::renderScene()
 {
+    keySpecialOperations();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     loadIdentity(VIEW);
     loadIdentity(MODEL);
@@ -99,6 +100,26 @@ void MicroMachines::renderScene()
     for (auto &object : _objects) {
         object->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId);
     }
+    
+    if (keySpecialStates[GLUT_KEY_UP] == false
+        && keySpecialStates[GLUT_KEY_DOWN] == false) {
+        if (_car->getSpeed() < 0) {
+            if (_car->getSpeed() + 0.0001 < 0) {
+                _car->setSpeed(_car->getSpeed() + 0.0001);
+            } else {
+                _car->setSpeed(0.0);
+            }
+        } else if (_car->getSpeed() > 0) {
+            if (_car->getSpeed() - 0.0001 > 0) {
+                _car->setSpeed(_car->getSpeed() - 0.0001);
+            } else {
+                _car->setSpeed(0.0);
+            }
+        }
+    }
+    _car->setPosition(_car->getSpeed() * sin((_car->getAngle() * PI / 180)) + _car->getPosition().getX(),
+                      _car->getPosition().getY(),
+                     _car->getSpeed() * cos((_car->getAngle() * PI / 180)) + _car->getPosition().getZ());
 }
 
 void MicroMachines::resize(int width, int height)
@@ -143,6 +164,64 @@ void MicroMachines::processKeys(unsigned char key, int xx, int yy){
             break;
         default:
             break;
+    }
+}
+
+void MicroMachines::keyPressed(int key, int x, int y) {
+    if (key == GLUT_KEY_UP) {
+        keySpecialStates[key] = true;
+    } else if (key == GLUT_KEY_DOWN) {
+        keySpecialStates[key] = true;
+    }
+    if (key == GLUT_KEY_RIGHT) {
+        keySpecialStates[key] = true;
+    }
+    else if (key == GLUT_KEY_LEFT) {
+        keySpecialStates[key] = true;
+    }
+    
+}
+
+void MicroMachines::specialUpKey(int key, int x, int y) {
+    if (key == GLUT_KEY_UP) {
+        keySpecialStates[key] = false;
+    }
+    if (key == GLUT_KEY_DOWN) {
+        keySpecialStates[key] = false;
+    }
+    if (key == GLUT_KEY_RIGHT) {
+        keySpecialStates[key] = false;
+    }
+    if (key == GLUT_KEY_LEFT) {
+        keySpecialStates[key] = false;
+    }
+}
+
+void MicroMachines::keySpecialOperations() {
+
+    double angle = _car->getAngle();
+    if (keySpecialStates[GLUT_KEY_UP]) {
+        _car->setSpeed(_car->getSpeed() + 0.003);
+
+    } else if (keySpecialStates[GLUT_KEY_DOWN]) {
+        _car->setSpeed(_car->getSpeed() - 0.003);
+        //printf("velocity(%f)\n", _car->getSpeed());
+    }
+
+    if (keySpecialStates[GLUT_KEY_RIGHT]) {
+        angle -= 5;
+        _car->setAngle(angle);
+    } else if (keySpecialStates[GLUT_KEY_LEFT]) {
+        angle += 5;
+        _car->setAngle(angle);
+    }
+
+    if (_car->getSpeed() >= 0.05) {
+        _car->setSpeed(0.05);
+    }
+
+    if (_car->getSpeed() <= -0.025) {
+        _car->setSpeed(-0.025);
     }
 }
 
