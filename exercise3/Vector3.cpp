@@ -78,7 +78,7 @@ vec3 vec3::normalise(){
  @return The length of the vector.
  */
 double vec3::length(){
-    return abs(sqrt(pow(_x, 2) + pow(_y, 2) + pow(_z, 2)));
+    return fabs(sqrt(pow(_x, 2) + pow(_y, 2) + pow(_z, 2)));
 }
 
 /**
