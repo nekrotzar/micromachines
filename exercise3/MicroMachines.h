@@ -27,6 +27,7 @@ class MicroMachines
 protected:
     
     bool _camera_trigger;
+    bool* keySpecialStates = new bool[246];
     VSShaderLib shader;
     
     GLint pvm_uniformId;
@@ -56,6 +57,9 @@ public:
     void renderScene();
     void resize(int width, int height);
     void processKeys(unsigned char key, int xx, int yy);
+    void keyPressed(int key, int x, int y);
+    void specialUpKey(int key, int x, int y);
+    void keySpecialOperations();
     void processMouseButtons(int button, int state, int xx, int yy);
     void processMouseMotion(int xx, int yy);
     void processMouseWheel(int wheel, int direction, int x, int y);

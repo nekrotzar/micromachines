@@ -42,6 +42,8 @@ void setupCallbacks()
     glutReshapeFunc(resize);
     //glutIdleFunc(render);
     glutKeyboardFunc(processKeys);
+    glutSpecialFunc(mySpecialKeys);
+    glutSpecialUpFunc(mySpecialUpKey);
     glutMouseFunc(processMouseButtons);
     glutMotionFunc(processMouseMotion);
     
@@ -97,6 +99,16 @@ void resize(int width, int height)
 void processKeys(unsigned char key, int xx, int yy)
 {
     microMachines->processKeys(key, xx ,yy);
+}
+
+void mySpecialKeys(int key, int x, int y)
+{
+    microMachines->keyPressed(key, x, y);
+}
+
+void mySpecialUpKey(int key, int x, int y)
+{
+    microMachines->specialUpKey(key, x, y);
 }
 
 void processMouseButtons(int button, int state, int xx, int yy)
