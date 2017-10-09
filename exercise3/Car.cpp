@@ -8,7 +8,7 @@ void Car::render(VSShaderLib shader, GLint pvm_uniformId , GLint vm_uniformId, G
     pushMatrix(MODEL);
     translate(MODEL, getPosition().getX(), getPosition().getY(), getPosition().getZ());
     rotate(MODEL, getAngle(), 0, 0, 1);
-    scale(MODEL, 1.0, 1.0, 1.0);
+    scale(MODEL, 0.5, 0.5, 0.5);
     
     load(shader, 1);    // Load wheel mesh
     pushMatrix(MODEL);

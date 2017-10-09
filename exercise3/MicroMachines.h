@@ -20,7 +20,7 @@
 #include "VertexAttrDef.h"
 #include "AVTmathLib.h"
 
-#define NUM_OBJECTS 5
+#define NUM_OBJECTS 90
 
 class MicroMachines
 {

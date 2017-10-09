@@ -19,10 +19,10 @@ MicroMachines::MicroMachines()
     
     
     _cameras.push_back(new OrthogonalCamera(-20, 20, -20, 20, -5, 100));    // camera option #0
-    _cameras.push_back(new PerspectiveCamera(53.13f, 0.1f, 1000.0f));   // camera option #1
+    _cameras.push_back(new PerspectiveCamera(23.13f, 0.1f, 1000.0f));   // camera option #1
     _cameras.push_back(new PerspectiveCamera(53.13f, 0.1f, 1000.0f));   // camera option #2
     
-    _current_camera = 0;
+    _current_camera = 2;
 }
 
 MicroMachines::~MicroMachines(){}
@@ -48,10 +48,10 @@ void MicroMachines::renderScene()
         lookAt(0, 40, 0, 0, 0, 0, 1, 0, 0);
     }
     
-    else if (_current_camera == 1) {
-        lookAt(0, 40, 0, 0, 0, 0, 1, 0, 0);
+    if (_current_camera == 1) {
+        lookAt(-10, 20, 25, 0, 0, 0, 1, 0, 0);
     }
-    else if (_current_camera == 2)
+    if (_current_camera == 2)
     {
         lookAt(camX, camY, camZ, 0, 0, 0, 0, 1, 0);
     }
@@ -345,6 +345,7 @@ void MicroMachines::init()
 
     //Assigning meshes to table
     _objects[0]->assignMesh(&mesh[2]);
+    _objects[0]->assignMesh(&mesh[1]);
     
     //Assigning meshes to car
     _objects[1]->assignMesh(&mesh[0]);
