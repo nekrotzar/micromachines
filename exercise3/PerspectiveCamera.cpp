@@ -11,5 +11,6 @@ PerspectiveCamera::~PerspectiveCamera(){}
 
 void PerspectiveCamera::update(float ratio)
 {
+    loadIdentity(PROJECTION);
     perspective(_fov, ratio, _near, _far);
 }

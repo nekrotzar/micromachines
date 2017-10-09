@@ -5,6 +5,7 @@
 
 #include <math.h>
 #include <GL/glew.h>
+#include <GLUT/glut.h>
 
 #include "OrthogonalCamera.h"
 #include "PerspectiveCamera.h"
@@ -24,6 +25,8 @@
 class MicroMachines
 {
 protected:
+    
+    bool _camera_trigger;
     VSShaderLib shader;
     
     GLint pvm_uniformId;

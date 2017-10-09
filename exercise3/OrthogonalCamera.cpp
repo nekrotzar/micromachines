@@ -12,11 +12,10 @@ OrthogonalCamera::OrthogonalCamera(double left, double right, double bottom, dou
 OrthogonalCamera::~OrthogonalCamera(){}
 
 void OrthogonalCamera::update(float ratio){
-    lookAt(0, 0, 0, 0, 0, 0, 0, 1, 0);
-    
+    loadIdentity(PROJECTION);
     if(ratio > 1){
-        ortho(-5 * ratio, 5 * ratio, -5, 5, -10, 10);
-    } else {
-        ortho(-5, 5, -5 / ratio, 5 / ratio, -10, 10);
+        ortho(_bottom * ratio, _top * ratio, _bottom, _top , _near, _far);
+    } else if (ratio < 1) {
+        ortho(_left, _right, _right / ratio, _left / ratio, _near, _far);
     }
 }

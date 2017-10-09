@@ -5,6 +5,8 @@ int objId = 0;
 
 MicroMachines::MicroMachines()
 {
+    _camera_trigger = false;
+    
     _car = new Car();
 	_table = new Table();
 	_orange = new Orange();
@@ -16,11 +18,11 @@ MicroMachines::MicroMachines()
 	_objects.push_back(_butter);
     
     
-    _cameras.push_back(new OrthogonalCamera(-5, 5, -5, 5, -50, 50));    // camera option #0
-    _cameras.push_back(new PerspectiveCamera(93.13f, 0.1f, 1000.0f));   // camera option #1
-   // _cameras.push_back(new PerspectiveCamera(93.13f, 0.1f, 1000.0f));   // camera option #2
+    _cameras.push_back(new OrthogonalCamera(-10, 10, -10, 10, -20, 20));    // camera option #0
+    _cameras.push_back(new PerspectiveCamera(53.13f, 0.1f, 1000.0f));   // camera option #1
+    _cameras.push_back(new PerspectiveCamera(53.13f, 0.1f, 1000.0f));   // camera option #2
     
-    _current_camera = 1;
+    _current_camera = 2;
 }
 
 MicroMachines::~MicroMachines(){}
@@ -32,7 +34,35 @@ void MicroMachines::renderScene()
     loadIdentity(MODEL);
     
     /*FIXME: Choose lookAt according to selected camera*/
-    lookAt(camX, camY, camZ, 0, 0, 0, 0, 1, 0);
+    
+    
+    if (_camera_trigger == true) {
+        _camera_trigger = false;
+        
+        GLuint w = glutGet(GLUT_WINDOW_WIDTH);
+        GLuint h = glutGet(GLUT_WINDOW_HEIGHT);
+        
+        float ratio = w / h;
+        _cameras[_current_camera]->update(ratio);
+        
+        if (_current_camera == 0) {
+            //lookAt(7.5, 20, 7.5, 7.6, 0, 7.5, 0, 1, 0);
+        }
+        if (_current_camera == 1)
+        {
+            lookAt(7.5, 20, 7.5, 7.6, 0, 7.5, 0, 1, 0);
+        }
+        if (_current_camera == 2)
+        {
+            lookAt(camX, camY, camZ, 0, 0, 0, 0, 1, 0);
+        }
+    }
+    
+    
+   if (_current_camera == 2) {
+        lookAt(camX, camY, camZ, 0, 0, 0, 0, 1, 0);
+    }
+    
 
     // Use shader program
     glUseProgram(shader.getProgramIndex());
@@ -58,7 +88,6 @@ void MicroMachines::resize(int width, int height)
     glViewport(0, 0, width, height);
     // set the projection matrix
     ratio = (1.0f * width) / height;
-    loadIdentity(PROJECTION);
     _cameras[_current_camera]->update(ratio);
 }
 
@@ -66,12 +95,15 @@ void MicroMachines::processKeys(unsigned char key, int xx, int yy){
     switch (key) {
         case 49:
             _current_camera = 0;
+            _camera_trigger = true;
             break;
         case 50:
             _current_camera = 1;
+            _camera_trigger = true;
             break;
         case 51:
             _current_camera = 2;
+            _camera_trigger = true;
             break;
         case 27:
             exit(1);
