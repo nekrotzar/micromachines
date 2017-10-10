@@ -23,7 +23,7 @@ MicroMachines::MicroMachines()
 	_objects.push_back(_butter);
 
     _cameras.push_back(new OrthogonalCamera(-15, 15, -15, 15, -5, 100));    // camera option #0
-    _cameras.push_back(new PerspectiveCamera(53.13f, 0.1f, 1000.0f));   // camera option #1
+    _cameras.push_back(new PerspectiveCamera(53.13f, 10.0f, 1000.0f));   // camera option #1
     _cameras.push_back(new PerspectiveCamera(93.13f, 0.1f, 1000.0f));   // camera option #2
     
     _current_camera = 0;
@@ -50,10 +50,10 @@ void MicroMachines::renderScene()
     loadIdentity(MODEL);
     
     if (_current_camera == 0) {
-        lookAt(0, 70, 0, 0, 0, 0, 1, 0, 0);
+        lookAt(0, 95, 0, 0, 0, 0, 20, 60, 0);
     }
     if (_current_camera == 1) {
-        lookAt(-10, 20, 25, 0, 0, 0, 1, 0, 0);
+        lookAt(-7.5, 20, 0.0, 0.0, 0, 0.0, 0, 1, 0);
     }
     if (_current_camera == 2)
     {
@@ -107,14 +107,14 @@ void MicroMachines::renderScene()
     if (keySpecialStates[GLUT_KEY_UP] == false
         && keySpecialStates[GLUT_KEY_DOWN] == false) {
         if (_car->getSpeed() < 0) {
-            if (_car->getSpeed() + 0.0001 < 0) {
-                _car->setSpeed(_car->getSpeed() + 0.0001);
+            if (_car->getSpeed() + 0.001 < 0) {
+                _car->setSpeed(_car->getSpeed() + 0.001);
             } else {
                 _car->setSpeed(0.0);
             }
         } else if (_car->getSpeed() > 0) {
-            if (_car->getSpeed() - 0.0001 > 0) {
-                _car->setSpeed(_car->getSpeed() - 0.0001);
+            if (_car->getSpeed() - 0.001 > 0) {
+                _car->setSpeed(_car->getSpeed() - 0.001);
             } else {
                 _car->setSpeed(0.0);
             }
