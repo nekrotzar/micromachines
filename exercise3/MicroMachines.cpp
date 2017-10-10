@@ -5,6 +5,11 @@ int objId = 0;
 
 MicroMachines::MicroMachines()
 {
+    int i = 0;
+    while (i < 247) {
+        keySpecialStates[i] = false;
+        i++;
+    }
     _camera_trigger = false;
     
     _table = new Table();
@@ -16,13 +21,12 @@ MicroMachines::MicroMachines()
 	_objects.push_back(_car);
 	_objects.push_back(_orange);
 	_objects.push_back(_butter);
+
+    _cameras.push_back(new OrthogonalCamera(-15, 15, -15, 15, -5, 100));    // camera option #0
+    _cameras.push_back(new PerspectiveCamera(53.13f, 0.1f, 1000.0f));   // camera option #1
+    _cameras.push_back(new PerspectiveCamera(93.13f, 0.1f, 1000.0f));   // camera option #2
     
-    
-    _cameras.push_back(new OrthogonalCamera(-20, 20, -20, 20, -5, 100));    // camera option #0
-    _cameras.push_back(new PerspectiveCamera(23.13f, 0.1f, 1000.0f));   // camera option #1
-    _cameras.push_back(new PerspectiveCamera(53.13f, 0.1f, 1000.0f));   // camera option #2
-    
-    _current_camera = 2;
+    _current_camera = 0;
 }
 
 MicroMachines::~MicroMachines(){}
@@ -46,9 +50,8 @@ void MicroMachines::renderScene()
     loadIdentity(MODEL);
     
     if (_current_camera == 0) {
-        lookAt(0, 40, 0, 0, 0, 0, 1, 0, 0);
+        lookAt(0, 70, 0, 0, 0, 0, 1, 0, 0);
     }
-    
     if (_current_camera == 1) {
         lookAt(-10, 20, 25, 0, 0, 0, 1, 0, 0);
     }
@@ -202,22 +205,22 @@ void MicroMachines::keySpecialOperations() {
     double angle = _car->getAngle();
     if (keySpecialStates[GLUT_KEY_UP]) {
         _car->setSpeed(_car->getSpeed() + 0.003);
-
-    } else if (keySpecialStates[GLUT_KEY_DOWN]) {
+    }
+    else if (keySpecialStates[GLUT_KEY_DOWN]) {
         _car->setSpeed(_car->getSpeed() - 0.003);
-        //printf("velocity(%f)\n", _car->getSpeed());
     }
 
     if (keySpecialStates[GLUT_KEY_RIGHT]) {
-        angle -= 5;
+        angle -= 3;
         _car->setAngle(angle);
-    } else if (keySpecialStates[GLUT_KEY_LEFT]) {
-        angle += 5;
+    }
+    else if (keySpecialStates[GLUT_KEY_LEFT]) {
+        angle += 3;
         _car->setAngle(angle);
     }
 
-    if (_car->getSpeed() >= 0.05) {
-        _car->setSpeed(0.05);
+    if (_car->getSpeed() >= 0.025) {
+        _car->setSpeed(0.025);
     }
 
     if (_car->getSpeed() <= -0.025) {

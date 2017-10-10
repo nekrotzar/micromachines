@@ -2,6 +2,8 @@
 
 Car::Car(){
     DynamicObject::setAngle(90);
+    DynamicObject::setSpeed(0.0);
+    Entity::setPosition(1.4, 0.0, 9.8);
 }
 Car::~Car(){}
 
@@ -10,7 +12,7 @@ void Car::render(VSShaderLib shader, GLint pvm_uniformId , GLint vm_uniformId, G
     pushMatrix(MODEL);
     translate(MODEL, getPosition().getX(), getPosition().getY(), getPosition().getZ());
     rotate(MODEL, getAngle(), 0, 1, 0);
-    scale(MODEL, 0.5, 0.5, 0.5);
+    scale(MODEL, 0.45, 0.4, 0.65);
     
     load(shader, 1);    // Load wheel mesh
     pushMatrix(MODEL);

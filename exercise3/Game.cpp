@@ -29,7 +29,7 @@ void setupGLUT(int argc, char ** argv)
         glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
     #endif
     
-    glutInitWindowPosition(100,100);
+    glutInitWindowPosition(200,100);
     glutInitWindowSize(WinX, WinY);
     WindowHandle = glutCreateWindow(CAPTION);
 }

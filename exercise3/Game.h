@@ -18,7 +18,7 @@
 
 MicroMachines * microMachines;
 
-int WinX = 640, WinY = 480;
+int WinX = 900, WinY = 600;
 int WindowHandle = 0;
 
 unsigned int FrameCount = 0;
