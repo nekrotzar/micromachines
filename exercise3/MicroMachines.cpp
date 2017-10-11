@@ -14,12 +14,13 @@ MicroMachines::MicroMachines()
     
     _table = new Table();
     _car = new Car();
-	_orange = new Orange();
+	//_orange = new Orange(14.0,14.0);
 	_butter = new Butter();
    
     _objects.push_back(_table);
 	_objects.push_back(_car);
-	_objects.push_back(_orange);
+	_objects.push_back(new Orange(14.0, 10.0));
+	_objects.push_back(new Orange(14.0, 9.0));
 	_objects.push_back(_butter);
 
     _cameras.push_back(new OrthogonalCamera(-15, 15, -15, 15, -5, 100));    // camera option #0
@@ -36,6 +37,10 @@ void MicroMachines::deleteAll(){
     for (auto &object : _objects) {
         delete object;
     }
+
+	for (auto &orange : _oranges) {
+		delete orange;
+	}
     
     for (auto &camera : _cameras) {
         delete camera;
@@ -103,6 +108,10 @@ void MicroMachines::renderScene()
     for (auto &object : _objects) {
         object->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId);
     }
+
+	for (auto &orange : _oranges) {
+		orange->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId);
+	}
     
     if (keySpecialStates[GLUT_KEY_UP] == false
         && keySpecialStates[GLUT_KEY_DOWN] == false) {
@@ -434,10 +443,14 @@ void MicroMachines::init()
     _objects[1]->assignMesh(&mesh[1]);
 
 	//Assigning meshes to orange
+	/*for (auto &orange : _oranges)
+	{
+		orange->assignMesh(&mesh[3]);
+	}*/
 	_objects[2]->assignMesh(&mesh[3]);
-
+	_objects[3]->assignMesh(&mesh[3]);
 	//Assigning meshes to butter
-	_objects[3]->assignMesh(&mesh[4]);
+	_objects[4]->assignMesh(&mesh[4]);
 
     // some GL settings
     glEnable(GL_DEPTH_TEST);

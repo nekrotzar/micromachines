@@ -24,7 +24,7 @@
 #include "VertexAttrDef.h"
 #include "AVTmathLib.h"
 
-#define NUM_OBJECTS 90
+#define NUM_OBJECTS 200
 
 class MicroMachines
 {
@@ -51,6 +51,7 @@ protected:
 	Butter *_butter;
     
     std::vector<Object*> _objects;
+	std::vector<Orange*> _oranges;
     std::vector<Camera*> _cameras;
     int _current_camera;
     
