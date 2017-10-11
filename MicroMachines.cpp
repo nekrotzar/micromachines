@@ -3,8 +3,14 @@
 struct MyMesh mesh[NUM_OBJECTS];
 int objId = 0;
 
-MicroMachines::MicroMachines()
-{
+MicroMachines::MicroMachines(){
+    // Create shader program
+    if (!setupShaders()) {
+        exit(1);
+    }
+    
+    // Create objects
+    
     int i = 0;
     while (i < 247) {
         keySpecialStates[i] = false;
@@ -28,75 +34,55 @@ MicroMachines::MicroMachines()
     _cameras.push_back(new PerspectiveCamera(93.13f, 0.1f, 1000.0f));   // camera option #2
     
     _current_camera = 0;
+    
+    //Create meshes
+    init();
 }
 
-MicroMachines::~MicroMachines(){}
-
-void MicroMachines::deleteAll(){
-    
+MicroMachines::~MicroMachines(){
     for (auto &object : _objects) {
         delete object;
     }
-
-	for (auto &orange : _oranges) {
-		delete orange;
-	}
+    
+    for (auto &orange : _oranges) {
+        delete orange;
+    }
     
     for (auto &camera : _cameras) {
         delete camera;
     }
 }
 
-void MicroMachines::renderScene()
+void MicroMachines::display()
 {
     keySpecialOperations();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     loadIdentity(VIEW);
     loadIdentity(MODEL);
     
-    if (_current_camera == 0) {
-        lookAt(0, 95, 0, 0, 0, 0, 20, 60, 0);
-    }
-    if (_current_camera == 1) {
-        lookAt(-7.5, 20, 0.0, 0.0, 0, 0.0, 0, 1, 0);
-    }
-    if (_current_camera == 2)
-    {
-        lookAt(camX, camY, camZ, 0, 0, 0, 0, 1, 0);
-    }
+    // Uncomment for cameras to work properly
+    reshape(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
     
+    double carX = _car->getPosition().getX();
+    double carY = _car->getPosition().getY();
+    double carZ = _car->getPosition().getZ();
+    double angle = _car->getAngle() * 3.14 / 180;
     
-    /*FIXME: Choose lookAt according to selected camera*/
-    
-    /*
-    if (_camera_trigger == true) {
-        _camera_trigger = false;
-        
-        GLuint w = glutGet(GLUT_WINDOW_WIDTH);
-        GLuint h = glutGet(GLUT_WINDOW_HEIGHT);
-        
-        float ratio = w / h;
-        _cameras[_current_camera]->update(ratio);
-        
-        if (_current_camera == 0) {
-            //lookAt(7.5, 20, 7.5, 7.6, 0, 7.5, 0, 1, 0);
-        }
-        if (_current_camera == 1)
-        {
-            lookAt(7.5, 20, 7.5, 7.6, 0, 7.5, 0, 1, 0);
-        }
-        if (_current_camera == 2)
-        {
-            lookAt(camX, camY, camZ, 0, 0, 0, 0, 1, 0);
-        }
+    // Select camera
+    switch (_current_camera) {
+        case 0:
+            lookAt(0, 20, 0, 0, 0, 0, 1, 0, 0);
+            break;
+        case 1:
+            lookAt(-25, 10, 0, 0, 0, 0, 1, 0, 0);
+            break;
+        case 2:
+            lookAt(carX - 2 * cos(angle), 2, carZ + 2 * sin(angle), carX, 2, carZ, 0, 1, 0);
+            break;
+        default:
+            break;
     }
     
-    
-   if (_current_camera == 2) {
-        lookAt(camX, camY, camZ, 0, 0, 0, 0, 1, 0);
-    }
-    */
-
     // Use shader program
     glUseProgram(shader.getProgramIndex());
     
@@ -134,7 +120,7 @@ void MicroMachines::renderScene()
                      _car->getSpeed() * cos((_car->getAngle() * PI / 180)) + _car->getPosition().getZ());
 }
 
-void MicroMachines::resize(int width, int height)
+void MicroMachines::reshape(int width, int height)
 {
     float ratio;
     // Prevent a divide by zero, when window is too short
@@ -162,8 +148,11 @@ void MicroMachines::processKeys(unsigned char key, int xx, int yy){
             _camera_trigger = true;
             break;
         case 27:
-            deleteAll();
+            #ifdef __APPLE__
             exit(1);
+            #else
+            glutLeaveMainLoop();
+            #endif
             break;
         case 'c':
             printf("Camera Spherical Coordinates (%f, %f, %f)\n", alpha, beta, r);
@@ -179,7 +168,7 @@ void MicroMachines::processKeys(unsigned char key, int xx, int yy){
     }
 }
 
-void MicroMachines::keyPressed(int key, int x, int y) {
+void MicroMachines::processSpecialKeys(int key, int x, int y) {
     if (key == GLUT_KEY_UP) {
         keySpecialStates[key] = true;
     } else if (key == GLUT_KEY_DOWN) {
@@ -194,7 +183,7 @@ void MicroMachines::keyPressed(int key, int x, int y) {
     
 }
 
-void MicroMachines::specialUpKey(int key, int x, int y) {
+void MicroMachines::processSpecialUpKeys(int key, int x, int y) {
     if (key == GLUT_KEY_UP) {
         keySpecialStates[key] = false;
     }
@@ -227,11 +216,10 @@ void MicroMachines::keySpecialOperations() {
         angle += 3;
         _car->setAngle(angle);
     }
-
+    
     if (_car->getSpeed() >= 0.025) {
         _car->setSpeed(0.025);
     }
-
     if (_car->getSpeed() <= -0.025) {
         _car->setSpeed(-0.025);
     }
@@ -316,8 +304,7 @@ void MicroMachines::processMouseWheel(int wheel, int direction, int x, int y){
     //    glutPostRedisplay();
 }
 
-GLuint MicroMachines::setupShaders()
-{
+GLuint MicroMachines::setupShaders(){
     // Shader for models
     shader.init();
     shader.loadShader(VSShaderLib::VERTEX_SHADER, "shaders/pointlight.vert");
@@ -343,8 +330,7 @@ GLuint MicroMachines::setupShaders()
     return(shader.isProgramLinked());
 }
 
-void MicroMachines::init()
-{
+void MicroMachines::init(){
     // set the camera position based on its spherical coordinates
     camX = r * sin(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
     camZ = r * cos(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
