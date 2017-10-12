@@ -1,21 +1,33 @@
 #include "Entity.h"
 
 Entity::Entity(){
-    setPosition(0, 0, 0);
+    _position = new btVector3(0.0f, 0.0f, 0.0f);
+    _rotation = new btQuaternion();
 }
-Entity::~Entity(){}
-
-vec3 Entity::getPosition()
-{
-    return _position;
+Entity::~Entity(){
+    delete _position;
 }
 
-void Entity::setPosition(double x, double y, double z)
-{
-    _position.set(x, y, z);
+btVector3 Entity::getPosition(){
+    return * _position;
 }
 
-void Entity::setPosition(const vec3& position)
-{
-    _position = position;
+btQuaternion Entity::getRotation(){
+    return * _rotation;
+}
+
+void Entity::setPosition(double x, double y, double z){
+    _position->setValue(x, y, z);
+}
+
+void Entity::setPosition(const btVector3& position){
+    _position->setValue(position.getX(), position.getY(), position.getZ());
+}
+
+void Entity::setRotation(double x, double y, double z, double angle){
+    _rotation->setRotation(btVector3(x,y,z), btSin(angle));
+}
+
+void Entity::setRotation(const btQuaternion& rotation){
+    _rotation->setRotation(rotation.getAxis(), rotation.getAngle());
 }

@@ -13,6 +13,8 @@
     #include <GL/glut.h>
 #endif
 
+#include <bullet/btBulletDynamicsCommon.h>
+
 #include "OrthogonalCamera.h"
 #include "PerspectiveCamera.h"
 #include "DynamicObject.h"
@@ -34,6 +36,7 @@ public:
     ~MicroMachines();
     void init();
     void display();
+    void update(int delta_t);
     void reshape(int width, int height);
     void processKeys(unsigned char key, int xx, int yy);
     void processSpecialKeys(int key, int x, int y);
@@ -46,9 +49,14 @@ public:
     void deleteAll();
     void setCamera();
 protected:
+    btBroadphaseInterface * m_pBroadphase;
+    btCollisionConfiguration * m_pCollisionConfiguration;
+    btCollisionDispatcher * m_pDispatcher;
+    btConstraintSolver * m_pSolver;
+    btDynamicsWorld * m_pWorld;
     
-    bool _camera_trigger;
-    bool* keySpecialStates = new bool[246];
+    bool _toggle_camera;
+    bool _up, _down, _left, _right;
     VSShaderLib shader;
     
     GLint pvm_uniformId;
@@ -64,11 +72,8 @@ protected:
     
     Car *_car;
 	Table *_table;
-	Orange *_orange;
-	Butter *_butter;
     
     std::vector<Object*> _objects;
-	std::vector<Orange*> _oranges;
     std::vector<Camera*> _cameras;
     int _current_camera;
 };

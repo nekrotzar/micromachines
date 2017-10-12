@@ -2,17 +2,18 @@
 #define Car_h
 
 #include "DynamicObject.h"
-#define PI 3.14159265
+
+#define MAX_SPEED 0.05
 
 class Car : public DynamicObject
 {
 protected:
-    
+    btSliderConstraint * m_forkSlider;
 public:
-    Car();
+    Car(const btVector3& position, const btQuaternion& rotation);
+    Car(btScalar mass, btCollisionShape * shape, const btVector3& position, const btQuaternion& rotation);
     ~Car();
-    void render(VSShaderLib shader, GLint pvm_uniformId , GLint vm_uniformId, GLint normal_uniformdId);
-
+    void render(btScalar * transform, VSShaderLib shader, GLint pvm_uniformId , GLint vm_uniformId, GLint normal_uniformdId);
 };
 
 #endif /* Car_h */
