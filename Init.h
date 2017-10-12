@@ -1,5 +1,15 @@
 #ifndef Init_h
 #define Init_h
+#include <iostream>
+#include <sstream>
+
+#include <GL/glew.h>
+
+#ifdef _APPLE_
+#include <GLUT/glut.h>
+#else
+#include <GL/freeglut.h>
+#endif
 
 #include "MicroMachines.h"
 

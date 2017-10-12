@@ -125,7 +125,7 @@
     <ClInclude Include="..\cube.h" />
     <ClInclude Include="..\DynamicObject.h" />
     <ClInclude Include="..\Entity.h" />
-    <ClInclude Include="..\Game.h" />
+    <ClInclude Include="..\Init.h" />
     <ClInclude Include="..\MicroMachines.h" />
     <ClInclude Include="..\Object.h" />
     <ClInclude Include="..\Orange.h" />
@@ -145,7 +145,7 @@
     <ClCompile Include="..\Car.cpp" />
     <ClCompile Include="..\DynamicObject.cpp" />
     <ClCompile Include="..\Entity.cpp" />
-    <ClCompile Include="..\Game.cpp" />
+    <ClCompile Include="..\main.cpp" />
     <ClCompile Include="..\MicroMachines.cpp" />
     <ClCompile Include="..\Object.cpp" />
     <ClCompile Include="..\Orange.cpp" />
