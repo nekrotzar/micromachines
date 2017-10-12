@@ -3,89 +3,100 @@
 struct MyMesh mesh[NUM_OBJECTS];
 int objId = 0;
 
-MicroMachines::MicroMachines(){
-    
-    // Initialize MicroMachines state variables
-    _toggle_camera = false;                     // No camera change.
-    _up = _down = _left = _right = false;       // No initial movement
-    _current_camera = 0;                        // Orthogonal camera as default.
-    
-    // Create shader program
-    if (!setupShaders()) {
-        exit(1);
+MicroMachines::MicroMachines()
+{
+    int i = 0;
+    while (i < 247) {
+        keySpecialStates[i] = false;
+        i++;
     }
+    _camera_trigger = false;
     
-    // Create objects
-    _table = new Table(btVector3(0,0,0));
-    _car = new Car(btVector3(0,20,0), btQuaternion(0,1,0, 90*3.14/180));
+    _table = new Table();
+    _car = new Car();
+	//_orange = new Orange(14.0,14.0);
+	_butter = new Butter();
    
     _objects.push_back(_table);
 	_objects.push_back(_car);
-	_objects.push_back(new Orange(btVector3(5.0, 10.0f, 5.0), btQuaternion(0,1,0,1)));
-    _objects.push_back(new Orange(btVector3(-5.0, 10.0f, -5.0f),  btQuaternion(0,0,0,1)));
-	_objects.push_back(new Butter(btVector3(2,30,2), btQuaternion(0,0,0,1)));
+	_objects.push_back(new Orange(14.0, 10.0));
+	_objects.push_back(new Orange(14.0, 9.0));
+	_objects.push_back(_butter);
 
     _cameras.push_back(new OrthogonalCamera(-15, 15, -15, 15, -5, 100));    // camera option #0
-    _cameras.push_back(new PerspectiveCamera(53.13f, 10.0f, 1000.0f));      // camera option #1
-    _cameras.push_back(new PerspectiveCamera(53.13f, 0.1f, 1000.0f));       // camera option #2
+    _cameras.push_back(new PerspectiveCamera(53.13f, 10.0f, 1000.0f));   // camera option #1
+    _cameras.push_back(new PerspectiveCamera(93.13f, 0.1f, 1000.0f));   // camera option #2
     
-    //Create meshes and assign meshes to objects
-    init();
-    
-    //Initialize bullet physics
-    m_pCollisionConfiguration = new btDefaultCollisionConfiguration();
-    m_pDispatcher = new btCollisionDispatcher(m_pCollisionConfiguration);
-    m_pBroadphase = new btDbvtBroadphase();
-    m_pSolver = new btSequentialImpulseConstraintSolver();
-    m_pWorld = new btDiscreteDynamicsWorld(m_pDispatcher, m_pBroadphase, m_pSolver, m_pCollisionConfiguration);
-    m_pWorld->setGravity(btVector3(0,-9.8,0));
-    
-    //Add rigid bodies to the world
-    for (auto &object : _objects) {
-        m_pWorld->addRigidBody(object->getRigidBody());
-    }
-    
+    _current_camera = 0;
 }
 
-MicroMachines::~MicroMachines(){
-    
-    // Shutdown physics
-    delete m_pWorld;
-    delete m_pSolver;
-    delete m_pBroadphase;
-    delete m_pDispatcher;
-    delete m_pCollisionConfiguration;
+MicroMachines::~MicroMachines(){}
+
+void MicroMachines::deleteAll(){
     
     for (auto &object : _objects) {
         delete object;
     }
+
+	for (auto &orange : _oranges) {
+		delete orange;
+	}
     
     for (auto &camera : _cameras) {
         delete camera;
     }
 }
 
-void MicroMachines::display()
+void MicroMachines::renderScene()
 {
+    keySpecialOperations();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     loadIdentity(VIEW);
     loadIdentity(MODEL);
     
-    // Select camera
-    switch (_current_camera) {
-        case 0:
-            lookAt(0, 20, 0, 0, 0, 0, 1, 0, 0);
-            break;
-        case 1:
-            lookAt(-25, 10, 0, 0, 0, 0, 1, 0, 0);
-            break;
-        case 2:
-            lookAt(camX + _car->getPosition().getX() - 4 * cos(_car->getAngle()), 4, camZ + _car->getPosition().getZ() - sin(_car->getAngle()) ,_car->getPosition().getX(),1,_car->getPosition().getZ(), 0, 1, 0);
-            break;
-        default:
-            break;
+    if (_current_camera == 0) {
+        lookAt(0, 95, 0, 0, 0, 0, 20, 60, 0);
+    }
+    if (_current_camera == 1) {
+        lookAt(-7.5, 20, 0.0, 0.0, 0, 0.0, 0, 1, 0);
+    }
+    if (_current_camera == 2)
+    {
+        lookAt(camX, camY, camZ, 0, 0, 0, 0, 1, 0);
     }
     
+    
+    /*FIXME: Choose lookAt according to selected camera*/
+    
+    /*
+    if (_camera_trigger == true) {
+        _camera_trigger = false;
+        
+        GLuint w = glutGet(GLUT_WINDOW_WIDTH);
+        GLuint h = glutGet(GLUT_WINDOW_HEIGHT);
+        
+        float ratio = w / h;
+        _cameras[_current_camera]->update(ratio);
+        
+        if (_current_camera == 0) {
+            //lookAt(7.5, 20, 7.5, 7.6, 0, 7.5, 0, 1, 0);
+        }
+        if (_current_camera == 1)
+        {
+            lookAt(7.5, 20, 7.5, 7.6, 0, 7.5, 0, 1, 0);
+        }
+        if (_current_camera == 2)
+        {
+            lookAt(camX, camY, camZ, 0, 0, 0, 0, 1, 0);
+        }
+    }
+    
+    
+   if (_current_camera == 2) {
+        lookAt(camX, camY, camZ, 0, 0, 0, 0, 1, 0);
+    }
+    */
+
     // Use shader program
     glUseProgram(shader.getProgramIndex());
     
@@ -94,35 +105,36 @@ void MicroMachines::display()
     multMatrixPoint(VIEW, lightPos, res);
     glUniform4fv(lPos_uniformId, 1, res);
     
-    btScalar transform[16];
-    
     for (auto &object : _objects) {
-        btTransform trans;
-        object->getMotionState()->getWorldTransform(trans);
-        trans.getOpenGLMatrix(transform);
-    
-        object->render(transform, shader, pvm_uniformId, vm_uniformId, normal_uniformId);
+        object->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId);
     }
+
+	for (auto &orange : _oranges) {
+		orange->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId);
+	}
+    
+    if (keySpecialStates[GLUT_KEY_UP] == false
+        && keySpecialStates[GLUT_KEY_DOWN] == false) {
+        if (_car->getSpeed() < 0) {
+            if (_car->getSpeed() + 0.001 < 0) {
+                _car->setSpeed(_car->getSpeed() + 0.001);
+            } else {
+                _car->setSpeed(0.0);
+            }
+        } else if (_car->getSpeed() > 0) {
+            if (_car->getSpeed() - 0.001 > 0) {
+                _car->setSpeed(_car->getSpeed() - 0.001);
+            } else {
+                _car->setSpeed(0.0);
+            }
+        }
+    }
+    _car->setPosition(_car->getSpeed() * sin((_car->getAngle() * PI / 180)) + _car->getPosition().getX(),
+                      _car->getPosition().getY(),
+                     _car->getSpeed() * cos((_car->getAngle() * PI / 180)) + _car->getPosition().getZ());
 }
 
-void MicroMachines::update(int delta_t){
-    
-    // Update the physics world
-    m_pWorld->stepSimulation(delta_t);
-    
-    // Update viewport if camera has changed
-    if(_toggle_camera)
-        reshape(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
-
-    // Process all pressed keys
-    // Define new variables , e.g. speed
-    
-    for (auto &object : _objects) {
-        object->update(delta_t);
-    }
-}
-
-void MicroMachines::reshape(int width, int height)
+void MicroMachines::resize(int width, int height)
 {
     float ratio;
     // Prevent a divide by zero, when window is too short
@@ -139,22 +151,19 @@ void MicroMachines::processKeys(unsigned char key, int xx, int yy){
     switch (key) {
         case 49:
             _current_camera = 0;
-            _toggle_camera = true;
+            _camera_trigger = true;
             break;
         case 50:
             _current_camera = 1;
-            _toggle_camera = true;
+            _camera_trigger = true;
             break;
         case 51:
             _current_camera = 2;
-            _toggle_camera = true;
+            _camera_trigger = true;
             break;
         case 27:
-            #ifdef __APPLE__
+            deleteAll();
             exit(1);
-            #else
-            glutLeaveMainLoop();
-            #endif
             break;
         case 'c':
             printf("Camera Spherical Coordinates (%f, %f, %f)\n", alpha, beta, r);
@@ -170,47 +179,61 @@ void MicroMachines::processKeys(unsigned char key, int xx, int yy){
     }
 }
 
-void MicroMachines::processSpecialKeys(int key, int x, int y) {
-    switch (key) {
-        case GLUT_KEY_UP:
-            _up = true;
-            _car->setAcceleration(0.0001);
-            break;
-        case GLUT_KEY_DOWN:
-            _car->setAcceleration(-0.0001);
-            _down = true;
-            break;
-        case GLUT_KEY_LEFT:
-            _left = true;
-            _car->setAngle(_car->getAngle() + 3);
-            break;
-        case GLUT_KEY_RIGHT:
-            _right = true;
-            _car->setAngle(_car->getAngle() + 3);
-            break;
-        default:
-            break;
+void MicroMachines::keyPressed(int key, int x, int y) {
+    if (key == GLUT_KEY_UP) {
+        keySpecialStates[key] = true;
+    } else if (key == GLUT_KEY_DOWN) {
+        keySpecialStates[key] = true;
+    }
+    if (key == GLUT_KEY_RIGHT) {
+        keySpecialStates[key] = true;
+    }
+    else if (key == GLUT_KEY_LEFT) {
+        keySpecialStates[key] = true;
+    }
+    
+}
+
+void MicroMachines::specialUpKey(int key, int x, int y) {
+    if (key == GLUT_KEY_UP) {
+        keySpecialStates[key] = false;
+    }
+    if (key == GLUT_KEY_DOWN) {
+        keySpecialStates[key] = false;
+    }
+    if (key == GLUT_KEY_RIGHT) {
+        keySpecialStates[key] = false;
+    }
+    if (key == GLUT_KEY_LEFT) {
+        keySpecialStates[key] = false;
     }
 }
 
-void MicroMachines::processSpecialUpKeys(int key, int x, int y) {
-    switch (key) {
-        case GLUT_KEY_UP:
-            _up = false;
-            _car->setAcceleration(0);
-            break;
-        case GLUT_KEY_DOWN:
-            _down = false;
-            _car->setAcceleration(0);
-            break;
-        case GLUT_KEY_LEFT:
-            _left = false;
-            break;
-        case GLUT_KEY_RIGHT:
-            _right = false;
-            break;
-        default:
-            break;
+void MicroMachines::keySpecialOperations() {
+
+    double angle = _car->getAngle();
+    if (keySpecialStates[GLUT_KEY_UP]) {
+        _car->setSpeed(_car->getSpeed() + 0.003);
+    }
+    else if (keySpecialStates[GLUT_KEY_DOWN]) {
+        _car->setSpeed(_car->getSpeed() - 0.003);
+    }
+
+    if (keySpecialStates[GLUT_KEY_RIGHT]) {
+        angle -= 3;
+        _car->setAngle(angle);
+    }
+    else if (keySpecialStates[GLUT_KEY_LEFT]) {
+        angle += 3;
+        _car->setAngle(angle);
+    }
+
+    if (_car->getSpeed() >= 0.025) {
+        _car->setSpeed(0.025);
+    }
+
+    if (_car->getSpeed() <= -0.025) {
+        _car->setSpeed(-0.025);
     }
 }
 
@@ -293,7 +316,8 @@ void MicroMachines::processMouseWheel(int wheel, int direction, int x, int y){
     //    glutPostRedisplay();
 }
 
-GLuint MicroMachines::setupShaders(){
+GLuint MicroMachines::setupShaders()
+{
     // Shader for models
     shader.init();
     shader.loadShader(VSShaderLib::VERTEX_SHADER, "shaders/pointlight.vert");
@@ -319,7 +343,8 @@ GLuint MicroMachines::setupShaders(){
     return(shader.isProgramLinked());
 }
 
-void MicroMachines::init(){
+void MicroMachines::init()
+{
     // set the camera position based on its spherical coordinates
     camX = r * sin(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
     camZ = r * cos(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
@@ -417,11 +442,14 @@ void MicroMachines::init(){
     _objects[1]->assignMesh(&mesh[0]);
     _objects[1]->assignMesh(&mesh[1]);
 
-    //Assigning meshes to orange
+	//Assigning meshes to orange
+	/*for (auto &orange : _oranges)
+	{
+		orange->assignMesh(&mesh[3]);
+	}*/
 	_objects[2]->assignMesh(&mesh[3]);
 	_objects[3]->assignMesh(&mesh[3]);
-	
-    //Assigning meshes to butter
+	//Assigning meshes to butter
 	_objects[4]->assignMesh(&mesh[4]);
 
     // some GL settings

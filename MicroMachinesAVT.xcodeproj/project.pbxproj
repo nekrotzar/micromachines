@@ -9,14 +9,14 @@
 /* Begin PBXBuildFile section */
 		271C84A71F87D96500E3F947 /* basic_geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 271C84831F87D96000E3F947 /* basic_geometry.cpp */; };
 		271C84A81F87D96500E3F947 /* Butter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 271C84861F87D96100E3F947 /* Butter.cpp */; };
-		271C84A91F87D96500E3F947 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 271C84871F87D96100E3F947 /* main.cpp */; settings = {COMPILER_FLAGS = "-Wno-deprecated"; }; };
+		271C84A91F87D96500E3F947 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 271C84871F87D96100E3F947 /* Game.cpp */; };
 		271C84AA1F87D96500E3F947 /* Orange.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 271C84881F87D96100E3F947 /* Orange.cpp */; };
 		271C84AB1F87D96500E3F947 /* Table.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 271C84891F87D96100E3F947 /* Table.cpp */; };
 		271C84AC1F87D96500E3F947 /* Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 271C848C1F87D96100E3F947 /* Object.cpp */; };
 		271C84AD1F87D96500E3F947 /* OrthogonalCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 271C84901F87D96100E3F947 /* OrthogonalCamera.cpp */; };
 		271C84AE1F87D96500E3F947 /* PerspectiveCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 271C84911F87D96100E3F947 /* PerspectiveCamera.cpp */; };
 		271C84AF1F87D96500E3F947 /* Entity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 271C84921F87D96100E3F947 /* Entity.cpp */; };
-		271C84B01F87D96500E3F947 /* MicroMachines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 271C84931F87D96200E3F947 /* MicroMachines.cpp */; settings = {COMPILER_FLAGS = "-Wno-deprecated"; }; };
+		271C84B01F87D96500E3F947 /* MicroMachines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 271C84931F87D96200E3F947 /* MicroMachines.cpp */; };
 		271C84B11F87D96500E3F947 /* DynamicObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 271C849C1F87D96300E3F947 /* DynamicObject.cpp */; };
 		271C84B21F87D96500E3F947 /* Car.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 271C849D1F87D96300E3F947 /* Car.cpp */; };
 		271C84B31F87D96500E3F947 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 271C849E1F87D96300E3F947 /* Camera.cpp */; };
@@ -58,11 +58,11 @@
 		271C84841F87D96000E3F947 /* Butter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Butter.h; sourceTree = "<group>"; };
 		271C84851F87D96100E3F947 /* Car.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Car.h; sourceTree = "<group>"; };
 		271C84861F87D96100E3F947 /* Butter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Butter.cpp; sourceTree = "<group>"; };
-		271C84871F87D96100E3F947 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		271C84871F87D96100E3F947 /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
 		271C84881F87D96100E3F947 /* Orange.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Orange.cpp; sourceTree = "<group>"; };
 		271C84891F87D96100E3F947 /* Table.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Table.cpp; sourceTree = "<group>"; };
 		271C848A1F87D96100E3F947 /* Vector3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector3.h; sourceTree = "<group>"; };
-		271C848B1F87D96100E3F947 /* Init.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Init.h; sourceTree = "<group>"; };
+		271C848B1F87D96100E3F947 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
 		271C848C1F87D96100E3F947 /* Object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Object.cpp; sourceTree = "<group>"; };
 		271C848E1F87D96100E3F947 /* pointlight.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = pointlight.frag; sourceTree = "<group>"; };
 		271C848F1F87D96100E3F947 /* pointlight.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = pointlight.vert; sourceTree = "<group>"; };
@@ -132,8 +132,8 @@
 				271C84961F87D96200E3F947 /* DynamicObject.h */,
 				271C84921F87D96100E3F947 /* Entity.cpp */,
 				271C84821F87D96000E3F947 /* Entity.h */,
-				271C84871F87D96100E3F947 /* main.cpp */,
-				271C848B1F87D96100E3F947 /* Init.h */,
+				271C84871F87D96100E3F947 /* Game.cpp */,
+				271C848B1F87D96100E3F947 /* Game.h */,
 				271C84931F87D96200E3F947 /* MicroMachines.cpp */,
 				271C849F1F87D96300E3F947 /* MicroMachines.h */,
 				271C848C1F87D96100E3F947 /* Object.cpp */,
@@ -247,7 +247,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				271C84B31F87D96500E3F947 /* Camera.cpp in Sources */,
-				271C84A91F87D96500E3F947 /* main.cpp in Sources */,
+				271C84A91F87D96500E3F947 /* Game.cpp in Sources */,
 				271C84B61F87D96500E3F947 /* Vector3.cpp in Sources */,
 				271C84AE1F87D96500E3F947 /* PerspectiveCamera.cpp in Sources */,
 				271C84B11F87D96500E3F947 /* DynamicObject.cpp in Sources */,
