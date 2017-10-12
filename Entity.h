@@ -4,17 +4,23 @@
 #include "Vector3.h"
 #include "AVTmathLib.h"
 
+#include <btBulletDynamicsCommon.h>
+
 extern struct MyMesh mesh[];
 
 class Entity {
 protected:
-    vec3 _position;
+    btVector3 * _position;
+    btQuaternion * _rotation;
 public:
     Entity();
     ~Entity();
-    vec3 getPosition();
+    btVector3 getPosition();
+    btQuaternion getRotation();
     void setPosition(double, double, double);
-    void setPosition(const vec3& vec);
+    void setPosition(const btVector3& position);
+    void setRotation(double, double, double, double);
+    void setRotation(const btQuaternion& rotation);
 };
 
 #endif /* Entity_h */

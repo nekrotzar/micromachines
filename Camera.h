@@ -7,9 +7,9 @@ class Camera{
 protected:
     double _near;
     double _far;
-    vec3 _up;
-    vec3 _center;
-    vec3 _at;
+    btVector3 _up;
+    btVector3 _center;
+    btVector3 _at;
 public:
     Camera();
     ~Camera();

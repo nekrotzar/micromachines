@@ -35,9 +35,12 @@ void timerCallback(int value){
     glutTimerFunc(1000, timerCallback, 0);
 }
 
-void refreshCallback(int value){
+void refreshCallback(int previousTime){
+    int currentTime = glutGet(GLUT_ELAPSED_TIME);
+    
+    microMachines->update(currentTime - previousTime);
     glutPostRedisplay();
-    glutTimerFunc(1000/60, refreshCallback, 0);
+    glutTimerFunc(1000/60, refreshCallback, currentTime);
 }
 
 void displayCallback(){

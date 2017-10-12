@@ -8,9 +8,9 @@ class Table : public StaticObject
 protected:
 
 public:
-	Table();
-	~Table();
-	void render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformdId);
+    Table(const btVector3& position);
+    ~Table();
+	void render(btScalar * transform, VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformdId);
 };
 
 #endif /* Table_h */
