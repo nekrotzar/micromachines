@@ -1,17 +1,16 @@
 #ifndef Butter_h
 #define Butter_h
 
-#include "StaticObject.h"
+#include "DynamicObject.h"
 
-class Butter : public StaticObject
+class Butter : public DynamicObject 
 {
 	protected:
 
 	public:
-    Butter(const btVector3& position, const btQuaternion& rotation);
-    Butter(btScalar mass, btCollisionShape * shape, const btVector3& position, const btQuaternion& rotation);
-    ~Butter();
-		void render(btScalar * transform, VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformdId);
+		Butter();
+		~Butter();
+		void render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformdId);
 };
 
 #endif /* Butter_h */

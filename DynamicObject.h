@@ -7,17 +7,14 @@ class DynamicObject : public Object
 {
 private:
     double _angle = 0.0;
-    double _speed = 0.0;
-    double _acceleration = 0.0;
+    double _speed;
     
 public:
-    DynamicObject(btScalar mass, btCollisionShape * shape, const btVector3& position, const btQuaternion& rotation);
+    DynamicObject();
     void setSpeed(double speed);
-    void setAngle(double angle);
-    void setAcceleration(double acceleration);
     double getSpeed();
+    void setAngle(double angle);
     double getAngle();
-    void update(int delta_t);
 };
 
 #endif /* DynamicObject_h */

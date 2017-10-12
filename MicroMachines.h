@@ -2,13 +2,15 @@
 #define MicroMachines_h
 
 #include <vector>
+#include <iostream>
+#include <sstream>
 
 #include <math.h>
 #include <GL/glew.h>
 #ifdef __APPLE__
-#include <GLUT/glut.h>
+    #include <GLUT/glut.h>
 #else
-#include <GL/glut.h>
+    #include <GL/glut.h>
 #endif
 
 #include "OrthogonalCamera.h"
@@ -26,8 +28,23 @@
 
 #define NUM_OBJECTS 200
 
-class MicroMachines
-{
+class MicroMachines{
+public:
+    MicroMachines();
+    ~MicroMachines();
+    void init();
+    void display();
+    void reshape(int width, int height);
+    void processKeys(unsigned char key, int xx, int yy);
+    void processSpecialKeys(int key, int x, int y);
+    void processSpecialUpKeys(int key, int x, int y);
+    void keySpecialOperations();
+    void processMouseButtons(int button, int state, int xx, int yy);
+    void processMouseMotion(int xx, int yy);
+    void processMouseWheel(int wheel, int direction, int x, int y);
+    GLuint setupShaders();
+    void deleteAll();
+    void setCamera();
 protected:
     
     bool _camera_trigger;
@@ -54,23 +71,6 @@ protected:
 	std::vector<Orange*> _oranges;
     std::vector<Camera*> _cameras;
     int _current_camera;
-    
-public:
-    MicroMachines();
-    ~MicroMachines();
-    void init();
-    void renderScene();
-    void resize(int width, int height);
-    void processKeys(unsigned char key, int xx, int yy);
-    void keyPressed(int key, int x, int y);
-    void specialUpKey(int key, int x, int y);
-    void keySpecialOperations();
-    void processMouseButtons(int button, int state, int xx, int yy);
-    void processMouseMotion(int xx, int yy);
-    void processMouseWheel(int wheel, int direction, int x, int y);
-    GLuint setupShaders();
-    void deleteAll();
-    void setCamera();
 };
 
 

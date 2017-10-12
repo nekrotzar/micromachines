@@ -3,9 +3,6 @@
 
 #include "Object.h"
 
-class StaticObject : public Object{
-public:
-    StaticObject(btScalar mass, btCollisionShape * shape, const btVector3& position, const btQuaternion& rotation);
-};
+class StaticObject : public Object{};
 
 #endif /* StaticObject_h */
