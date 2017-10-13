@@ -8,7 +8,7 @@
 #ifdef _APPLE_
 #include <GLUT/glut.h>
 #else
-#include <GL/freeglut.h>
+//#include <GL/freeglut.h>
 #endif
 
 
@@ -78,7 +78,7 @@ void MicroMachines::display()
     double carX = _car->getPosition().getX();
     double carY = _car->getPosition().getY();
     double carZ = _car->getPosition().getZ();
-    double angle = _car->getAngle() * 3.14 / 180;
+    double angle = _car->getAngle() * PI / 180;
     
     // Select camera
     switch (_current_camera) {
@@ -89,7 +89,13 @@ void MicroMachines::display()
             lookAt(-25, 10, 0, 0, 0, 0, 1, 0, 0);
             break;
         case 2:
-            lookAt(carX - 2 * cos(angle), 2, carZ + 2 * sin(angle), carX, 2, carZ, 0, 1, 0);
+            lookAt(carX - 2 * sin(angle),
+                   carY + 2,
+                   carZ - 2 * cos(angle),
+                   carX,
+                   carY,
+                   carZ ,
+                   0, 1, 0);
             break;
         default:
             break;
