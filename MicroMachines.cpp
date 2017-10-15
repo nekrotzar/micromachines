@@ -155,51 +155,51 @@ void MicroMachines::display()
     int object_collide;
     object_collide = collides();
     
-    //if (object_collide != 10000) {
-    //    if (_car->getSpeed() > 0) {
-    //        _butter->setPosition(_butter->getPosition().getX() + 0.1 * sin((_car->getAngle() * PI / 180)),
-    //                             _butter->getPosition().getY(),
-    //                             _butter->getPosition().getZ() + 0.1 * cos((_car->getAngle() * PI / 180)));
-    //        if (keySpecialStates[GLUT_KEY_UP] = true) {
-    //            keySpecialStates[GLUT_KEY_UP] = false;
-    //        }
-    //    } else if (_car->getSpeed() < 0) {
-    //        _butter->setPosition(_butter->getPosition().getX() - 0.1 * sin((_car->getAngle() * PI / 180)),
-    //                             _butter->getPosition().getY(),
-    //                             _butter->getPosition().getZ()- 0.1 * cos((_car->getAngle() * PI / 180)));
-    //        if (keySpecialStates[GLUT_KEY_DOWN] = true) {
-    //            keySpecialStates[GLUT_KEY_DOWN] = false;
-    //        }
-    //    }
-    //    _car->setSpeed(0.0);
+    if (object_collide != 10000) {
+        if (_car->getSpeed() > 0) {
+            _objects[object_collide]->setPosition(_objects[object_collide]->getPosition().getX() + 0.1 * sin((_car->getAngle() * PI / 180)),
+												_objects[object_collide]->getPosition().getY(),
+												_objects[object_collide]->getPosition().getZ() + 0.1 * cos((_car->getAngle() * PI / 180)));
+            if (keySpecialStates[GLUT_KEY_UP] = true) {
+                keySpecialStates[GLUT_KEY_UP] = false;
+            }
+        } else if (_car->getSpeed() < 0) {
+			_objects[object_collide]->setPosition(_objects[object_collide]->getPosition().getX() - 0.1 * sin((_car->getAngle() * PI / 180)),
+												_objects[object_collide]->getPosition().getY(),
+												_objects[object_collide]->getPosition().getZ()- 0.1 * cos((_car->getAngle() * PI / 180)));
+            if (keySpecialStates[GLUT_KEY_DOWN] = true) {
+                keySpecialStates[GLUT_KEY_DOWN] = false;
+            }
+        }
+        _car->setSpeed(0.0);
 
-    //}
-    //else {
+    }
+    else {
         _car->setPosition(_car->getSpeed() * sin((_car->getAngle() * PI / 180)) + _car->getPosition().getX(),
                           _car->getPosition().getY(),
                           _car->getSpeed() * cos((_car->getAngle() * PI / 180)) + _car->getPosition().getZ());
-    //}
+    }
 }
 
 
 int MicroMachines::collides() {
-   // double dpq, p, q;
-   // //for (int i = 0; i < (signed) (_objects.size()); i++) {
-   // dpq = pow(((_butter->getPosition().getX()) - (_car->getPosition().getX())), 2)
-   //     + pow(((_butter->getPosition().getZ()) - (_car->getPosition().getZ())), 2);
-   //     std::cout << "butter: " << _butter->getPosition().getZ() << std::endl;
-   //     std::cout << "car: " << _car->getPosition().getZ() << std::endl;
-   //     p = pow(_butter->getRadius(), 2);
-   //     q = pow(_car->getRadius(), 2);
-   //     // std::cout << "p: " << p<< std::endl;
-   //      //std::cout << "q: " << dpq<< std::endl;
-   //     //printf("dpq (%d)\n", dpq);
-   //     //printf("p (%d)\n", p);
-   //     //printf("q (%d)\n", q);
-   //    if (dpq <= p + q) {
-   //         return 1;
-   //    }
-   //// }
+    double dpq, p, q;
+    for (int i = 2; i < 7; i++) {
+		dpq = pow(((_objects[i]->getPosition().getX()) - (_car->getPosition().getX())), 2)
+			+ pow(((_objects[i]->getPosition().getZ()) - (_car->getPosition().getZ())), 2);
+			//std::cout << "butter: " << _butter->getPosition().getZ() << std::endl;
+			//std::cout << "car: " << _car->getPosition().getZ() << std::endl;
+			p = pow(_objects[i]->getRadius(), 2);
+			q = pow(_car->getRadius(), 2);
+			// std::cout << "p: " << p<< std::endl;
+			 //std::cout << "q: " << dpq<< std::endl;
+			//printf("dpq (%d)\n", dpq);
+			//printf("p (%d)\n", p);
+			//printf("q (%d)\n", q);
+		   if (dpq <= p + q) {
+				return i;
+		   }
+   }
     return 10000;
 }
 
