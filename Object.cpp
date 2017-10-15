@@ -34,3 +34,13 @@ void Object::load(VSShaderLib shader, int myId){
     glUniform1f(loc,_meshes[myId]->mat.shininess);
     
 }
+
+void Object::setRadius(double radius)
+{
+    _radius = radius;
+}
+
+double Object::getRadius()
+{
+    return _radius;
+}
