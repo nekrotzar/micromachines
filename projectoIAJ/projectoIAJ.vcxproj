@@ -122,6 +122,7 @@
     <ClInclude Include="..\Butter.h" />
     <ClInclude Include="..\Camera.h" />
     <ClInclude Include="..\Car.h" />
+    <ClInclude Include="..\Cheerios.h" />
     <ClInclude Include="..\cube.h" />
     <ClInclude Include="..\DynamicObject.h" />
     <ClInclude Include="..\Entity.h" />
@@ -143,6 +144,7 @@
     <ClCompile Include="..\Butter.cpp" />
     <ClCompile Include="..\Camera.cpp" />
     <ClCompile Include="..\Car.cpp" />
+    <ClCompile Include="..\Cheerios.cpp" />
     <ClCompile Include="..\DynamicObject.cpp" />
     <ClCompile Include="..\Entity.cpp" />
     <ClCompile Include="..\main.cpp" />

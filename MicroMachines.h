@@ -4,6 +4,7 @@
 #include <vector>
 #include <iostream>
 #include <sstream>
+#include <time.h>
 
 #include <math.h>
 #include <GL/glew.h>
@@ -19,6 +20,7 @@
 #include "StaticObject.h"
 #include "Car.h"
 #include "Table.h"
+#include "Cheerios.h"
 #include "Orange.h"
 #include "Butter.h"
 
@@ -64,7 +66,6 @@ protected:
     
     Car *_car;
 	Table *_table;
-	Orange *_orange;
 	Butter *_butter;
     
     std::vector<Object*> _objects;

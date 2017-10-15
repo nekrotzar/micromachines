@@ -72,6 +72,9 @@
     <ClInclude Include="..\Init.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\Cheerios.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\AVTmathLib.cpp">
@@ -123,6 +126,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Cheerios.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

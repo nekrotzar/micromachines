@@ -8,12 +8,13 @@
 #ifdef _APPLE_
 #include <GLUT/glut.h>
 #else
-//#include <GL/freeglut.h>
+#include <GL/freeglut.h>
 #endif
 
 
 struct MyMesh mesh[NUM_OBJECTS];
 int objId = 0;
+std::vector<time_t> _apagado;
 
 MicroMachines::MicroMachines(){
     // Create shader program
@@ -32,13 +33,17 @@ MicroMachines::MicroMachines(){
     
     _table = new Table();
     _car = new Car();
-	//_orange = new Orange(14.0,14.0);
 	_butter = new Butter();
    
     _objects.push_back(_table);
 	_objects.push_back(_car);
-	_objects.push_back(new Orange(14.0, 10.0));
-	_objects.push_back(new Orange(14.0, 9.0));
+	srand(time(NULL));
+	for (int i = 0; i < 5; i++)
+	{
+		_oranges.push_back(new Orange((double)(rand() % 23 + (-13) + ((rand() % 99) / 100)), (double)(rand() % 23 + (-13) + ((rand() % 99) / 100))));
+		_oranges[i]->setSpeed((rand() % 15)*0.001);
+		_oranges[i]->setAngle(rand() % 360);
+	}
 	_objects.push_back(_butter);
 
     _cameras.push_back(new OrthogonalCamera(-15, 15, -15, 15, -5, 100));    // camera option #0
@@ -136,6 +141,28 @@ void MicroMachines::display()
     _car->setPosition(_car->getSpeed() * sin((_car->getAngle() * PI / 180)) + _car->getPosition().getX(),
                       _car->getPosition().getY(),
                      _car->getSpeed() * cos((_car->getAngle() * PI / 180)) + _car->getPosition().getZ());
+
+	for (int i = 0; i < _oranges.size(); i++) {
+		if (_oranges[i]->getPosition().getX() >= 13 || _oranges[i]->getPosition().getX() <= -13	|| _oranges[i]->getPosition().getZ() >= 13 || _oranges[i]->getPosition().getZ() <= -13) {
+			//_oranges.erase(_oranges.begin() + i);
+			_oranges[i]->setPosition((double)(rand() % 23 + (-13) + ((rand() % 99) / 100)), _oranges[i]->getPosition().getY(),(double)(rand() % 23 + (-13) + ((rand() % 99) / 100)));
+			//_apagado.push_back(time(NULL));
+			//break;
+		}
+		else {
+			_oranges[i]->setPosition(
+				_oranges[i]->getSpeed()	* cos((_oranges[i]->getAngle() * PI / 180))	* glutGet(GLUT_ELAPSED_TIME) / 1000	+ _oranges[i]->getPosition().getX(), _oranges[i]->getPosition().getY(), _oranges[i]->getSpeed() * sin((_oranges[i]->getAngle() * PI / 180)) * glutGet(GLUT_ELAPSED_TIME) / 1000 + _oranges[i]->getPosition().getZ());
+			//_oranges[i]->setSpin(_oranges[i].getSpin() + 10);
+		}
+	}
+
+	/*for (int j = 0; j < _apagado.size(); j++) {
+		if ((time(NULL) - _apagado[j]) >= 5) {
+			_oranges.push_back(new Orange((double)(rand() % 23 + (-13) + ((rand() % 99) / 100)), (double)(rand() % 23 + (-13) + ((rand() % 99) / 100))));
+			_apagado.erase(_apagado.begin() + j);
+			break;
+		}
+	}*/
 }
 
 void MicroMachines::reshape(int width, int height)
@@ -447,14 +474,12 @@ void MicroMachines::init(){
     _objects[1]->assignMesh(&mesh[1]);
 
 	//Assigning meshes to orange
-	/*for (auto &orange : _oranges)
+	for (int i = 0; i < 5; i++)
 	{
-		orange->assignMesh(&mesh[3]);
-	}*/
-	_objects[2]->assignMesh(&mesh[3]);
-	_objects[3]->assignMesh(&mesh[3]);
+		_oranges[i]->assignMesh(&mesh[3]);
+	}
 	//Assigning meshes to butter
-	_objects[4]->assignMesh(&mesh[4]);
+	_objects[2]->assignMesh(&mesh[4]);
 
     // some GL settings
     glEnable(GL_DEPTH_TEST);

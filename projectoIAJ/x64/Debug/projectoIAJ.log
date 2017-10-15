@@ -1,5 +1,8 @@
-﻿  MicroMachines.cpp
-c:\users\torres\documents\avt1718\micromachines.cpp(92): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\torres\documents\avt1718\micromachines.cpp(381): warning C4305: 'argument': truncation from 'double' to 'float'
+﻿  main.cpp
+  MicroMachines.cpp
+c:\users\torres\documents\avt1718\micromachines.cpp(41): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\torres\documents\avt1718\micromachines.cpp(104): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\torres\documents\avt1718\micromachines.cpp(415): warning C4305: 'argument': truncation from 'double' to 'float'
+  Generating Code...
   projectoIAJ.vcxproj -> C:\Users\torres\Documents\avt1718\projectoIAJ\x64\Debug\projectoIAJ.exe
   projectoIAJ.vcxproj -> C:\Users\torres\Documents\avt1718\projectoIAJ\x64\Debug\projectoIAJ.pdb (Partial PDB)
