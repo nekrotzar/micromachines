@@ -36,6 +36,7 @@ public:
     ~MicroMachines();
     void init();
     void display();
+	int collides();
     void reshape(int width, int height);
     void processKeys(unsigned char key, int xx, int yy);
     void processSpecialKeys(int key, int x, int y);
