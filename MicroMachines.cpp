@@ -33,7 +33,6 @@ MicroMachines::MicroMachines(){
     
     _table = new Table();
     _car = new Car();
-	_butter = new Butter();
    
     _objects.push_back(_table);
 	_objects.push_back(_car);
@@ -44,7 +43,12 @@ MicroMachines::MicroMachines(){
 		_oranges[i]->setSpeed((rand() % 15)*0.001);
 		_oranges[i]->setAngle(rand() % 360);
 	}
-	_objects.push_back(_butter);
+
+	for (int i = 0; i < 5; i++)
+	{
+		_objects.push_back(new Butter((double)(rand() % 23 + (-13) + ((rand() % 99) / 100)), (double)(rand() % 23 + (-13) + ((rand() % 99) / 100))));
+	}
+	//_objects.push_back(_butter);
 
     _cameras.push_back(new OrthogonalCamera(-15, 15, -15, 15, -5, 100));    // camera option #0
     _cameras.push_back(new PerspectiveCamera(53.13f, 10.0f, 1000.0f));   // camera option #1
@@ -140,66 +144,62 @@ void MicroMachines::display()
     }
 	for (int i = 0; i < _oranges.size(); i++) {
 		if (_oranges[i]->getPosition().getX() >= 13 || _oranges[i]->getPosition().getX() <= -13	|| _oranges[i]->getPosition().getZ() >= 13 || _oranges[i]->getPosition().getZ() <= -13) {
-			//_oranges.erase(_oranges.begin() + i);
 			_oranges[i]->setPosition((double)(rand() % 23 + (-13) + ((rand() % 99) / 100)), _oranges[i]->getPosition().getY(),(double)(rand() % 23 + (-13) + ((rand() % 99) / 100)));
-			//_apagado.push_back(time(NULL));
-			//break;
 		}
 		else {
 			_oranges[i]->setPosition(
 				_oranges[i]->getSpeed()	* cos((_oranges[i]->getAngle() * PI / 180))	* glutGet(GLUT_ELAPSED_TIME) / 1000	+ _oranges[i]->getPosition().getX(), _oranges[i]->getPosition().getY(), _oranges[i]->getSpeed() * sin((_oranges[i]->getAngle() * PI / 180)) * glutGet(GLUT_ELAPSED_TIME) / 1000 + _oranges[i]->getPosition().getZ());
-			//_oranges[i]->setSpin(_oranges[i].getSpin() + 10);
 		}
 	}
     
     int object_collide;
     object_collide = collides();
     
-    if (object_collide != 10000) {
-        if (_car->getSpeed() > 0) {
-            _butter->setPosition(_butter->getPosition().getX() + 0.1 * sin((_car->getAngle() * PI / 180)),
-                                 _butter->getPosition().getY(),
-                                 _butter->getPosition().getZ() + 0.1 * cos((_car->getAngle() * PI / 180)));
-            if (keySpecialStates[GLUT_KEY_UP] = true) {
-                keySpecialStates[GLUT_KEY_UP] = false;
-            }
-        } else if (_car->getSpeed() < 0) {
-            _butter->setPosition(_butter->getPosition().getX() - 0.1 * sin((_car->getAngle() * PI / 180)),
-                                 _butter->getPosition().getY(),
-                                 _butter->getPosition().getZ()- 0.1 * cos((_car->getAngle() * PI / 180)));
-            if (keySpecialStates[GLUT_KEY_DOWN] = true) {
-                keySpecialStates[GLUT_KEY_DOWN] = false;
-            }
-        }
-        _car->setSpeed(0.0);
+    //if (object_collide != 10000) {
+    //    if (_car->getSpeed() > 0) {
+    //        _butter->setPosition(_butter->getPosition().getX() + 0.1 * sin((_car->getAngle() * PI / 180)),
+    //                             _butter->getPosition().getY(),
+    //                             _butter->getPosition().getZ() + 0.1 * cos((_car->getAngle() * PI / 180)));
+    //        if (keySpecialStates[GLUT_KEY_UP] = true) {
+    //            keySpecialStates[GLUT_KEY_UP] = false;
+    //        }
+    //    } else if (_car->getSpeed() < 0) {
+    //        _butter->setPosition(_butter->getPosition().getX() - 0.1 * sin((_car->getAngle() * PI / 180)),
+    //                             _butter->getPosition().getY(),
+    //                             _butter->getPosition().getZ()- 0.1 * cos((_car->getAngle() * PI / 180)));
+    //        if (keySpecialStates[GLUT_KEY_DOWN] = true) {
+    //            keySpecialStates[GLUT_KEY_DOWN] = false;
+    //        }
+    //    }
+    //    _car->setSpeed(0.0);
 
-    }
-    else {
+    //}
+    //else {
         _car->setPosition(_car->getSpeed() * sin((_car->getAngle() * PI / 180)) + _car->getPosition().getX(),
                           _car->getPosition().getY(),
                           _car->getSpeed() * cos((_car->getAngle() * PI / 180)) + _car->getPosition().getZ());
-    }
+    //}
 }
 
 
 int MicroMachines::collides() {
-    double dpq, p, q;
-    //for (int i = 0; i < (signed) (_objects.size()); i++) {
-    dpq = pow(((_butter->getPosition().getX()) - (_car->getPosition().getX())), 2)
-        + pow(((_butter->getPosition().getZ()) - (_car->getPosition().getZ())), 2);
-        std::cout << "butter: " << _butter->getPosition().getZ() << std::endl;
-        std::cout << "car: " << _car->getPosition().getZ() << std::endl;
-        p = pow(_butter->getRadius(), 2);
-        q = pow(_car->getRadius(), 2);
-        // std::cout << "p: " << p<< std::endl;
-         //std::cout << "q: " << dpq<< std::endl;
-        //printf("dpq (%d)\n", dpq);
-        //printf("p (%d)\n", p);
-        //printf("q (%d)\n", q);
-       if (dpq <= p + q) {
-            return 1;
-       }
-   // }
+   // double dpq, p, q;
+   // //for (int i = 0; i < (signed) (_objects.size()); i++) {
+   // dpq = pow(((_butter->getPosition().getX()) - (_car->getPosition().getX())), 2)
+   //     + pow(((_butter->getPosition().getZ()) - (_car->getPosition().getZ())), 2);
+   //     std::cout << "butter: " << _butter->getPosition().getZ() << std::endl;
+   //     std::cout << "car: " << _car->getPosition().getZ() << std::endl;
+   //     p = pow(_butter->getRadius(), 2);
+   //     q = pow(_car->getRadius(), 2);
+   //     // std::cout << "p: " << p<< std::endl;
+   //      //std::cout << "q: " << dpq<< std::endl;
+   //     //printf("dpq (%d)\n", dpq);
+   //     //printf("p (%d)\n", p);
+   //     //printf("q (%d)\n", q);
+   //    if (dpq <= p + q) {
+   //         return 1;
+   //    }
+   //// }
     return 10000;
 }
 
@@ -517,7 +517,10 @@ void MicroMachines::init(){
 		_oranges[i]->assignMesh(&mesh[3]);
 	}
 	//Assigning meshes to butter
-	_objects[2]->assignMesh(&mesh[4]);
+	for (int i = 2; i < 7; i++)
+	{
+		_objects[i]->assignMesh(&mesh[4]);
+	}
 
     // some GL settings
     glEnable(GL_DEPTH_TEST);

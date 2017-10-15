@@ -8,7 +8,7 @@ class Butter : public DynamicObject
 	protected:
 
 	public:
-		Butter();
+		Butter(double x, double z);
 		~Butter();
 		void render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformdId);
 };

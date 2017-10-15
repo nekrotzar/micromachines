@@ -11,7 +11,6 @@ void Orange::render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId,
 	pushMatrix(MODEL);
 	translate(MODEL, getPosition().getX(), getPosition().getY(), getPosition().getZ());
 	rotate(MODEL, 90.0, 0.0, 0.0, 1);
-	//rotate(MODEL, _spin, cos(getAngle() * PI / 180), sin(getAngle() * PI / 180), 0.0);
 	scale(MODEL, 0.5f, .5f, 0.5f);
 	renderMesh(pvm_uniformId, vm_uniformId, normal_uniformId, 0);
 	popMatrix(MODEL);
