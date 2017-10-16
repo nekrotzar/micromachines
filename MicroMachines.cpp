@@ -229,11 +229,18 @@ void MicroMachines::display()
                           _car->getPosition().getY(),
                           _car->getSpeed() * cos((_car->getAngle() * PI / 180)) + _car->getPosition().getZ());
     }
+    
+    int orang = orange_collide();
+    if (orang == 1) {
+        _car->setSpeed(0.0);
+        _car->setPosition(1.4, 0.0, 9.8);
+        _car->setAngle(90);
+    }
+    
 }
 
 
 int MicroMachines::collides() {
-    //COLLISIONS BUTTER ONLY
     for (int i = 2; i < 7; i++) {
         if ((_objects[i]->getPosition().getX() - 0.4 < _car->getPosition().getX()) &&
             (_car->getPosition().getX() < _objects[i]->getPosition().getX() + 1.4) &&
@@ -242,7 +249,7 @@ int MicroMachines::collides() {
             return i;
         }
     }
-    for (int i = 7; i < 94; i++) {
+    for (int i = 13; i < 94; i++) {
         if ((_objects[i]->getPosition().getX() - 0.4 < _car->getPosition().getX()) &&
             (_car->getPosition().getX() < _objects[i]->getPosition().getX() + 0.4) &&
             (_objects[i]->getPosition().getZ() - 0.4 < _car->getPosition().getZ()) &&
@@ -251,6 +258,18 @@ int MicroMachines::collides() {
         }
     }
     return 10000;
+}
+
+int MicroMachines::orange_collide() {
+    for (int i = 0; i < 5; i++) {
+        if ((_oranges[i]->getPosition().getX() - 0.8 < _car->getPosition().getX()) &&
+            (_car->getPosition().getX() < _oranges[i]->getPosition().getX() + 0.8) &&
+            (_oranges[i]->getPosition().getZ() - 0.8 < _car->getPosition().getZ()) &&
+            (_car->getPosition().getZ() < _oranges[i]->getPosition().getZ() + 0.8)) {
+            return 1;
+        }
+    }
+    return 0;
 }
 
 void MicroMachines::reshape(int width, int height)
