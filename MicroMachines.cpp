@@ -87,7 +87,7 @@ MicroMachines::MicroMachines(){
 	}	
 
     _cameras.push_back(new OrthogonalCamera(-15, 15, -15, 15, -5, 100));    // camera option #0
-    _cameras.push_back(new PerspectiveCamera(53.13f, 10.0f, 1000.0f));   // camera option #1
+    _cameras.push_back(new PerspectiveCamera(53.13f, 0.1f, 1000.0f));   // camera option #1
     _cameras.push_back(new PerspectiveCamera(93.13f, 0.1f, 1000.0f));   // camera option #2
     
     _current_camera = 0;
@@ -146,7 +146,7 @@ void MicroMachines::display()
             lookAt(0, 20, 0, 0, 0, 0, 1, 0, 0);
             break;
         case 1:
-            lookAt(-25, 10, 0, 0, 0, 0, 1, 0, 0);
+            lookAt(camX, camY, camZ, 0, 0, 0, 0, 1, 0);
             break;
         case 2:
             lookAt(carX - 2 * sin(angle),
@@ -210,21 +210,19 @@ void MicroMachines::display()
     if (object_collide != 10000) {
         if (_car->getSpeed() > 0) {
             _objects[object_collide]->setPosition(_objects[object_collide]->getPosition().getX() + 0.1 * sin((_car->getAngle() * PI / 180)),
-												_objects[object_collide]->getPosition().getY(),
-												_objects[object_collide]->getPosition().getZ() + 0.1 * cos((_car->getAngle() * PI / 180)));
-            if (keySpecialStates[GLUT_KEY_UP] = true) {
-                keySpecialStates[GLUT_KEY_UP] = false;
-            }
+                                                  _objects[object_collide]->getPosition().getY(),
+                                                  _objects[object_collide]->getPosition().getZ() + 0.1 * cos((_car->getAngle() * PI / 180)));
+            
         } else if (_car->getSpeed() < 0) {
-			_objects[object_collide]->setPosition(_objects[object_collide]->getPosition().getX() - 0.1 * sin((_car->getAngle() * PI / 180)),
-												_objects[object_collide]->getPosition().getY(),
-												_objects[object_collide]->getPosition().getZ()- 0.1 * cos((_car->getAngle() * PI / 180)));
-            if (keySpecialStates[GLUT_KEY_DOWN] = true) {
-                keySpecialStates[GLUT_KEY_DOWN] = false;
-            }
+            _objects[object_collide]->setPosition(_objects[object_collide]->getPosition().getX() - 0.1 * sin((_car->getAngle() * PI / 180)),
+                                                  _objects[object_collide]->getPosition().getY(),
+                                                  _objects[object_collide]->getPosition().getZ()- 0.1 * cos((_car->getAngle() * PI / 180)));
         }
+        
+        keySpecialStates[GLUT_KEY_UP] = false;
+        keySpecialStates[GLUT_KEY_DOWN] = false;
         _car->setSpeed(0.0);
-
+        
     }
     else {
         _car->setPosition(_car->getSpeed() * sin((_car->getAngle() * PI / 180)) + _car->getPosition().getX(),
@@ -235,23 +233,15 @@ void MicroMachines::display()
 
 
 int MicroMachines::collides() {
-    double dpq, p, q;
+    //COLLISIONS BUTTER ONLY
     for (int i = 2; i < 7; i++) {
-		dpq = pow(((_objects[i]->getPosition().getX()) - (_car->getPosition().getX())), 2)
-			+ pow(((_objects[i]->getPosition().getZ()) - (_car->getPosition().getZ())), 2);
-			//std::cout << "butter: " << _butter->getPosition().getZ() << std::endl;
-			//std::cout << "car: " << _car->getPosition().getZ() << std::endl;
-			p = pow(_objects[i]->getRadius(), 2);
-			q = pow(_car->getRadius(), 2);
-			// std::cout << "p: " << p<< std::endl;
-			 //std::cout << "q: " << dpq<< std::endl;
-			//printf("dpq (%d)\n", dpq);
-			//printf("p (%d)\n", p);
-			//printf("q (%d)\n", q);
-		   if (dpq <= p + q) {
-				return i;
-		   }
-   }
+        if ((_objects[i]->getPosition().getX() - 0.4 < _car->getPosition().getX()) &&
+            (_car->getPosition().getX() < _objects[i]->getPosition().getX() + 1.4) &&
+            (_objects[i]->getPosition().getZ() - 0.4 < _car->getPosition().getZ()) &&
+            (_car->getPosition().getZ() < _objects[i]->getPosition().getZ() + 1.0)) {
+            return i;
+        }
+    }
     return 10000;
 }
 
@@ -397,15 +387,13 @@ void MicroMachines::processMouseMotion(int xx, int yy)
     
     // left mouse button: move camera
     if (tracking == 1) {
-        
-        
         alphaAux = alpha + deltaX;
         betaAux = beta + deltaY;
         
         if (betaAux > 85.0f)
             betaAux = 85.0f;
-        else if (betaAux < -85.0f)
-            betaAux = -85.0f;
+        else if (betaAux < 15.0f)
+            betaAux = 15.0f;
         rAux = r;
     }
     // right mouse button: zoom
