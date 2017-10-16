@@ -49,18 +49,42 @@ MicroMachines::MicroMachines(){
 		_objects.push_back(new Butter((double)(rand() % 23 + (-13) + ((rand() % 99) / 100)), (double)(rand() % 23 + (-13) + ((rand() % 99) / 100))));
 	}
     
+	for (int i = 0; i < 6; i++)
+	{
+		_objects.push_back(new Candle(4.0f));
+	}
+    /*_objects.push_back(new Candle(4.0f));
     _objects.push_back(new Candle(4.0f));
     _objects.push_back(new Candle(4.0f));
     _objects.push_back(new Candle(4.0f));
-    _objects.push_back(new Candle(4.0f));
-    _objects.push_back(new Candle(4.0f));
-    _objects.push_back(new Candle(4.0f));
+    _objects.push_back(new Candle(4.0f));*/
     _objects[7]->setPosition(5 , 1.5,  0);
     _objects[8]->setPosition(-9 , 1.5,  9);
     _objects[9]->setPosition(-9 , 1.5,  -9);
     _objects[10]->setPosition(9 , 1.5,  9);
     _objects[11]->setPosition(9 , 1.5,  -9);
     _objects[12]->setPosition(-5 , 1.5,  0);
+
+	int angle = 0, angle1 = 0, g = 0, j = 0;
+	float x = 0, x1 = 0;
+	float y = 0, y1 = 0;
+
+	//======= Exterior Elipse ======
+	while (g<45) {
+		x = 9.3 * cos((angle * PI) / 180);
+		y = 9.3 * sin((angle * PI) / 180);
+		_objects.push_back(new Cheerios(x, y));
+		angle += 8;
+		g++;
+	}
+	//======= Interior Elipse ======
+	while (j < 36) {
+		x1 = 11.0 * cos((angle1 * PI) / 180);
+		y1 = 11.0 * sin((angle1 * PI) / 180);
+		_objects.push_back(new Cheerios(x1, y1));
+		angle1 += 10;
+		j++;
+	}	
 
     _cameras.push_back(new OrthogonalCamera(-15, 15, -15, 15, -5, 100));    // camera option #0
     _cameras.push_back(new PerspectiveCamera(53.13f, 10.0f, 1000.0f));   // camera option #1
@@ -550,7 +574,8 @@ void MicroMachines::init(){
 
     //Assigning meshes to table
     _objects[0]->assignMesh(&mesh[2]);
-    _objects[0]->assignMesh(&mesh[1]);
+    //_objects[0]->assignMesh(&mesh[1]);
+	
     
     //Assigning meshes to car
     _objects[1]->assignMesh(&mesh[0]);
@@ -570,6 +595,11 @@ void MicroMachines::init(){
     for (int i = 7; i < 13; i++) {
         _objects[i]->assignMesh(&mesh[5]);
     }
+
+	for (int i = 13; i < 94; i++)
+	{
+		_objects[i]->assignMesh(&mesh[1]);
+	}
     
     // some GL settings
     glEnable(GL_DEPTH_TEST);
