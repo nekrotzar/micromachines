@@ -9,6 +9,7 @@ protected:
 
 public:
 	Cheerios(double x, double z);
+	//asdopj
 	~Cheerios();
 	void render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformdId);
 };
