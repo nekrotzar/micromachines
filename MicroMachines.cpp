@@ -242,6 +242,14 @@ int MicroMachines::collides() {
             return i;
         }
     }
+    for (int i = 7; i < 94; i++) {
+        if ((_objects[i]->getPosition().getX() - 0.4 < _car->getPosition().getX()) &&
+            (_car->getPosition().getX() < _objects[i]->getPosition().getX() + 0.4) &&
+            (_objects[i]->getPosition().getZ() - 0.4 < _car->getPosition().getZ()) &&
+            (_car->getPosition().getZ() < _objects[i]->getPosition().getZ() + 0.4)) {
+            return i;
+        }
+    }
     return 10000;
 }
 
