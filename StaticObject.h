@@ -3,6 +3,10 @@
 
 #include "Object.h"
 
-class StaticObject : public Object{};
+class StaticObject : public Object {
+public:
+    StaticObject();
+    ~StaticObject();
+};
 
 #endif /* StaticObject_h */

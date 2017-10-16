@@ -48,13 +48,40 @@ MicroMachines::MicroMachines(){
 	{
 		_objects.push_back(new Butter((double)(rand() % 23 + (-13) + ((rand() % 99) / 100)), (double)(rand() % 23 + (-13) + ((rand() % 99) / 100))));
 	}
-	//_objects.push_back(_butter);
+    
+    _objects.push_back(new Candle(4.0f));
+    _objects.push_back(new Candle(4.0f));
+    _objects.push_back(new Candle(4.0f));
+    _objects.push_back(new Candle(4.0f));
+    _objects.push_back(new Candle(4.0f));
+    _objects.push_back(new Candle(4.0f));
+    _objects[7]->setPosition(5 , 1.5,  0);
+    _objects[8]->setPosition(-9 , 1.5,  9);
+    _objects[9]->setPosition(-9 , 1.5,  -9);
+    _objects[10]->setPosition(9 , 1.5,  9);
+    _objects[11]->setPosition(9 , 1.5,  -9);
+    _objects[12]->setPosition(-5 , 1.5,  0);
 
     _cameras.push_back(new OrthogonalCamera(-15, 15, -15, 15, -5, 100));    // camera option #0
     _cameras.push_back(new PerspectiveCamera(53.13f, 10.0f, 1000.0f));   // camera option #1
     _cameras.push_back(new PerspectiveCamera(93.13f, 0.1f, 1000.0f));   // camera option #2
     
     _current_camera = 0;
+    
+    /*Global light*/
+    _lights.push_back(new LightSource(0));
+    
+    /*Point lights*/
+    _lights.push_back(new LightSource(1));
+    _lights.push_back(new LightSource(2));
+    _lights.push_back(new LightSource(3));
+    _lights.push_back(new LightSource(4));
+    _lights.push_back(new LightSource(5));
+    _lights.push_back(new LightSource(6));
+    
+    /*Spot lights*/
+    _lights.push_back(new LightSource(7));
+    _lights.push_back(new LightSource(8));
     
     //Create meshes
     init();
@@ -114,9 +141,10 @@ void MicroMachines::display()
     glUseProgram(shader.getProgramIndex());
     
     // Send the light position in eye coordinates
-    float res[4];
-    multMatrixPoint(VIEW, lightPos, res);
-    glUniform4fv(lPos_uniformId, 1, res);
+    // FIXME: lPos_uniformId should be different for every light
+    _lights[0]->draw(lPos_uniformId, vec3(0, 5, 0) , 1.0f);
+    _lights[1]->draw(lPos_uniformId, vec3(-5, 5, 0) , 1.0f);
+    _lights[2]->draw(lPos_uniformId, vec3(5, 5, 0) , 1.0f);
     
     for (auto &object : _objects) {
         object->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId);
@@ -502,6 +530,23 @@ void MicroMachines::init(){
 	mesh[objId].mat.shininess = shininess_butter;
 	mesh[objId].mat.texCount = texcount_butter;
 	createCube();
+    
+    float amb_candle[] = { 1.0f, 1.0f, 0.9f, 1.0f };
+    float diff_candle[] = { 1.0f, 1.0f, 0.9f, 1.0f };
+    float spec_candle[] = { 1.0f, 1.0f, 0.5f, 1.0f };
+    float emissive_candle[] = { 0.1f, 0.1f, 0.1f, 1.0f };
+    float shininess_candle = 60.0f;
+    int texcount_candle = 0;
+    
+    // create geometry and VAO of the candle
+    objId = 5;
+    memcpy(mesh[objId].mat.ambient, amb_candle, 4 * sizeof(float));
+    memcpy(mesh[objId].mat.diffuse, diff_candle, 4 * sizeof(float));
+    memcpy(mesh[objId].mat.specular, spec_candle, 4 * sizeof(float));
+    memcpy(mesh[objId].mat.emissive, emissive_candle, 4 * sizeof(float));
+    mesh[objId].mat.shininess = shininess_candle;
+    mesh[objId].mat.texCount = texcount_candle;
+    createCylinder(3, .3f, 50);
 
     //Assigning meshes to table
     _objects[0]->assignMesh(&mesh[2]);
@@ -521,7 +566,11 @@ void MicroMachines::init(){
 	{
 		_objects[i]->assignMesh(&mesh[4]);
 	}
-
+    
+    for (int i = 7; i < 13; i++) {
+        _objects[i]->assignMesh(&mesh[5]);
+    }
+    
     // some GL settings
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);

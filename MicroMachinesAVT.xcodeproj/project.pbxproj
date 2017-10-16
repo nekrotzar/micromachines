@@ -29,6 +29,8 @@
 		271C84BE1F87D9D600E3F947 /* libGLEW.2.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 271C84BD1F87D9D600E3F947 /* libGLEW.2.1.0.dylib */; };
 		271C84BF1F87DA0900E3F947 /* pointlight.frag in Copy Files */ = {isa = PBXBuildFile; fileRef = 271C848E1F87D96100E3F947 /* pointlight.frag */; };
 		271C84C01F87DA0900E3F947 /* pointlight.vert in Copy Files */ = {isa = PBXBuildFile; fileRef = 271C848F1F87D96100E3F947 /* pointlight.vert */; };
+		27486FC01F9500B100684568 /* Candle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27486FBC1F9500B000684568 /* Candle.cpp */; };
+		27486FC11F9500B100684568 /* LightSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27486FBD1F9500B100684568 /* LightSource.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -89,6 +91,10 @@
 		271C84B91F87D9BB00E3F947 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		271C84BB1F87D9C000E3F947 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		271C84BD1F87D9D600E3F947 /* libGLEW.2.1.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.2.1.0.dylib; path = ../../../../usr/local/Cellar/glew/2.1.0/lib/libGLEW.2.1.0.dylib; sourceTree = "<group>"; };
+		27486FBC1F9500B000684568 /* Candle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Candle.cpp; sourceTree = "<group>"; };
+		27486FBD1F9500B100684568 /* LightSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LightSource.cpp; sourceTree = "<group>"; };
+		27486FBE1F9500B100684568 /* Candle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Candle.h; sourceTree = "<group>"; };
+		27486FBF1F9500B100684568 /* LightSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LightSource.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +114,10 @@
 		271C846D1F87D91C00E3F947 = {
 			isa = PBXGroup;
 			children = (
+				27486FBC1F9500B000684568 /* Candle.cpp */,
+				27486FBE1F9500B100684568 /* Candle.h */,
+				27486FBD1F9500B100684568 /* LightSource.cpp */,
+				27486FBF1F9500B100684568 /* LightSource.h */,
 				271C84A41F87D96400E3F947 /* AVTmathLib.cpp */,
 				271C84991F87D96200E3F947 /* AVTmathLib.h */,
 				271C84831F87D96000E3F947 /* basic_geometry.cpp */,
@@ -234,6 +244,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27486FC01F9500B100684568 /* Candle.cpp in Sources */,
 				271C84B31F87D96500E3F947 /* Camera.cpp in Sources */,
 				271C84A91F87D96500E3F947 /* main.cpp in Sources */,
 				271C84B61F87D96500E3F947 /* Vector3.cpp in Sources */,
@@ -248,6 +259,7 @@
 				271C84A81F87D96500E3F947 /* Butter.cpp in Sources */,
 				271C84AA1F87D96500E3F947 /* Orange.cpp in Sources */,
 				271C84AD1F87D96500E3F947 /* OrthogonalCamera.cpp in Sources */,
+				27486FC11F9500B100684568 /* LightSource.cpp in Sources */,
 				271C84AF1F87D96500E3F947 /* Entity.cpp in Sources */,
 				271C84AB1F87D96500E3F947 /* Table.cpp in Sources */,
 				271C84B71F87D96500E3F947 /* StaticObject.cpp in Sources */,

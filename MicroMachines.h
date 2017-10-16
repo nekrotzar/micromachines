@@ -18,11 +18,13 @@
 #include "PerspectiveCamera.h"
 #include "DynamicObject.h"
 #include "StaticObject.h"
+#include "LightSource.h"
 #include "Car.h"
 #include "Table.h"
 #include "Cheerios.h"
 #include "Orange.h"
 #include "Butter.h"
+#include "Candle.h"
 
 #include "vsShaderLib.h"
 #include "VertexAttrDef.h"
@@ -58,6 +60,10 @@ protected:
     GLint vm_uniformId;
     GLint normal_uniformId;
     GLint lPos_uniformId;
+    
+    GLint lDir_uniformId;
+    GLint lCutOff_uniformId;
+    GLint lExp_uniformId;
         
     float lightPos[4] = {4.0f, 6.0f, 2.0f, 1.0f};
     float camX, camY, camZ;
@@ -69,6 +75,7 @@ protected:
 	Table *_table;
 	Butter *_butter;
     
+    std::vector<LightSource*> _lights;
     std::vector<Object*> _objects;
 	std::vector<Orange*> _oranges;
     std::vector<Camera*> _cameras;
