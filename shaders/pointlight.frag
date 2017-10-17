@@ -11,43 +11,52 @@ struct Materials {
     int texCount;
 };
 
-struct LightParameters {
-    // position
-    // direction
-    vec3 direction;
-    // cuttoff
-    float cutOff;
-    // exponent
-    float exponent;
+struct PointLight {
+    vec4 position;
+    float constant, linear, quadratic;
+    vec4 ambient, diffuse, specular;
 };
 
+uniform PointLight pointlights[6];
 uniform Materials mat;
-uniform LightParameters lProp;
 
 in Data {
     vec3 normal;
     vec3 eye;
-    vec3 lightDir;
+    vec4 position;
+    vec2 texcoord;
 } DataIn;
 
+
 void main() {
-    
+    vec4 result;
     vec4 spec = vec4(0.0);
     
+    vec4 scatterLight = vec4(0.0);
+    vec4 reflectLight = vec4(0.0);
+    
     vec3 n = normalize(DataIn.normal);
-    vec3 l = normalize(DataIn.lightDir);
     vec3 e = normalize(DataIn.eye);
     
-    float intensity = max(dot(n,l), 0.0);
-    
-    
-    if (intensity > 0.0) {
+    for (int i = 0; i < 6; ++i) {
+        vec3 lightDir = normalize(vec3(pointlights[i].position - DataIn.position));
+        float distance = length(lightDir);
+        float attenuation = 1.0/ (distance * distance); // Quadratic attenuation
+
         
-        vec3 h = normalize(l + e);
-        float intSpec = max(dot(h,n), 0.0);
+        lightDir = lightDir / distance;
+        
+        vec3 h = normalize(lightDir + e);
+        
+        float intDiff = max(dot(n, lightDir),0.0);
+        float intSpec = max(dot(h, n),0.0);
+        
         spec = mat.specular * pow(intSpec, mat.shininess);
+        
+        scatterLight += mat.diffuse * intDiff * attenuation;
+        reflectLight += spec * attenuation;
     }
     
-    colorOut = max(intensity * mat.diffuse + spec, mat.ambient);
-}
+    colorOut = max(scatterLight + reflectLight, mat.ambient);
 
+}

@@ -19,6 +19,7 @@
 #include "DynamicObject.h"
 #include "StaticObject.h"
 #include "LightSource.h"
+#include "PointLight.h"
 #include "Car.h"
 #include "Table.h"
 #include "Cheerios.h"
@@ -31,6 +32,7 @@
 #include "AVTmathLib.h"
 
 #define NUM_OBJECTS 200
+#define NUM_LIGHTS 10
 
 class MicroMachines{
 public:
@@ -60,7 +62,8 @@ protected:
     GLint pvm_uniformId;
     GLint vm_uniformId;
     GLint normal_uniformId;
-    GLint lPos_uniformId;
+    
+    GLint lPos_uniformId[6];
     
     GLint lDir_uniformId;
     GLint lCutOff_uniformId;

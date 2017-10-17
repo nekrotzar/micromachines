@@ -31,6 +31,9 @@
 		271C84C01F87DA0900E3F947 /* pointlight.vert in Copy Files */ = {isa = PBXBuildFile; fileRef = 271C848F1F87D96100E3F947 /* pointlight.vert */; };
 		27486FC01F9500B100684568 /* Candle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27486FBC1F9500B000684568 /* Candle.cpp */; };
 		27486FC11F9500B100684568 /* LightSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27486FBD1F9500B100684568 /* LightSource.cpp */; };
+		27B4136F1F966FE0008AFC0D /* DirectionalLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27B4136B1F966FDC008AFC0D /* DirectionalLight.cpp */; };
+		27B413701F966FE0008AFC0D /* PointLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27B4136C1F966FDD008AFC0D /* PointLight.cpp */; };
+		27B413711F966FE0008AFC0D /* Spotlight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27B4136D1F966FDE008AFC0D /* Spotlight.cpp */; };
 		D12EA1261F95519B00145306 /* Cheerios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D12EA1241F95519A00145306 /* Cheerios.cpp */; };
 /* End PBXBuildFile section */
 
@@ -96,6 +99,12 @@
 		27486FBD1F9500B100684568 /* LightSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LightSource.cpp; sourceTree = "<group>"; };
 		27486FBE1F9500B100684568 /* Candle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Candle.h; sourceTree = "<group>"; };
 		27486FBF1F9500B100684568 /* LightSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LightSource.h; sourceTree = "<group>"; };
+		27B413691F966FDA008AFC0D /* PointLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointLight.h; sourceTree = "<group>"; };
+		27B4136A1F966FDB008AFC0D /* Spotlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Spotlight.h; sourceTree = "<group>"; };
+		27B4136B1F966FDC008AFC0D /* DirectionalLight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DirectionalLight.cpp; sourceTree = "<group>"; };
+		27B4136C1F966FDD008AFC0D /* PointLight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PointLight.cpp; sourceTree = "<group>"; };
+		27B4136D1F966FDE008AFC0D /* Spotlight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Spotlight.cpp; sourceTree = "<group>"; };
+		27B4136E1F966FDF008AFC0D /* DirectionalLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectionalLight.h; sourceTree = "<group>"; };
 		D12EA1241F95519A00145306 /* Cheerios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Cheerios.cpp; sourceTree = "<group>"; };
 		D12EA1251F95519A00145306 /* Cheerios.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cheerios.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -118,6 +127,12 @@
 			isa = PBXGroup;
 			children = (
 				27486FBC1F9500B000684568 /* Candle.cpp */,
+				27B4136B1F966FDC008AFC0D /* DirectionalLight.cpp */,
+				27B4136E1F966FDF008AFC0D /* DirectionalLight.h */,
+				27B4136C1F966FDD008AFC0D /* PointLight.cpp */,
+				27B413691F966FDA008AFC0D /* PointLight.h */,
+				27B4136D1F966FDE008AFC0D /* Spotlight.cpp */,
+				27B4136A1F966FDB008AFC0D /* Spotlight.h */,
 				27486FBE1F9500B100684568 /* Candle.h */,
 				27486FBD1F9500B100684568 /* LightSource.cpp */,
 				27486FBF1F9500B100684568 /* LightSource.h */,
@@ -256,7 +271,9 @@
 				271C84B61F87D96500E3F947 /* Vector3.cpp in Sources */,
 				271C84AE1F87D96500E3F947 /* PerspectiveCamera.cpp in Sources */,
 				271C84B11F87D96500E3F947 /* DynamicObject.cpp in Sources */,
+				27B413711F966FE0008AFC0D /* Spotlight.cpp in Sources */,
 				271C84A71F87D96500E3F947 /* basic_geometry.cpp in Sources */,
+				27B4136F1F966FE0008AFC0D /* DirectionalLight.cpp in Sources */,
 				271C84AC1F87D96500E3F947 /* Object.cpp in Sources */,
 				271C84B01F87D96500E3F947 /* MicroMachines.cpp in Sources */,
 				271C84B41F87D96500E3F947 /* vsShaderLib.cpp in Sources */,
@@ -267,6 +284,7 @@
 				271C84AD1F87D96500E3F947 /* OrthogonalCamera.cpp in Sources */,
 				27486FC11F9500B100684568 /* LightSource.cpp in Sources */,
 				271C84AF1F87D96500E3F947 /* Entity.cpp in Sources */,
+				27B413701F966FE0008AFC0D /* PointLight.cpp in Sources */,
 				271C84AB1F87D96500E3F947 /* Table.cpp in Sources */,
 				271C84B71F87D96500E3F947 /* StaticObject.cpp in Sources */,
 			);

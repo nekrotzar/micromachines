@@ -53,11 +53,6 @@ MicroMachines::MicroMachines(){
 	{
 		_objects.push_back(new Candle(4.0f));
 	}
-    /*_objects.push_back(new Candle(4.0f));
-    _objects.push_back(new Candle(4.0f));
-    _objects.push_back(new Candle(4.0f));
-    _objects.push_back(new Candle(4.0f));
-    _objects.push_back(new Candle(4.0f));*/
     _objects[7]->setPosition(5 , 1.5,  0);
     _objects[8]->setPosition(-9 , 1.5,  9);
     _objects[9]->setPosition(-9 , 1.5,  -9);
@@ -92,20 +87,12 @@ MicroMachines::MicroMachines(){
     
     _current_camera = 0;
     
-    /*Global light*/
-    _lights.push_back(new LightSource(0));
-    
-    /*Point lights*/
-    _lights.push_back(new LightSource(1));
-    _lights.push_back(new LightSource(2));
-    _lights.push_back(new LightSource(3));
-    _lights.push_back(new LightSource(4));
-    _lights.push_back(new LightSource(5));
-    _lights.push_back(new LightSource(6));
-    
-    /*Spot lights*/
-    _lights.push_back(new LightSource(7));
-    _lights.push_back(new LightSource(8));
+    _lights.push_back(new PointLight(vec3(5,2,0)));
+    _lights.push_back(new PointLight(vec3(-9,2,9)));
+    _lights.push_back(new PointLight(vec3(-9,2,-9)));
+    _lights.push_back(new PointLight(vec3(9,2,9)));
+    _lights.push_back(new PointLight(vec3(9,2,-9)));
+    _lights.push_back(new PointLight(vec3(-5,2,0)));
     
     //Create meshes
     init();
@@ -165,10 +152,23 @@ void MicroMachines::display()
     glUseProgram(shader.getProgramIndex());
     
     // Send the light position in eye coordinates
-    // FIXME: lPos_uniformId should be different for every light
-    _lights[0]->draw(lPos_uniformId, vec3(0, 5, 0) , 1.0f);
-    _lights[1]->draw(lPos_uniformId, vec3(-5, 5, 0) , 1.0f);
-    _lights[2]->draw(lPos_uniformId, vec3(5, 5, 0) , 1.0f);
+    float res[4];
+    std::stringstream ss;
+    
+    for (int i = 0; i < 6; i++) {
+        
+        
+        float lightPos[4] = {(float) _lights[i]->getPosition().getX(), (float) _lights[i]->getPosition().getY(), (float) _lights[i]->getPosition().getZ(), 1.0f};
+        
+        ss.str("");
+        ss << "pointlights[" << i << "].position";
+        lPos_uniformId[i] = glGetUniformLocation(shader.getProgramIndex(), ss.str().c_str());
+        
+        
+        multMatrixPoint(VIEW, lightPos, res);
+        glUniform4fv(lPos_uniformId[i], 1, res);
+    }
+
     
     for (auto &object : _objects) {
         object->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId);
@@ -473,7 +473,7 @@ GLuint MicroMachines::setupShaders(){
     pvm_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_pvm");
     vm_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_viewModel");
     normal_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_normal");
-    lPos_uniformId = glGetUniformLocation(shader.getProgramIndex(), "l_pos");
+    //lPos_uniformId = glGetUniformLocation(shader.getProgramIndex(), "l_pos");
     
     printf("InfoLog for Hello World Shader\n%s\n\n", shader.getAllInfoLogs().c_str());
     
@@ -620,6 +620,6 @@ void MicroMachines::init(){
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
     glEnable(GL_MULTISAMPLE);
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 }
