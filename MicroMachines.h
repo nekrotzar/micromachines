@@ -64,6 +64,9 @@ protected:
     GLint normal_uniformId;
     
     GLint lPos_uniformId[6];
+    GLint lConst_uniformId[6];
+    GLint lLin_uniformId[6];
+    GLint lQuadr_uniformId[6];
     
     GLint lDir_uniformId;
     GLint lCutOff_uniformId;

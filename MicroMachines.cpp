@@ -151,22 +151,9 @@ void MicroMachines::display()
     // Use shader program
     glUseProgram(shader.getProgramIndex());
     
-    // Send the light position in eye coordinates
-    float res[4];
-    std::stringstream ss;
-    
+    // Send the light position in eye coordinates    
     for (int i = 0; i < 6; i++) {
-        
-        
-        float lightPos[4] = {(float) _lights[i]->getPosition().getX(), (float) _lights[i]->getPosition().getY(), (float) _lights[i]->getPosition().getZ(), 1.0f};
-        
-        ss.str("");
-        ss << "pointlights[" << i << "].position";
-        lPos_uniformId[i] = glGetUniformLocation(shader.getProgramIndex(), ss.str().c_str());
-        
-        
-        multMatrixPoint(VIEW, lightPos, res);
-        glUniform4fv(lPos_uniformId[i], 1, res);
+            _lights[i]->draw(shader, lPos_uniformId[i],i);
     }
 
     
@@ -307,7 +294,12 @@ void MicroMachines::processKeys(unsigned char key, int xx, int yy){
             #endif
             break;
         case 'c':
-            printf("Camera Spherical Coordinates (%f, %f, %f)\n", alpha, beta, r);
+            for (int i = 0; i < 6 ; ++i) {
+                if (_lights[i]->getState())
+                    _lights[i]->setState(false);
+                else
+                    _lights[i]->setState(true); 
+            }
             break;
         case 'm':
             glEnable(GL_MULTISAMPLE);
@@ -570,11 +562,11 @@ void MicroMachines::init(){
 	mesh[objId].mat.texCount = texcount_butter;
 	createCube();
     
-    float amb_candle[] = { 1.0f, 1.0f, 0.9f, 1.0f };
+    float amb_candle[] = { 0.8f, 0.8f, 0.9f, 1.0f };
     float diff_candle[] = { 1.0f, 1.0f, 0.9f, 1.0f };
     float spec_candle[] = { 1.0f, 1.0f, 0.5f, 1.0f };
-    float emissive_candle[] = { 0.1f, 0.1f, 0.1f, 1.0f };
-    float shininess_candle = 60.0f;
+    float emissive_candle[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+    float shininess_candle = 10.;
     int texcount_candle = 0;
     
     // create geometry and VAO of the candle

@@ -12,6 +12,7 @@ struct Materials {
 };
 
 struct PointLight {
+    bool status;
     vec4 position;
     float constant, linear, quadratic;
     vec4 ambient, diffuse, specular;
@@ -39,24 +40,29 @@ void main() {
     vec3 e = normalize(DataIn.eye);
     
     for (int i = 0; i < 6; ++i) {
+        
+        if (!pointlights[i].status) {
+            continue;
+        }
+        
         vec3 lightDir = normalize(vec3(pointlights[i].position - DataIn.position));
         float distance = length(lightDir);
-        float attenuation = 1.0/ (distance * distance); // Quadratic attenuation
+        float attenuation = 1.0/ (pointlights[i].constant + pointlights[i].linear * distance + pointlights[i].quadratic*(distance * distance));; // Quadratic attenuation
 
-        
-        lightDir = lightDir / distance;
         
         vec3 h = normalize(lightDir + e);
         
         float intDiff = max(dot(n, lightDir),0.0);
         float intSpec = max(dot(h, n),0.0);
         
-        spec = mat.specular * pow(intSpec, mat.shininess);
-        
-        scatterLight += mat.diffuse * intDiff * attenuation;
-        reflectLight += spec * attenuation;
+
+            
+            spec = mat.specular * pow(intSpec, mat.shininess);
+            
+            scatterLight += mat.diffuse * intDiff * attenuation;
+            reflectLight += spec * attenuation;
     }
     
-    colorOut = max(scatterLight + reflectLight, mat.ambient);
+    colorOut = scatterLight + reflectLight;
 
 }

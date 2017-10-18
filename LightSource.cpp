@@ -1,6 +1,7 @@
 #include "LightSource.h"
 
 LightSource::LightSource(GLenum num, vec3 position){
+    _isOn = true;
     _num = num;
     setPosition(position);
 }
@@ -11,7 +12,14 @@ GLenum LightSource::getNum(){
     return _num;
 }
 
+bool LightSource::getState(){
+    return _isOn;
+}
 
-void LightSource::draw(VSShaderLib shader, GLint lPos_uniformId){}
+void LightSource::setState(bool status){
+    _isOn = status;
+}
+
+void LightSource::draw(VSShaderLib shader, GLint lPos_uniformId, int num){}
 
 

@@ -12,11 +12,14 @@
 class LightSource : public Entity {
 protected:
     GLenum _num;
+    bool _isOn;
 public:
     LightSource(GLenum number, vec3 position);
     ~LightSource();
     GLenum getNum();
-    virtual void draw(VSShaderLib shader, GLint lPos_uniformId);
+    bool getState();
+    void setState(bool status);
+    virtual void draw(VSShaderLib shader, GLint lPos_uniformId, int num);
 };
 
 #endif /* LightSource_h */
