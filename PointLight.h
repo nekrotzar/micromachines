@@ -14,7 +14,7 @@ public:
     float getQuadraticAttenuation();
     
 
-    void draw(VSShaderLib shader, GLint lPos_uniformId, int num);
+    void draw(VSShaderLib shader, int num);
 };
 
 

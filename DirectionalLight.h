@@ -6,7 +6,8 @@
 class DirectionalLight : public LightSource {
 protected:
 public:
-    void draw(VSShaderLib shader, GLint lPos_uniformId);
+    DirectionalLight(vec3 direction);
+    void draw(VSShaderLib shader, int num);
 };
 
 

@@ -19,7 +19,7 @@ public:
     GLenum getNum();
     bool getState();
     void setState(bool status);
-    virtual void draw(VSShaderLib shader, GLint lPos_uniformId, int num);
+    virtual void draw(VSShaderLib shader, int num);
 };
 
 #endif /* LightSource_h */

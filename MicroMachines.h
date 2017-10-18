@@ -20,6 +20,8 @@
 #include "StaticObject.h"
 #include "LightSource.h"
 #include "PointLight.h"
+#include "DirectionalLight.h"
+#include "Spotlight.h"
 #include "Car.h"
 #include "Table.h"
 #include "Cheerios.h"
@@ -62,15 +64,6 @@ protected:
     GLint pvm_uniformId;
     GLint vm_uniformId;
     GLint normal_uniformId;
-    
-    GLint lPos_uniformId[6];
-    GLint lConst_uniformId[6];
-    GLint lLin_uniformId[6];
-    GLint lQuadr_uniformId[6];
-    
-    GLint lDir_uniformId;
-    GLint lCutOff_uniformId;
-    GLint lExp_uniformId;
         
     float lightPos[4] = {4.0f, 6.0f, 2.0f, 1.0f};
     float camX, camY, camZ;

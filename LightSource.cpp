@@ -20,6 +20,6 @@ void LightSource::setState(bool status){
     _isOn = status;
 }
 
-void LightSource::draw(VSShaderLib shader, GLint lPos_uniformId, int num){}
+void LightSource::draw(VSShaderLib shader, int num){}
 
 

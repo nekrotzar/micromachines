@@ -87,13 +87,15 @@ MicroMachines::MicroMachines(){
     
     _current_camera = 0;
     
-    _lights.push_back(new PointLight(vec3(5,2,0)));
-    _lights.push_back(new PointLight(vec3(-9,2,9)));
-    _lights.push_back(new PointLight(vec3(-9,2,-9)));
-    _lights.push_back(new PointLight(vec3(9,2,9)));
-    _lights.push_back(new PointLight(vec3(9,2,-9)));
-    _lights.push_back(new PointLight(vec3(-5,2,0)));
-    
+    _lights.push_back(new DirectionalLight(vec3(0,10,-10)));  // Directional Light #0
+    _lights.push_back(new PointLight(vec3(5,2,0)));         // Point Light #1
+    _lights.push_back(new PointLight(vec3(-9,2,9)));        // Point Light #2
+    _lights.push_back(new PointLight(vec3(-9,2,-9)));       // Point Light #3
+    _lights.push_back(new PointLight(vec3(9,2,9)));         // Point Light #4
+    _lights.push_back(new PointLight(vec3(9,2,-9)));        // Point Light #5
+    _lights.push_back(new PointLight(vec3(-5,2,0)));        // Point Light #6
+    _lights.push_back(new Spotlight(_car->getPosition()));
+    _lights.push_back(new Spotlight(_car->getPosition()));
     //Create meshes
     init();
 }
@@ -151,12 +153,14 @@ void MicroMachines::display()
     // Use shader program
     glUseProgram(shader.getProgramIndex());
     
-    // Send the light position in eye coordinates    
+    // Send the light position in eye coordinates
+    
+    _lights[0]->draw(shader,0);
+    
     for (int i = 0; i < 6; i++) {
-            _lights[i]->draw(shader, lPos_uniformId[i],i);
+            _lights[i+1]->draw(shader, i);
     }
 
-    
     for (auto &object : _objects) {
         object->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId);
     }
@@ -294,7 +298,7 @@ void MicroMachines::processKeys(unsigned char key, int xx, int yy){
             #endif
             break;
         case 'c':
-            for (int i = 0; i < 6 ; ++i) {
+            for (int i = 1; i < 7 ; ++i) {
                 if (_lights[i]->getState())
                     _lights[i]->setState(false);
                 else
@@ -305,7 +309,10 @@ void MicroMachines::processKeys(unsigned char key, int xx, int yy){
             glEnable(GL_MULTISAMPLE);
             break;
         case 'n':
-            glDisable(GL_MULTISAMPLE);
+            if (_lights[0]->getState())
+                _lights[0]->setState(false);
+            else
+                _lights[0]->setState(true);
             break;
         default:
             break;

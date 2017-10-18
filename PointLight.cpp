@@ -1,7 +1,7 @@
 #include "PointLight.h"
 
 PointLight::PointLight(vec3 position) : LightSource(1.0, position){
-    _constant = 1.0;
+    _constant = 2.5;
     _linear = 0.045;
     _quadratic = 0.0075;
 }
@@ -17,14 +17,14 @@ float PointLight::getQuadraticAttenuation(){
     return _quadratic;
 }
 
-void PointLight::draw(VSShaderLib shader, GLint lPos_uniformId, int num){
+void PointLight::draw(VSShaderLib shader, int num){
     float res[4];
     float lightPos[4] = {(float) getPosition().getX(), (float) getPosition().getY(), (float)getPosition().getZ(), 1.0f};
     std::stringstream ss;
     
     ss.str("");
     ss << "pointlights[" << num << "].position";
-    lPos_uniformId = glGetUniformLocation(shader.getProgramIndex(), ss.str().c_str());
+    GLint lPos_uniformId = glGetUniformLocation(shader.getProgramIndex(), ss.str().c_str());
     
     ss.str("");
     ss << "pointlights[" << num << "].constant";
