@@ -1,11 +1,12 @@
 #include "Spotlight.h"
 
 Spotlight::Spotlight(vec3 position) : LightSource(1.0, position){
-    _cutoff = 0.0f;
-    _exponent = 0.0f;
-    _constant = 2.5;
-    _linear = 0.045;
-    _quadratic = 0.0075;
+    _direction = vec3(0.0, 1.0 ,0.0);
+    _cutoff = 15.0f;
+    _exponent = 10.0f;
+    _constant = 1.5f;
+    _linear = .0015f;
+    _quadratic = 0.00001f;
 }
 
 Spotlight::Spotlight(vec3 position, float cutoff, float exponent) : LightSource(1.0, position) {
@@ -15,7 +16,6 @@ Spotlight::Spotlight(vec3 position, float cutoff, float exponent) : LightSource(
 
 void Spotlight::setDirection(const vec3& direction){
     _direction = direction;
-
 }
 
 void Spotlight::setCutoff(float cuttof){
@@ -52,17 +52,30 @@ void Spotlight::draw(VSShaderLib shader, int num){
     float res[4], resDir[4];
     float lightPos[4] = {(float) getPosition().getX(), (float) getPosition().getY(), (float) getPosition().getZ(), 1.0f};
 
+    GLfloat diffuse[] = { 0.8f, 0.8f, 0.8f, 1.0f };
+    GLfloat specular[] = { 0.7f, 0.7f, 0.4f, 1.0f };
+    
     std::stringstream ss;
 
     /*Car direction*/
-    float dir[3] = {(float) getDirection().getX(), (float) getDirection().getY(), (float) getPosition().getZ()};
+    float dir[4] = {(float) getDirection().getX(), (float) getDirection().getY(), (float) getDirection().getZ(), 1.0};
     
+    ss.str("");
     ss << "spotlights[" << num << "].position";
     GLint lPos_uniformId = glGetUniformLocation(shader.getProgramIndex(), ss.str().c_str());
+    ss.str("");
     ss << "spotlights[" << num << "].direction";
     GLint spotDir_uniformId = glGetUniformLocation(shader.getProgramIndex(), ss.str().c_str());
+    ss.str("");
+    ss << "spotlights[" << num << "].diffuse";
+    GLint lDiff_uniformId = glGetUniformLocation(shader.getProgramIndex(), ss.str().c_str());
+    ss.str("");
+    ss << "spotlights[" << num << "].specular";
+    GLint lSpec_uniformId = glGetUniformLocation(shader.getProgramIndex(), ss.str().c_str());
+    ss.str("");
     ss << "spotlights[" << num << "].cutoff";
     GLint spotCutOff_uniformId = glGetUniformLocation(shader.getProgramIndex(), ss.str().c_str());
+    ss.str("");
     ss << "spotlights[" << num << "].exponent";
     GLint spotExp_uniformId = glGetUniformLocation(shader.getProgramIndex(), ss.str().c_str());
     ss.str("");
@@ -86,7 +99,9 @@ void Spotlight::draw(VSShaderLib shader, int num){
     glUniform1f(lQuadr_uniformId, getQuadraticAttenuation());
     glUniform1f(spotCutOff_uniformId, getCutoff());
     glUniform1f(spotExp_uniformId, getExponent());
-    glUniform3fv(spotDir_uniformId, 1, resDir);
+    glUniform4fv(lDiff_uniformId, 1, diffuse);
+    glUniform4fv(lSpec_uniformId, 1, specular);
+    glUniform4fv(spotDir_uniformId, 1, resDir);
     glUniform4fv(lPos_uniformId, 1, res);
 }
 

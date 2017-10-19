@@ -29,6 +29,7 @@
 #include "Butter.h"
 #include "Candle.h"
 
+#include "TGA.h"
 #include "vsShaderLib.h"
 #include "VertexAttrDef.h"
 #include "AVTmathLib.h"
@@ -64,6 +65,10 @@ protected:
     GLint pvm_uniformId;
     GLint vm_uniformId;
     GLint normal_uniformId;
+    GLint texMode_uniformId;
+    GLint tex_loc, tex_loc1;
+    
+    GLuint TextureArray[3];
         
     float lightPos[4] = {4.0f, 6.0f, 2.0f, 1.0f};
     float camX, camY, camZ;

@@ -22,8 +22,12 @@ MicroMachines::MicroMachines(){
         exit(1);
     }
     
-    // Create objects
+    // Create texture objects
+    glGenTextures(2, TextureArray);
+    TGA_Texture(TextureArray, "textures/stone.tga", 0);
+    TGA_Texture(TextureArray, "textures/lightwood.tga", 1);
     
+    // Create objects
     int i = 0;
     while (i < 247) {
         keySpecialStates[i] = false;
@@ -87,15 +91,15 @@ MicroMachines::MicroMachines(){
     
     _current_camera = 0;
     
-    _lights.push_back(new DirectionalLight(vec3(0,10,-10)));  // Directional Light #0
-    _lights.push_back(new PointLight(vec3(5,2,0)));         // Point Light #1
-    _lights.push_back(new PointLight(vec3(-9,2,9)));        // Point Light #2
-    _lights.push_back(new PointLight(vec3(-9,2,-9)));       // Point Light #3
-    _lights.push_back(new PointLight(vec3(9,2,9)));         // Point Light #4
-    _lights.push_back(new PointLight(vec3(9,2,-9)));        // Point Light #5
-    _lights.push_back(new PointLight(vec3(-5,2,0)));        // Point Light #6
-    _lights.push_back(new Spotlight(_car->getPosition()));
-    _lights.push_back(new Spotlight(_car->getPosition()));
+    _lights.push_back(new DirectionalLight(vec3(-1.0,1.0,0.0)));  // Directional Light #0
+    _lights.push_back(new PointLight(vec3(5,3.1,0)));         // Point Light #1
+    _lights.push_back(new PointLight(vec3(-9,3.1,9)));        // Point Light #2
+    _lights.push_back(new PointLight(vec3(-9,3.1,-9)));       // Point Light #3
+    _lights.push_back(new PointLight(vec3(9,3.1,9)));         // Point Light #4
+    _lights.push_back(new PointLight(vec3(9,3.1,-9)));        // Point Light #5
+    _lights.push_back(new PointLight(vec3(-5,3.1,0)));        // Point Light #6
+    _lights.push_back(new Spotlight(_car->getPosition() + (0.0, 5, 0.0)));            // Spot Light #7
+    //_lights.push_back(new Spotlight(vec3(-8.0, 5.0, -8.0)));          // Spot Light #8
     //Create meshes
     init();
 }
@@ -153,13 +157,31 @@ void MicroMachines::display()
     // Use shader program
     glUseProgram(shader.getProgramIndex());
     
-    // Send the light position in eye coordinates
     
+    // Bind texture objects to texture units
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, TextureArray[0]);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, TextureArray[1]);
+    
+    // GLSL samplers used texture units
+    glUniform1i(texMode_uniformId, 0);
+    glUniform1i(tex_loc, 0);
+    glUniform1i(tex_loc1, 1);
+    
+    // Send the light position in eye coordinates
     _lights[0]->draw(shader,0);
     
+    
     for (int i = 0; i < 6; i++) {
-            _lights[i+1]->draw(shader, i);
+        _lights[i+1]->draw(shader, i);
     }
+    
+    _lights[7]->setPosition(_car->getPosition().getX(), 5.0, _car->getPosition().getZ());
+    
+    _lights[7]->draw(shader, 0);
+    //_lights[8]->draw(shader, 1);
+
 
     for (auto &object : _objects) {
         object->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId);
@@ -229,7 +251,6 @@ void MicroMachines::display()
     }
     
 }
-
 
 int MicroMachines::collides() {
     for (int i = 2; i < 7; i++) {
@@ -303,6 +324,14 @@ void MicroMachines::processKeys(unsigned char key, int xx, int yy){
                     _lights[i]->setState(false);
                 else
                     _lights[i]->setState(true); 
+            }
+            break;
+        case 'h':
+            for (int i = 7; i < 9; ++i) {
+                if (_lights[i]->getState())
+                    _lights[i]->setState(false);
+                else
+                    _lights[i]->setState(true);
             }
             break;
         case 'm':
@@ -463,9 +492,7 @@ GLuint MicroMachines::setupShaders(){
     glBindFragDataLocation(shader.getProgramIndex(), 0,"colorOut");
     glBindAttribLocation(shader.getProgramIndex(), VERTEX_COORD_ATTRIB, "position");
     glBindAttribLocation(shader.getProgramIndex(), NORMAL_ATTRIB, "normal");
-    
-    //Following line comment because shader file does not have texCoord attribute
-    //glBindAttribLocation(shader.getProgramIndex(), TEXTURE_COORD_ATTRIB, "texCoord");
+    glBindAttribLocation(shader.getProgramIndex(), TEXTURE_COORD_ATTRIB, "texCoord");
     
     glLinkProgram(shader.getProgramIndex());
     
@@ -473,6 +500,10 @@ GLuint MicroMachines::setupShaders(){
     vm_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_viewModel");
     normal_uniformId = glGetUniformLocation(shader.getProgramIndex(), "m_normal");
     //lPos_uniformId = glGetUniformLocation(shader.getProgramIndex(), "l_pos");
+
+    texMode_uniformId = glGetUniformLocation(shader.getProgramIndex(), "texMode");
+    tex_loc = glGetUniformLocation(shader.getProgramIndex(), "texmap");
+    tex_loc1 = glGetUniformLocation(shader.getProgramIndex(), "texmap1");
     
     printf("InfoLog for Hello World Shader\n%s\n\n", shader.getAllInfoLogs().c_str());
     
@@ -485,12 +516,12 @@ void MicroMachines::init(){
     camZ = r * cos(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
     camY = r * sin(beta * 3.14f / 180.0f);
     
-    float amb[]= {0.2f, 0.15f, 0.1f, 1.0f};
-    float diff[] = {0.8f, 0.6f, 0.4f, 1.0f};
-    float spec[] = {0.8f, 0.8f, 0.8f, 1.0f};
+    float amb[]= {0.0f, 0.0f, 0.0f, 1.0f};
+    float diff[] = {1.0f, 0.1f, 0.1f, 1.0f};
+    float spec[] = {1.0f, 0.5f, 0.5f, 1.0f};
     float emissive[] = {0.0f, 0.0f, 0.0f, 1.0f};
-    float shininess= 100.0f;
-    int texcount = 0;
+    float shininess= 150.0f;
+    int texcount = 1;
     
     // create geometry and VAO of the car body
     objId = 0;
@@ -502,31 +533,31 @@ void MicroMachines::init(){
     mesh[objId].mat.texCount = texcount;
     createCube();
     
-    float amb1[] = {0.0f, 0.0f, 0.0f, 1.0f};
-    float diff1[] = {0.1f, 0.1f, 0.1f, 1.0f};
-    float spec1[] = {0.1f, 0.1f, 0.1f, 1.0f};
-    shininess = 300.0f;
+    float amb_wheel[] = {0.05f, 0.05f, 0.1f, 1.0f};
+    float diff_wheel[] = {0.0f, 0.0f, 0.0f, 1.0f};
+    float spec_wheel[] = {0.0f, 0.0f, 0.0f, 1.0f};
+    shininess = 100.0f;
     
     // create geometry and VAO of the car wheel
     objId = 1;
-    memcpy(mesh[objId].mat.ambient, amb1,4*sizeof(float));
-    memcpy(mesh[objId].mat.diffuse, diff1,4*sizeof(float));
-    memcpy(mesh[objId].mat.specular, spec1,4*sizeof(float));
+    memcpy(mesh[objId].mat.ambient, amb,4*sizeof(float));
+    memcpy(mesh[objId].mat.diffuse, diff_wheel,4*sizeof(float));
+    memcpy(mesh[objId].mat.specular, spec_wheel,4*sizeof(float));
     memcpy(mesh[objId].mat.emissive, emissive,4*sizeof(float));
     mesh[objId].mat.shininess = shininess;
     mesh[objId].mat.texCount = texcount;
     createTorus(0.07, 0.16, 10, 15);
 
-	float amb_table[] = { 0.1f, 0.5f, 0.1f, 1.0f };
+	float amb_table[] = { 0.1f, 0.1f, 0.1f, 1.0f };
 	float diff_table[] = { 0.1f, 0.5f, 0.1f, 1.0f };
-	float spec_table[] = { 0.1f, 0.5f, 0.1f, 1.0f };
+	float spec_table[] = { 0.1f, 0.1f, 0.1f, 1.0f };
 	float emissive_table[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 	float shininess_table = 100.0f;
 	int texcount_table = 0;
 
 	// create geometry and VAO of the table
 	objId = 2;
-	memcpy(mesh[objId].mat.ambient, amb_table, 4 * sizeof(float));
+	memcpy(mesh[objId].mat.ambient, amb, 4 * sizeof(float));
 	memcpy(mesh[objId].mat.diffuse, diff_table, 4 * sizeof(float));
 	memcpy(mesh[objId].mat.specular, spec_table, 4 * sizeof(float));
 	memcpy(mesh[objId].mat.emissive, emissive_table, 4 * sizeof(float));
@@ -534,16 +565,16 @@ void MicroMachines::init(){
 	mesh[objId].mat.texCount = texcount_table;
 	createCube();
 
-	float amb_orange[] = { 1.0f, 0.5f, 0.0f, 1.0f };
+	float amb_orange[] = { 0.2f, 0.15f, 0.1f, 1.0f };
 	float diff_orange[] = { 1.0f, 0.5f, 0.0f, 1.0f };
 	float spec_orange[] = { 1.0f, 0.5f, 0.0f, 1.0f };
 	float emissive_orange[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 	float shininess_orange = 100.0f;
-	int texcount_orange = 0;
+	int texcount_orange = 1;
 
 	// create geometry and VAO of the orange
 	objId = 3;
-	memcpy(mesh[objId].mat.ambient, amb_orange, 4 * sizeof(float));
+	memcpy(mesh[objId].mat.ambient, amb, 4 * sizeof(float));
 	memcpy(mesh[objId].mat.diffuse, diff_orange, 4 * sizeof(float));
 	memcpy(mesh[objId].mat.specular, spec_orange, 4 * sizeof(float));
 	memcpy(mesh[objId].mat.emissive, emissive_orange, 4 * sizeof(float));
@@ -552,16 +583,16 @@ void MicroMachines::init(){
 	createSphere(1.0,70);
 
 
-	float amb_butter[] = { 1.0f, 1.0f, 0.0f, 1.0f };
+	float amb_butter[] = { 0.3, 0.3f, 0.1f, 1.0f };
 	float diff_butter[] = { 1.0f, 1.0f, 0.0f, 1.0f };
 	float spec_butter[] = { 1.0f, 1.0f, 0.0f, 1.0f };
 	float emissive_butter[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 	float shininess_butter = 100.0f;
-	int texcount_butter = 0;
+	int texcount_butter = 1;
 
 	// create geometry and VAO of the orange
 	objId = 4;
-	memcpy(mesh[objId].mat.ambient, amb_butter, 4 * sizeof(float));
+	memcpy(mesh[objId].mat.ambient, amb, 4 * sizeof(float));
 	memcpy(mesh[objId].mat.diffuse, diff_butter, 4 * sizeof(float));
 	memcpy(mesh[objId].mat.specular, spec_butter, 4 * sizeof(float));
 	memcpy(mesh[objId].mat.emissive, emissive_butter, 4 * sizeof(float));
@@ -578,7 +609,7 @@ void MicroMachines::init(){
     
     // create geometry and VAO of the candle
     objId = 5;
-    memcpy(mesh[objId].mat.ambient, amb_candle, 4 * sizeof(float));
+    memcpy(mesh[objId].mat.ambient, amb, 4 * sizeof(float));
     memcpy(mesh[objId].mat.diffuse, diff_candle, 4 * sizeof(float));
     memcpy(mesh[objId].mat.specular, spec_candle, 4 * sizeof(float));
     memcpy(mesh[objId].mat.emissive, emissive_candle, 4 * sizeof(float));

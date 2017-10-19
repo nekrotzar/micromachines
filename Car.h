@@ -7,7 +7,7 @@
 class Car : public DynamicObject
 {
 protected:
-    
+    vec3 _direction;
 public:
     Car();
     ~Car();
