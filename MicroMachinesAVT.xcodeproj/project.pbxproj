@@ -37,6 +37,12 @@
 		27B413711F966FE0008AFC0D /* Spotlight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27B4136D1F966FDE008AFC0D /* Spotlight.cpp */; };
 		27D2E6741F991BF00076D8FF /* lightwood.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27D2E6721F991BE50076D8FF /* lightwood.tga */; };
 		27D2E6751F991BF00076D8FF /* stone.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27D2E6731F991BE50076D8FF /* stone.tga */; };
+		27D2E67C1F9921F10076D8FF /* butter.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27D2E6761F9921E30076D8FF /* butter.tga */; };
+		27D2E67D1F9921F10076D8FF /* candle.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27D2E6771F9921E40076D8FF /* candle.tga */; };
+		27D2E67E1F9921F10076D8FF /* cheerio.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27D2E67A1F9921E40076D8FF /* cheerio.tga */; };
+		27D2E67F1F9921F10076D8FF /* cloth.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27D2E6781F9921E40076D8FF /* cloth.tga */; };
+		27D2E6801F9921F10076D8FF /* orange.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27D2E6791F9921E40076D8FF /* orange.tga */; };
+		27D2E6811F9921F10076D8FF /* wood.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27D2E67B1F9921E50076D8FF /* wood.tga */; };
 		D12EA1261F95519B00145306 /* Cheerios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D12EA1241F95519A00145306 /* Cheerios.cpp */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +65,12 @@
 			dstPath = textures;
 			dstSubfolderSpec = 16;
 			files = (
+				27D2E67C1F9921F10076D8FF /* butter.tga in CopyFiles */,
+				27D2E67D1F9921F10076D8FF /* candle.tga in CopyFiles */,
+				27D2E67E1F9921F10076D8FF /* cheerio.tga in CopyFiles */,
+				27D2E67F1F9921F10076D8FF /* cloth.tga in CopyFiles */,
+				27D2E6801F9921F10076D8FF /* orange.tga in CopyFiles */,
+				27D2E6811F9921F10076D8FF /* wood.tga in CopyFiles */,
 				27D2E6741F991BF00076D8FF /* lightwood.tga in CopyFiles */,
 				27D2E6751F991BF00076D8FF /* stone.tga in CopyFiles */,
 			);
@@ -123,6 +135,12 @@
 		27B4136E1F966FDF008AFC0D /* DirectionalLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectionalLight.h; sourceTree = "<group>"; };
 		27D2E6721F991BE50076D8FF /* lightwood.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = lightwood.tga; sourceTree = "<group>"; };
 		27D2E6731F991BE50076D8FF /* stone.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = stone.tga; sourceTree = "<group>"; };
+		27D2E6761F9921E30076D8FF /* butter.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = butter.tga; sourceTree = "<group>"; };
+		27D2E6771F9921E40076D8FF /* candle.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = candle.tga; sourceTree = "<group>"; };
+		27D2E6781F9921E40076D8FF /* cloth.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = cloth.tga; sourceTree = "<group>"; };
+		27D2E6791F9921E40076D8FF /* orange.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = orange.tga; sourceTree = "<group>"; };
+		27D2E67A1F9921E40076D8FF /* cheerio.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = cheerio.tga; sourceTree = "<group>"; };
+		27D2E67B1F9921E50076D8FF /* wood.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = wood.tga; sourceTree = "<group>"; };
 		D12EA1241F95519A00145306 /* Cheerios.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Cheerios.cpp; sourceTree = "<group>"; };
 		D12EA1251F95519A00145306 /* Cheerios.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cheerios.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -231,6 +249,12 @@
 		27D2E6711F991BE50076D8FF /* textures */ = {
 			isa = PBXGroup;
 			children = (
+				27D2E6761F9921E30076D8FF /* butter.tga */,
+				27D2E6771F9921E40076D8FF /* candle.tga */,
+				27D2E67A1F9921E40076D8FF /* cheerio.tga */,
+				27D2E6781F9921E40076D8FF /* cloth.tga */,
+				27D2E6791F9921E40076D8FF /* orange.tga */,
+				27D2E67B1F9921E50076D8FF /* wood.tga */,
 				27D2E6721F991BE50076D8FF /* lightwood.tga */,
 				27D2E6731F991BE50076D8FF /* stone.tga */,
 			);
