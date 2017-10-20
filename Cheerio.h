@@ -1,16 +1,16 @@
-#ifndef Table_h
-#define Table_h
+#ifndef Cheerio_h
+#define Cheerio_h
 
 #include "StaticObject.h"
 
-class Table : public StaticObject
+class Cheerio : public StaticObject
 {
 protected:
 
 public:
-	Table();
-	~Table();
+	Cheerio(double x, double z);
+	~Cheerio();
 	void render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformdId, GLint texMode_uniformId);
 };
 
-#endif /* Table_h */
+#endif /* Cheerio_h */

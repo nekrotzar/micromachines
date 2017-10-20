@@ -2,7 +2,7 @@
 
 out vec4 colorOut;
 
-uniform sampler2D texmap;
+uniform sampler2D texmap0;
 uniform sampler2D texmap1;
 
 uniform int texMode;
@@ -146,15 +146,15 @@ void main() {
    }
    // Diffuse color and texture
    else if (texMode == 1){
-       texel = texture(texmap, DataIn.texcoord);
+       texel = texture(texmap0, DataIn.texcoord);
        colorOut = max(scatteredLight * mat.diffuse * texel + reflectedLight * mat.specular, mat.ambient * texel);
    }
    else if (texMode == 2){
-       texel = texture(texmap, DataIn.texcoord);
+       texel = texture(texmap0, DataIn.texcoord);
        colorOut = max(scatteredLight * texel + reflectedLight * mat.specular, 0.1 * texel);
    }
    else if (texMode == 3){
-       texel = texture(texmap, DataIn.texcoord);
+       texel = texture(texmap0, DataIn.texcoord);
        texel1 = texture(texmap1, DataIn.texcoord);
        colorOut = max(scatteredLight * texel * texel1 + reflectedLight * mat.specular, 0.1 * texel * texel1);
    }

@@ -8,7 +8,9 @@ Car::Car(){
 }
 Car::~Car(){}
 
-void Car::render(VSShaderLib shader, GLint pvm_uniformId , GLint vm_uniformId, GLint normal_uniformId){
+void Car::render(VSShaderLib shader, GLint pvm_uniformId , GLint vm_uniformId, GLint normal_uniformId, GLint texMode_uniformId){
+    
+    glUniform1i(texMode_uniformId, 0);
     
     pushMatrix(MODEL);
     translate(MODEL, getPosition().getX(), getPosition().getY(), getPosition().getZ());

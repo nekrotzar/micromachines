@@ -10,7 +10,7 @@ class Butter : public DynamicObject
 	public:
 		Butter(double x, double z);
 		~Butter();
-		void render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformdId);
+		void render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformdId, GLint texMode_uniformId);
 };
 
 #endif /* Butter_h */

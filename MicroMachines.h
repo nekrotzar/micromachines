@@ -24,18 +24,18 @@
 #include "Spotlight.h"
 #include "Car.h"
 #include "Table.h"
-#include "Cheerios.h"
+#include "Cheerio.h"
 #include "Orange.h"
 #include "Butter.h"
 #include "Candle.h"
 
-#include "TGA.h"
 #include "vsShaderLib.h"
 #include "VertexAttrDef.h"
 #include "AVTmathLib.h"
 
 #define NUM_OBJECTS 200
 #define NUM_LIGHTS 10
+#define NUM_TEXTURES 6
 
 class MicroMachines{
 public:
@@ -57,20 +57,19 @@ public:
     void deleteAll();
     void setCamera();
 protected:
-    
     bool _camera_trigger;
     bool* keySpecialStates = new bool[246];
+    
     VSShaderLib shader;
     
     GLint pvm_uniformId;
     GLint vm_uniformId;
     GLint normal_uniformId;
     GLint texMode_uniformId;
-    GLint tex_loc, tex_loc1;
+    GLint tex_loc0, tex_loc1;
     
-    GLuint TextureArray[3];
+    GLuint TextureArray[NUM_TEXTURES];
         
-    float lightPos[4] = {4.0f, 6.0f, 2.0f, 1.0f};
     float camX, camY, camZ;
     int startX, startY, tracking = 0;
     float alpha = 39.0f, beta = 51.0f;
@@ -78,12 +77,12 @@ protected:
     
     Car *_car;
 	Table *_table;
-	Butter *_butter;
     
     std::vector<LightSource*> _lights;
     std::vector<Object*> _objects;
 	std::vector<Orange*> _oranges;
     std::vector<Camera*> _cameras;
+    
     int _current_camera;
 };
 

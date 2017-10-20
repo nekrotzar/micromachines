@@ -22,10 +22,19 @@ MicroMachines::MicroMachines(){
         exit(1);
     }
     
+    /*Check number of available texture units*/
+    int texture_units;
+    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &texture_units);
+    printf("Number of texture units: %d", texture_units);
+    
     // Create texture objects
-    glGenTextures(2, TextureArray);
-    TGA_Texture(TextureArray, "textures/stone.tga", 0);
-    TGA_Texture(TextureArray, "textures/lightwood.tga", 1);
+    glGenTextures(6, TextureArray);
+    TGA_Texture(TextureArray, "textures/cloth.tga", 0);
+    TGA_Texture(TextureArray, "textures/wood.tga", 1);
+    TGA_Texture(TextureArray, "textures/butter.tga", 2);
+    TGA_Texture(TextureArray, "textures/cheerio.tga", 3);
+    TGA_Texture(TextureArray, "textures/orange.tga", 4);
+    TGA_Texture(TextureArray, "textures/stone.tga", 5);
     
     // Create objects
     int i = 0;
@@ -41,6 +50,7 @@ MicroMachines::MicroMachines(){
     _objects.push_back(_table);
 	_objects.push_back(_car);
 	srand(time(NULL));
+    
 	for (int i = 0; i < 5; i++)
 	{
 		_oranges.push_back(new Orange((double)(rand() % 23 + (-13) + ((rand() % 99) / 100)), (double)(rand() % 23 + (-13) + ((rand() % 99) / 100))));
@@ -69,10 +79,10 @@ MicroMachines::MicroMachines(){
 	float y = 0, y1 = 0;
 
 	//======= Exterior Elipse ======
-	while (g<45) {
+	while (g < 45) {
 		x = 9.3 * cos((angle * PI) / 180);
 		y = 9.3 * sin((angle * PI) / 180);
-		_objects.push_back(new Cheerios(x, y));
+		_objects.push_back(new Cheerio(x, y));
 		angle += 8;
 		g++;
 	}
@@ -80,7 +90,7 @@ MicroMachines::MicroMachines(){
 	while (j < 36) {
 		x1 = 11.0 * cos((angle1 * PI) / 180);
 		y1 = 11.0 * sin((angle1 * PI) / 180);
-		_objects.push_back(new Cheerios(x1, y1));
+		_objects.push_back(new Cheerio(x1, y1));
 		angle1 += 10;
 		j++;
 	}	
@@ -156,17 +166,7 @@ void MicroMachines::display()
     
     // Use shader program
     glUseProgram(shader.getProgramIndex());
-    
-    
-    // Bind texture objects to texture units
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, TextureArray[0]);
-    glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, TextureArray[1]);
-    
-    // GLSL samplers used texture units
-    glUniform1i(texMode_uniformId, 0);
-    glUniform1i(tex_loc, 0);
+    glUniform1i(tex_loc0, 0);
     glUniform1i(tex_loc1, 1);
     
     // Send the light position in eye coordinates
@@ -184,11 +184,11 @@ void MicroMachines::display()
 
 
     for (auto &object : _objects) {
-        object->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId);
+        object->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
     }
 
 	for (auto &orange : _oranges) {
-		orange->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId);
+		orange->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
 	}
     
     if (keySpecialStates[GLUT_KEY_UP] == false
@@ -502,7 +502,7 @@ GLuint MicroMachines::setupShaders(){
     //lPos_uniformId = glGetUniformLocation(shader.getProgramIndex(), "l_pos");
 
     texMode_uniformId = glGetUniformLocation(shader.getProgramIndex(), "texMode");
-    tex_loc = glGetUniformLocation(shader.getProgramIndex(), "texmap");
+    tex_loc0 = glGetUniformLocation(shader.getProgramIndex(), "texmap0");
     tex_loc1 = glGetUniformLocation(shader.getProgramIndex(), "texmap1");
     
     printf("InfoLog for Hello World Shader\n%s\n\n", shader.getAllInfoLogs().c_str());
@@ -553,7 +553,7 @@ void MicroMachines::init(){
 	float spec_table[] = { 0.1f, 0.1f, 0.1f, 1.0f };
 	float emissive_table[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 	float shininess_table = 100.0f;
-	int texcount_table = 0;
+	int texcount_table = 2;
 
 	// create geometry and VAO of the table
 	objId = 2;
@@ -605,7 +605,7 @@ void MicroMachines::init(){
     float spec_candle[] = { 1.0f, 1.0f, 0.5f, 1.0f };
     float emissive_candle[] = { 0.0f, 0.0f, 0.0f, 1.0f };
     float shininess_candle = 10.;
-    int texcount_candle = 0;
+    int texcount_candle = 1;
     
     // create geometry and VAO of the candle
     objId = 5;

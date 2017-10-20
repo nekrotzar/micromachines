@@ -3,14 +3,21 @@
 
 Table::Table() {
     Entity::setPosition(-11.0, 0.0, -15.0);
+    
+    glGenTextures(2, TextureArray);
+    TGA_Texture(TextureArray, "textures/lightwood.tga", 0);
+    TGA_Texture(TextureArray, "textures/cloth.tga", 1);
+    
 }
 Table::~Table() {}
 
-void Table::render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformId) {
-
-    int angle = 0, angle1 = 0, i = 0, j = 0;
-    float x = 0, x1 = 0;
-    float y = 0, y1 = 0;
+void Table::render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformId, GLint texMode_uniformId) {
+    
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, TextureArray[0]);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, TextureArray[1]);
+    glUniform1i(texMode_uniformId, 3);
     
 	pushMatrix(MODEL);
 	translate(MODEL, getPosition().getX(), getPosition().getY(), getPosition().getZ());
