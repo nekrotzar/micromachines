@@ -17,7 +17,25 @@ int objId = 0;
 std::vector<time_t> _apagado;
 
 MicroMachines::MicroMachines(){
+    start();
+}
+
+void MicroMachines::start(){
     // Create shader program
+    for (int i = 0; i < 247; i++)
+    {
+        keySpecialStates[i] = false;
+    }
+    _objects.clear();
+    _oranges.clear();
+    _apagado.clear();
+    _lights.clear();
+    _cameras.clear();
+    _lives.clear();
+    _car = NULL;
+    _table = NULL;
+
+    
     if (!setupShaders()) {
         exit(1);
     }
@@ -207,7 +225,7 @@ void MicroMachines::display()
         lives->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
     }
     
-	if (!pause)
+	if (!pause && !finished)
 	{
 		if (keySpecialStates[GLUT_KEY_UP] == false
 			&& keySpecialStates[GLUT_KEY_DOWN] == false) {
@@ -270,12 +288,13 @@ void MicroMachines::display()
             _car->setSpeed(0.0);
             _car->setPosition(1.4, 0.0, 9.8);
             _car->setAngle(90);
-            lives = lives - 1;
-            _lives.begin();
             std::cout << _lives.size();
             if(!_lives.empty()){
                 _lives.pop_back();
                 orang = 10;
+            }
+            if(_lives.empty()){
+                finished = true;
             }
 		}
 	}
@@ -375,6 +394,10 @@ void MicroMachines::processKeys(unsigned char key, int xx, int yy){
             break;
 		case 's':
 			pause = !pause;
+        case 'r':
+            if(finished){
+                start();
+            }
         default:
             break;
     }

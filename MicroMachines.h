@@ -41,6 +41,7 @@ class MicroMachines{
 public:
     MicroMachines();
     ~MicroMachines();
+    void start();
     void init();
     void display();
 	int collides();
@@ -88,6 +89,7 @@ protected:
     
     int _current_camera;
     int lives = 5;
+    bool finished = false;
 };
 
 
