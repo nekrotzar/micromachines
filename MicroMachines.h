@@ -56,9 +56,11 @@ public:
     GLuint setupShaders();
     void deleteAll();
     void setCamera();
+	bool getPause();
 protected:
     bool _camera_trigger;
     bool* keySpecialStates = new bool[246];
+	bool pause = false;
     
     VSShaderLib shader;
     

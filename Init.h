@@ -37,8 +37,8 @@ void timerCallback(int value){
 }
 
 void refreshCallback(int value){
-    glutPostRedisplay();
-    glutTimerFunc(1000/60, refreshCallback, 0);
+		glutPostRedisplay();
+		glutTimerFunc(1000 / 60, refreshCallback, 0);    
 }
 
 void displayCallback(){
