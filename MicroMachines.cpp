@@ -283,12 +283,14 @@ void MicroMachines::display()
 				_car->getSpeed() * cos((_car->getAngle() * PI / 180)) + _car->getPosition().getZ());
 		}
 
+        std::cout << _car->getPosition().getZ() << std::endl;
+
 		int orang = orange_collide();
-		if (orang == 1) {
+		if (orang == 1 || _car->getPosition().getX() > 13.2 || _car->getPosition().getZ() > 18.5
+                        || _car->getPosition().getX() < -13.2 || _car->getPosition().getZ() < -18.5) {
             _car->setSpeed(0.0);
             _car->setPosition(1.4, 0.0, 9.8);
             _car->setAngle(90);
-            std::cout << _lives.size();
             if(!_lives.empty()){
                 _lives.pop_back();
                 orang = 10;
@@ -396,6 +398,8 @@ void MicroMachines::processKeys(unsigned char key, int xx, int yy){
 			pause = !pause;
         case 'r':
             if(finished){
+                lives = 5;
+                finished = false;
                 start();
             }
         default:
