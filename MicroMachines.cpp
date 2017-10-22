@@ -110,6 +110,18 @@ MicroMachines::MicroMachines(){
     _lights.push_back(new PointLight(vec3(-5,3.1,0)));        // Point Light #6
     _lights.push_back(new Spotlight(_car->getPosition() + (0.0, 5, 0.0)));            // Spot Light #7
     //_lights.push_back(new Spotlight(vec3(-8.0, 5.0, -8.0)));          // Spot Light #8
+    
+    //Create Lives;
+    for (int ilives = 0; ilives < lives; ilives++) {
+        _lives.push_back(new Car());
+    }
+    
+    _lives[0]->setPosition(12.0 , 20.0,  -17.0);
+    _lives[1]->setPosition(12.0 , 20.0,  -18.0);
+    _lives[2]->setPosition(12.0 , 20.0,  -19.0);
+    _lives[3]->setPosition(12.0 , 20.0,  -20.0);
+    _lives[4]->setPosition(12.0 , 20.0,  -21.0);
+    
     //Create meshes
     init();
 }
@@ -191,6 +203,10 @@ void MicroMachines::display()
 		orange->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
 	}
     
+    for (auto &lives : _lives) {
+        lives->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
+    }
+    
     if (keySpecialStates[GLUT_KEY_UP] == false
         && keySpecialStates[GLUT_KEY_DOWN] == false) {
         if (_car->getSpeed() < 0) {
@@ -248,6 +264,13 @@ void MicroMachines::display()
         _car->setSpeed(0.0);
         _car->setPosition(1.4, 0.0, 9.8);
         _car->setAngle(90);
+        lives = lives - 1;
+        _lives.begin();
+        std::cout << _lives.size();
+        if(!_lives.empty()){
+            _lives.pop_back();
+            orang = 10;
+        }
     }
     
 }
@@ -283,6 +306,7 @@ int MicroMachines::orange_collide() {
     }
     return 0;
 }
+
 
 void MicroMachines::reshape(int width, int height)
 {
@@ -645,6 +669,12 @@ void MicroMachines::init(){
 	{
 		_objects[i]->assignMesh(&mesh[1]);
 	}
+    
+    //LIVES
+    for (int ilives = 0; ilives < lives; ilives++) {
+        _lives[ilives]->assignMesh(&mesh[0]);
+        _lives[ilives]->assignMesh(&mesh[1]);
+    }
     
     // some GL settings
     glEnable(GL_DEPTH_TEST);

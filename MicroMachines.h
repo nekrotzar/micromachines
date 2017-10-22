@@ -33,7 +33,7 @@
 #include "VertexAttrDef.h"
 #include "AVTmathLib.h"
 
-#define NUM_OBJECTS 200
+#define NUM_OBJECTS 100
 #define NUM_LIGHTS 10
 #define NUM_TEXTURES 6
 
@@ -81,9 +81,11 @@ protected:
     std::vector<LightSource*> _lights;
     std::vector<Object*> _objects;
 	std::vector<Orange*> _oranges;
+    std::vector<Car*> _lives;
     std::vector<Camera*> _cameras;
     
     int _current_camera;
+    int lives = 5;
 };
 
 
