@@ -216,7 +216,7 @@ void MicroMachines::display()
   
     
     _lights[7]->draw(shader, 0);
-    _lights[8]->draw(shader, 1);
+    //_lights[8]->draw(shader, 1);
     
 
     for (auto &object : _objects) {
