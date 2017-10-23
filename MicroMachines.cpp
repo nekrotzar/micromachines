@@ -133,11 +133,11 @@ void MicroMachines::start(){
         _lives.push_back(new Car());
     }
     
-    _lives[0]->setPosition(12.0 , 20.0,  -17.0);
-    _lives[1]->setPosition(12.0 , 20.0,  -18.0);
-    _lives[2]->setPosition(12.0 , 20.0,  -19.0);
-    _lives[3]->setPosition(12.0 , 20.0,  -20.0);
-    _lives[4]->setPosition(12.0 , 20.0,  -21.0);
+    _lives[0]->setPosition(4.0 , 9.0,  -4.0);
+    _lives[1]->setPosition(5.0 , 9.0,  -5.0);
+    _lives[2]->setPosition(6.0 , 9.0,  -6.0);
+    _lives[3]->setPosition(7.0 , 9.0,  -7.0);
+    _lives[4]->setPosition(8.0 , 9.0,  -8.0);
     
     //Create meshes
     init();
@@ -206,8 +206,13 @@ void MicroMachines::display()
         _lights[i+1]->draw(shader, i);
     }
     
-        _spot1->setPosition(carX + 1 * sin(angle), carY + 0.3, carZ + 1*cos(angle));
-        _spot1->setDirection(vec3(0, -1, 0));
+    _spot1->setPosition(carX + 0.2*sin(angle), carY, carZ + 0.2*cos(angle));
+    
+    if (_current_camera == 2) {
+        _spot1->setDirection(vec3(carX + sin(angle), 2, carZ + cos(angle)));
+    } else {
+        _spot1->setDirection(vec3(0, 4, 0));
+    }
   
     
     _lights[7]->draw(shader, 0);
@@ -222,18 +227,27 @@ void MicroMachines::display()
 		orange->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
 	}
     
-    for (auto &lives : _lives) {
-        lives->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
-    }
+    pushMatrix(PROJECTION);
+    loadIdentity(PROJECTION);
+    pushMatrix(VIEW);
+    loadIdentity(VIEW);
     
-   
+    ortho(-10.0f, 10.0f, -10.0f, 10.0f, -10.0f, 100.0f);
+    
     if (pause) {
         _hud[0]->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
+    }
+    
+    for (auto &live : _lives) {
+        live->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
     }
     
     if (finished) {
         _hud[1]->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
     }
+    
+    popMatrix(VIEW);
+    popMatrix(PROJECTION);
     
     
 	if (!pause && !finished)
@@ -294,7 +308,6 @@ void MicroMachines::display()
 				_car->getSpeed() * cos((_car->getAngle() * PI / 180)) + _car->getPosition().getZ());
 		}
 
-        std::cout << _car->getPosition().getZ() << std::endl;
 
 		int orang = orange_collide();
 		if (orang == 1 || _car->getPosition().getX() > 13.2 || _car->getPosition().getZ() > 18.5
@@ -459,12 +472,16 @@ void MicroMachines::keySpecialOperations() {
     }
 
     if (keySpecialStates[GLUT_KEY_RIGHT]) {
-        angle -= 3;
-        _car->setAngle(angle);
+        if(!pause){
+            angle -= 3;
+            _car->setAngle(angle);
+        }
     }
     else if (keySpecialStates[GLUT_KEY_LEFT]) {
-        angle += 3;
-        _car->setAngle(angle);
+        if(!pause){
+            angle += 3;
+            _car->setAngle(angle);
+        }
     }
     
     if (_car->getSpeed() >= 0.025) {
@@ -741,10 +758,21 @@ void MicroMachines::init(){
     _hud[0]->assignMesh(&mesh[6]);
     _hud[1]->assignMesh(&mesh[6]);
 
+    float amb_lives[]= {1.0f, 0.1f, 0.1f, 1.0f};
+    // create geometry and VAO of the car body
+    objId = 7;
+    memcpy(mesh[objId].mat.ambient, amb_lives,4*sizeof(float));
+    memcpy(mesh[objId].mat.diffuse, diff,4*sizeof(float));
+    memcpy(mesh[objId].mat.specular, spec,4*sizeof(float));
+    memcpy(mesh[objId].mat.emissive, emissive,4*sizeof(float));
+    mesh[objId].mat.shininess = shininess;
+    mesh[objId].mat.texCount = texcount;
+    createCube();
+    
     
     //LIVES
     for (int ilives = 0; ilives < lives; ilives++) {
-        _lives[ilives]->assignMesh(&mesh[0]);
+        _lives[ilives]->assignMesh(&mesh[7]);
         _lives[ilives]->assignMesh(&mesh[1]);
     }
     
