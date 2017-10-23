@@ -47,6 +47,7 @@
 		27D2E67F1F9921F10076D8FF /* cloth.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27D2E6781F9921E40076D8FF /* cloth.tga */; };
 		27D2E6801F9921F10076D8FF /* orange.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27D2E6791F9921E40076D8FF /* orange.tga */; };
 		27D2E6811F9921F10076D8FF /* wood.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27D2E67B1F9921E50076D8FF /* wood.tga */; };
+		D1E845251F9E33F90049E413 /* GameOver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1E845231F9E33F90049E413 /* GameOver.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -161,6 +162,8 @@
 		27D2E6791F9921E40076D8FF /* orange.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = orange.tga; sourceTree = "<group>"; };
 		27D2E67A1F9921E40076D8FF /* cheerio.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = cheerio.tga; sourceTree = "<group>"; };
 		27D2E67B1F9921E50076D8FF /* wood.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = wood.tga; sourceTree = "<group>"; };
+		D1E845221F9E33E90049E413 /* GameOver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameOver.h; sourceTree = "<group>"; };
+		D1E845231F9E33F90049E413 /* GameOver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameOver.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +183,8 @@
 		271C846D1F87D91C00E3F947 = {
 			isa = PBXGroup;
 			children = (
+				D1E845231F9E33F90049E413 /* GameOver.cpp */,
+				D1E845221F9E33E90049E413 /* GameOver.h */,
 				275307C31F9E2BD700843A2A /* hud */,
 				275307C01F9E26E900843A2A /* Pause.cpp */,
 				275307C21F9E271600843A2A /* Pause.h */,
@@ -371,6 +376,7 @@
 				271C84AA1F87D96500E3F947 /* Orange.cpp in Sources */,
 				271C84AD1F87D96500E3F947 /* OrthogonalCamera.cpp in Sources */,
 				27486FC11F9500B100684568 /* LightSource.cpp in Sources */,
+				D1E845251F9E33F90049E413 /* GameOver.cpp in Sources */,
 				271C84AF1F87D96500E3F947 /* Entity.cpp in Sources */,
 				27B413701F966FE0008AFC0D /* PointLight.cpp in Sources */,
 				271C84AB1F87D96500E3F947 /* Table.cpp in Sources */,
