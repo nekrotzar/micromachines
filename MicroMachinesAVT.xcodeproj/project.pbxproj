@@ -32,6 +32,9 @@
 		27486FC01F9500B100684568 /* Candle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27486FBC1F9500B000684568 /* Candle.cpp */; };
 		27486FC11F9500B100684568 /* LightSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27486FBD1F9500B100684568 /* LightSource.cpp */; };
 		274E70FC1F98DCD6003C0167 /* TGA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 274E70FA1F98DCD6003C0167 /* TGA.cpp */; };
+		275307C11F9E26E900843A2A /* Pause.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 275307C01F9E26E900843A2A /* Pause.cpp */; };
+		275307C71F9E2BED00843A2A /* pause.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 275307C41F9E2BD700843A2A /* pause.tga */; };
+		275307C81F9E2BED00843A2A /* gameover.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 275307C51F9E2BD700843A2A /* gameover.tga */; };
 		27B4136F1F966FE0008AFC0D /* DirectionalLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27B4136B1F966FDC008AFC0D /* DirectionalLight.cpp */; };
 		27B413701F966FE0008AFC0D /* PointLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27B4136C1F966FDD008AFC0D /* PointLight.cpp */; };
 		27B413711F966FE0008AFC0D /* Spotlight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27B4136D1F966FDE008AFC0D /* Spotlight.cpp */; };
@@ -57,6 +60,17 @@
 				271C84C01F87DA0900E3F947 /* pointlight.vert in Copy Files */,
 			);
 			name = "Copy Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		275307C61F9E2BE000843A2A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = hud;
+			dstSubfolderSpec = 16;
+			files = (
+				275307C71F9E2BED00843A2A /* pause.tga in CopyFiles */,
+				275307C81F9E2BED00843A2A /* gameover.tga in CopyFiles */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		27D2E6701F991BBB0076D8FF /* CopyFiles */ = {
@@ -127,6 +141,10 @@
 		27486FBF1F9500B100684568 /* LightSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LightSource.h; sourceTree = "<group>"; };
 		274E70FA1F98DCD6003C0167 /* TGA.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TGA.cpp; sourceTree = "<group>"; };
 		274E70FB1F98DCD6003C0167 /* TGA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGA.h; sourceTree = "<group>"; };
+		275307C01F9E26E900843A2A /* Pause.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Pause.cpp; sourceTree = "<group>"; };
+		275307C21F9E271600843A2A /* Pause.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Pause.h; sourceTree = "<group>"; };
+		275307C41F9E2BD700843A2A /* pause.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = pause.tga; sourceTree = "<group>"; };
+		275307C51F9E2BD700843A2A /* gameover.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = gameover.tga; sourceTree = "<group>"; };
 		27B413691F966FDA008AFC0D /* PointLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointLight.h; sourceTree = "<group>"; };
 		27B4136A1F966FDB008AFC0D /* Spotlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Spotlight.h; sourceTree = "<group>"; };
 		27B4136B1F966FDC008AFC0D /* DirectionalLight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DirectionalLight.cpp; sourceTree = "<group>"; };
@@ -162,6 +180,9 @@
 		271C846D1F87D91C00E3F947 = {
 			isa = PBXGroup;
 			children = (
+				275307C31F9E2BD700843A2A /* hud */,
+				275307C01F9E26E900843A2A /* Pause.cpp */,
+				275307C21F9E271600843A2A /* Pause.h */,
 				27D2E6711F991BE50076D8FF /* textures */,
 				274E70FA1F98DCD6003C0167 /* TGA.cpp */,
 				274E70FB1F98DCD6003C0167 /* TGA.h */,
@@ -170,9 +191,9 @@
 				27B4136C1F966FDD008AFC0D /* PointLight.cpp */,
 				27B413691F966FDA008AFC0D /* PointLight.h */,
 				27B4136D1F966FDE008AFC0D /* Spotlight.cpp */,
+				27B4136A1F966FDB008AFC0D /* Spotlight.h */,
 				27C5B4E51F9979EC001B1C2A /* Cheerio.cpp */,
 				27C5B4E61F9979EC001B1C2A /* Cheerio.h */,
-				27B4136A1F966FDB008AFC0D /* Spotlight.h */,
 				27486FBC1F9500B000684568 /* Candle.cpp */,
 				27486FBE1F9500B100684568 /* Candle.h */,
 				27486FBD1F9500B100684568 /* LightSource.cpp */,
@@ -246,6 +267,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		275307C31F9E2BD700843A2A /* hud */ = {
+			isa = PBXGroup;
+			children = (
+				275307C41F9E2BD700843A2A /* pause.tga */,
+				275307C51F9E2BD700843A2A /* gameover.tga */,
+			);
+			path = hud;
+			sourceTree = "<group>";
+		};
 		27D2E6711F991BE50076D8FF /* textures */ = {
 			isa = PBXGroup;
 			children = (
@@ -272,6 +302,7 @@
 				271C84731F87D91C00E3F947 /* Frameworks */,
 				271C84741F87D91C00E3F947 /* Copy Files */,
 				27D2E6701F991BBB0076D8FF /* CopyFiles */,
+				275307C61F9E2BE000843A2A /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -326,6 +357,7 @@
 				271C84AE1F87D96500E3F947 /* PerspectiveCamera.cpp in Sources */,
 				271C84B11F87D96500E3F947 /* DynamicObject.cpp in Sources */,
 				27B413711F966FE0008AFC0D /* Spotlight.cpp in Sources */,
+				275307C11F9E26E900843A2A /* Pause.cpp in Sources */,
 				271C84A71F87D96500E3F947 /* basic_geometry.cpp in Sources */,
 				27B4136F1F966FE0008AFC0D /* DirectionalLight.cpp in Sources */,
 				271C84AC1F87D96500E3F947 /* Object.cpp in Sources */,

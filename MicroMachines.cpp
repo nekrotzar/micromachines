@@ -32,27 +32,16 @@ void MicroMachines::start(){
     _lights.clear();
     _cameras.clear();
     _lives.clear();
+    _hud.clear();
+    
     _car = NULL;
     _table = NULL;
-
+    
+    pause = false;
     
     if (!setupShaders()) {
         exit(1);
     }
-    
-    /*Check number of available texture units*/
-    int texture_units;
-    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &texture_units);
-    printf("Number of texture units: %d", texture_units);
-    
-    // Create texture objects
-    glGenTextures(6, TextureArray);
-    TGA_Texture(TextureArray, "textures/cloth.tga", 0);
-    TGA_Texture(TextureArray, "textures/wood.tga", 1);
-    TGA_Texture(TextureArray, "textures/butter.tga", 2);
-    TGA_Texture(TextureArray, "textures/cheerio.tga", 3);
-    TGA_Texture(TextureArray, "textures/orange.tga", 4);
-    TGA_Texture(TextureArray, "textures/stone.tga", 5);
     
     // Create objects
     int i = 0;
@@ -64,6 +53,9 @@ void MicroMachines::start(){
     
     _table = new Table();
     _car = new Car();
+    
+    _hud.push_back(new Pause());
+
    
     _objects.push_back(_table);
 	_objects.push_back(_car);
@@ -119,6 +111,8 @@ void MicroMachines::start(){
     
     _current_camera = 0;
     
+    
+    
     _lights.push_back(new DirectionalLight(vec3(-1.0,1.0,0.0)));  // Directional Light #0
     _lights.push_back(new PointLight(vec3(5,3.1,0)));         // Point Light #1
     _lights.push_back(new PointLight(vec3(-9,3.1,9)));        // Point Light #2
@@ -126,8 +120,12 @@ void MicroMachines::start(){
     _lights.push_back(new PointLight(vec3(9,3.1,9)));         // Point Light #4
     _lights.push_back(new PointLight(vec3(9,3.1,-9)));        // Point Light #5
     _lights.push_back(new PointLight(vec3(-5,3.1,0)));        // Point Light #6
-    _lights.push_back(new Spotlight(_car->getPosition() + (0.0, 5, 0.0)));            // Spot Light #7
-    //_lights.push_back(new Spotlight(vec3(-8.0, 5.0, -8.0)));          // Spot Light #8
+    
+    _spot1 = new Spotlight(vec3(0.0,1,0.0));
+    _spot2 = new Spotlight(vec3(0.0,1,0.0));
+
+    _lights.push_back(_spot1);            // Spot Light #7
+    _lights.push_back(_spot2);          // Spot Light #8
     
     //Create Lives;
     for (int ilives = 0; ilives < lives; ilives++) {
@@ -207,11 +205,13 @@ void MicroMachines::display()
         _lights[i+1]->draw(shader, i);
     }
     
-    _lights[7]->setPosition(_car->getPosition().getX(), 5.0, _car->getPosition().getZ());
+        _spot1->setPosition(carX + 1 * sin(angle), carY + 0.3, carZ + 1*cos(angle));
+        _spot1->setDirection(vec3(0, -1, 0));
+  
     
     _lights[7]->draw(shader, 0);
-    //_lights[8]->draw(shader, 1);
-
+    _lights[8]->draw(shader, 1);
+    
 
     for (auto &object : _objects) {
         object->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
@@ -224,6 +224,12 @@ void MicroMachines::display()
     for (auto &lives : _lives) {
         lives->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
     }
+    
+   
+    if (pause) {
+        _hud[0]->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
+    }
+    
     
 	if (!pause && !finished)
 	{
@@ -675,6 +681,28 @@ void MicroMachines::init(){
     mesh[objId].mat.shininess = shininess_candle;
     mesh[objId].mat.texCount = texcount_candle;
     createCylinder(3, .3f, 50);
+    
+    
+    // HUD
+    // pause
+    
+    float amb_pause[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    float diff_pause[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+    float spec_pause[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+    float emissive_pause[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+    float shininess_pause = 10.;
+    int texcount_pause = 1;
+    
+    
+    objId = 6;
+    memcpy(mesh[objId].mat.ambient, amb_pause, 4 * sizeof(float));
+    memcpy(mesh[objId].mat.diffuse, diff_pause, 4 * sizeof(float));
+    memcpy(mesh[objId].mat.specular, spec_pause, 4 * sizeof(float));
+    memcpy(mesh[objId].mat.emissive, emissive_pause, 4 * sizeof(float));
+    mesh[objId].mat.shininess = shininess_pause;
+    mesh[objId].mat.texCount = texcount_pause;
+    createCube();
+    
 
     //Assigning meshes to table
     _objects[0]->assignMesh(&mesh[2]);
@@ -704,6 +732,8 @@ void MicroMachines::init(){
 	{
 		_objects[i]->assignMesh(&mesh[1]);
 	}
+
+    _hud[0]->assignMesh(&mesh[6]);
 
     
     //LIVES

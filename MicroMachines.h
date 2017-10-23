@@ -22,6 +22,7 @@
 #include "PointLight.h"
 #include "DirectionalLight.h"
 #include "Spotlight.h"
+#include "Pause.h"
 #include "Car.h"
 #include "Table.h"
 #include "Cheerio.h"
@@ -81,11 +82,15 @@ protected:
     Car *_car;
 	Table *_table;
     
+    Spotlight * _spot1;
+    Spotlight * _spot2;
+    
     std::vector<LightSource*> _lights;
     std::vector<Object*> _objects;
 	std::vector<Orange*> _oranges;
     std::vector<Car*> _lives;
     std::vector<Camera*> _cameras;
+    std::vector<Object*> _hud;
     
     int _current_camera;
     int lives = 5;
