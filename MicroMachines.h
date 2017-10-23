@@ -23,6 +23,7 @@
 #include "DirectionalLight.h"
 #include "Spotlight.h"
 #include "Pause.h"
+#include "GameOver.h"
 #include "Car.h"
 #include "Table.h"
 #include "Cheerio.h"

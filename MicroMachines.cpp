@@ -55,6 +55,7 @@ void MicroMachines::start(){
     _car = new Car();
     
     _hud.push_back(new Pause());
+    _hud.push_back(new GameOver());
 
    
     _objects.push_back(_table);
@@ -228,6 +229,10 @@ void MicroMachines::display()
    
     if (pause) {
         _hud[0]->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
+    }
+    
+    if (finished) {
+        _hud[1]->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
     }
     
     
@@ -734,6 +739,7 @@ void MicroMachines::init(){
 	}
 
     _hud[0]->assignMesh(&mesh[6]);
+    _hud[1]->assignMesh(&mesh[6]);
 
     
     //LIVES
