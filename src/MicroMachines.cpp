@@ -56,6 +56,7 @@ void MicroMachines::start(){
     
     _hud.push_back(new Pause());
     _hud.push_back(new GameOver());
+    _hud.push_back(new Points());
     //Create Lives;
     for (int ilives = 0; ilives < lives; ilives++) {
         _lives.push_back(new Life());
@@ -246,9 +247,17 @@ void MicroMachines::display()
     }
     
     
+    _hud[2]->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
+
+    
+    
+    // ======= POINTS
+    
+   
     popMatrix(VIEW);
     popMatrix(PROJECTION);
 
+    
     
 	if (!pause && !finished)
 	{
@@ -257,6 +266,7 @@ void MicroMachines::display()
 			if (_car->getSpeed() < 0) {
 				if (_car->getSpeed() + 0.001 < 0) {
 					_car->setSpeed(_car->getSpeed() + 0.001);
+                    points += 20;
 				}
 				else {
 					_car->setSpeed(0.0);
@@ -324,6 +334,7 @@ void MicroMachines::display()
             }
 		}
 	}
+    
 }
 
 int MicroMachines::collides() {
@@ -757,6 +768,7 @@ void MicroMachines::init(){
 
     _hud[0]->assignMesh(&mesh[6]);
     _hud[1]->assignMesh(&mesh[6]);
+    _hud[2]->assignMesh(&mesh[6]);
 
     float amb_lives[]= {1.0f, 0.1f, 0.1f, 1.0f};
     // create geometry and VAO of the car body
@@ -781,4 +793,86 @@ void MicroMachines::init(){
     glEnable(GL_MULTISAMPLE);
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
+}
+
+
+//================= STRINGS ===============
+
+void MicroMachines::initTextureMappedFont() {
+    float text_vertices[] = {
+        0.0f, 0.0f,
+        _fontSize, 0.0f,
+        _fontSize, _fontSize,
+        0.0f, _fontSize
+    };
+    
+    glGenVertexArrays(1, &text_vaoID);
+    glBindVertexArray(text_vaoID);
+    glGenBuffers(1, &text_vertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, text_vertexBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 8, &text_vertices[0], GL_STATIC_DRAW);
+    glEnableVertexAttribArray(VERTEX_ATTRIB1);
+    glVertexAttribPointer(VERTEX_ATTRIB1, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    
+    //Just initialize with something for now, the tex coords are updated
+    //for each character printed
+    float text_texCoords[] = {
+        0.0f, 0.0f,
+        0.0f, 0.0f,
+        0.0f, 0.0f,
+        0.0f, 0.0f
+    };
+    
+    glGenBuffers(1, &text_texCoordBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, text_texCoordBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 8, &text_texCoords[0], GL_DYNAMIC_DRAW);
+    glEnableVertexAttribArray(VERTEX_ATTRIB2);
+    glVertexAttribPointer(VERTEX_ATTRIB2, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    
+    //set the orthographic projection matrix
+    ortho(-10.0f, 10.0f, -10.0f, 10.0f, -10.0f, 100.0f);
+}
+
+void MicroMachines::DrawString(float x, float y, const std::string& str) {
+    
+    float text_texCoords[8];
+    
+    pushMatrix(MODEL);
+    translate(MODEL, -10, -10.0, 0.0);
+    glBindVertexArray(text_vaoID);
+    glTranslatef(10, 10, 0.0); //Position our text
+    for (std::string::size_type i = 0; i < str.size(); ++i)
+    {
+        const float aux = 1.0f / 16.0f;
+        
+        int ch = int(str[i]);
+        float xPos = float(ch % 16) * aux;
+        float yPos = float(ch / 16) * aux;
+        
+        text_texCoords[0] = xPos;
+        text_texCoords[1] = 1.0f - yPos - aux;
+        
+        text_texCoords[2] = xPos + aux;
+        text_texCoords[3] = 1.0f - yPos - aux;
+        
+        text_texCoords[4] = xPos + aux;
+        text_texCoords[5] = 1.0f - yPos - 0.001f;
+        
+        text_texCoords[6] = xPos;
+        text_texCoords[7] = 1.0f - yPos - 0.001f;
+        
+        glBindBuffer(GL_ARRAY_BUFFER, text_texCoordBuffer);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float) * 8, &text_texCoords[0]);
+        
+        computeDerivedMatrix(PROJ_VIEW_MODEL);
+        glUniformMatrix4fv(pvm_uniformId, 1, GL_FALSE, mCompMatrix[PROJ_VIEW_MODEL]);
+        
+        glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+        
+        translate(MODEL, _fontSize * 0.8f, 0.0f, 0.0f);
+    }
+    glBindVertexArray(0);
+    popMatrix(MODEL);
+    
+    glEnable(GL_DEPTH_TEST);
 }

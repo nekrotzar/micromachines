@@ -23,6 +23,7 @@
 #include "DirectionalLight.h"
 #include "Spotlight.h"
 #include "Life.h"
+#include "Points.h"
 #include "Pause.h"
 #include "GameOver.h"
 #include "Car.h"
@@ -61,6 +62,8 @@ public:
     void deleteAll();
     void setCamera();
 	bool getPause();
+    void initTextureMappedFont();
+    void DrawString(float x, float y, const std::string& str);
 protected:
     bool _camera_trigger;
     bool* keySpecialStates = new bool[246];
@@ -96,7 +99,16 @@ protected:
     
     int _current_camera;
     int lives = 5;
+    int points = 0;
     bool finished = false;
+    
+    //===Fonts
+    float _fontSize = 16.0;
+    GLuint text_vaoID;
+    GLuint text_texCoordBuffer;
+    GLuint text_vertexBuffer;
+    GLint doingText_uniformId;
+    GLint doingTextV_uniformId;
 };
 
 

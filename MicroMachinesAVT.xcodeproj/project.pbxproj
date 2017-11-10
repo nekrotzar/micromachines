@@ -14,7 +14,6 @@
 		271C84BC1F87D9C000E3F947 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 271C84BB1F87D9C000E3F947 /* GLUT.framework */; };
 		271C84BE1F87D9D600E3F947 /* libGLEW.2.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 271C84BD1F87D9D600E3F947 /* libGLEW.2.1.0.dylib */; };
 		272BAA4C1FA1B5E5004AB084 /* ObjLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 272BAA4B1FA1B5E5004AB084 /* ObjLoader.cpp */; };
-		272BAA4F1FA1BDEE004AB084 /* libassimp.4.0.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 272BAA4E1FA1BDEE004AB084 /* libassimp.4.0.1.dylib */; };
 		27ADF54E1FA14D09002765D2 /* pointlight.vert in Copy Files */ = {isa = PBXBuildFile; fileRef = 27ADF4F81FA14C88002765D2 /* pointlight.vert */; };
 		27ADF54F1FA14D09002765D2 /* pointlight.frag in Copy Files */ = {isa = PBXBuildFile; fileRef = 27ADF4F91FA14C88002765D2 /* pointlight.frag */; };
 		27ADF5501FA14D16002765D2 /* candle.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27ADF4EF1FA14C88002765D2 /* candle.tga */; };
@@ -53,7 +52,9 @@
 		27ADF5AD1FA14E81002765D2 /* vsShaderLib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27ADF5921FA14E81002765D2 /* vsShaderLib.cpp */; };
 		27ADF5AE1FA14E81002765D2 /* TGA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27ADF5931FA14E81002765D2 /* TGA.cpp */; };
 		27D5EB941FA1786D0015B813 /* Life.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27D5EB931FA1786D0015B813 /* Life.cpp */; };
-		27D5EB971FA179890015B813 /* life.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27D5EB961FA179810015B813 /* life.tga */; };
+		D1D7A23B1FB5CDB30045AD37 /* Points.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1D7A2391FB5CDB30045AD37 /* Points.cpp */; };
+		D1F2F9131FB5DCF900CFB504 /* life.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27D5EB961FA179810015B813 /* life.tga */; };
+		D1F2F9141FB5DD0400CFB504 /* font.tga in CopyFiles */ = {isa = PBXBuildFile; fileRef = D1D7A23E1FB5CF320045AD37 /* font.tga */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -75,7 +76,8 @@
 			dstPath = data/hud;
 			dstSubfolderSpec = 16;
 			files = (
-				27D5EB971FA179890015B813 /* life.tga in CopyFiles */,
+				D1F2F9141FB5DD0400CFB504 /* font.tga in CopyFiles */,
+				D1F2F9131FB5DCF900CFB504 /* life.tga in CopyFiles */,
 				27ADF5581FA14D1D002765D2 /* pause.tga in CopyFiles */,
 				27ADF5591FA14D1D002765D2 /* gameover.tga in CopyFiles */,
 			);
@@ -181,6 +183,9 @@
 		27D5EB931FA1786D0015B813 /* Life.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Life.cpp; sourceTree = "<group>"; };
 		27D5EB951FA178800015B813 /* Life.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Life.h; sourceTree = "<group>"; };
 		27D5EB961FA179810015B813 /* life.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = life.tga; sourceTree = "<group>"; };
+		D1D7A2391FB5CDB30045AD37 /* Points.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Points.cpp; sourceTree = "<group>"; };
+		D1D7A23A1FB5CDB30045AD37 /* Points.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Points.h; sourceTree = "<group>"; };
+		D1D7A23E1FB5CF320045AD37 /* font.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = font.tga; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,7 +193,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				272BAA4F1FA1BDEE004AB084 /* libassimp.4.0.1.dylib in Frameworks */,
 				271C84BE1F87D9D600E3F947 /* libGLEW.2.1.0.dylib in Frameworks */,
 				271C84BC1F87D9C000E3F947 /* GLUT.framework in Frameworks */,
 				271C84BA1F87D9BB00E3F947 /* OpenGL.framework in Frameworks */,
@@ -276,6 +280,7 @@
 			isa = PBXGroup;
 			children = (
 				27D5EB961FA179810015B813 /* life.tga */,
+				D1D7A23E1FB5CF320045AD37 /* font.tga */,
 				27ADF4FB1FA14C88002765D2 /* pause.tga */,
 				27ADF4FC1FA14C88002765D2 /* gameover.tga */,
 			);
@@ -374,6 +379,8 @@
 				27ADF5911FA14E81002765D2 /* Pause.h */,
 				27D5EB931FA1786D0015B813 /* Life.cpp */,
 				27D5EB951FA178800015B813 /* Life.h */,
+				D1D7A2391FB5CDB30045AD37 /* Points.cpp */,
+				D1D7A23A1FB5CDB30045AD37 /* Points.h */,
 			);
 			path = hud;
 			sourceTree = "<group>";
@@ -460,6 +467,7 @@
 				27ADF5A91FA14E81002765D2 /* LightSource.cpp in Sources */,
 				27ADF5AD1FA14E81002765D2 /* vsShaderLib.cpp in Sources */,
 				27ADF5AC1FA14E81002765D2 /* GameOver.cpp in Sources */,
+				D1D7A23B1FB5CDB30045AD37 /* Points.cpp in Sources */,
 				27ADF5951FA14E81002765D2 /* AVTmathLib.cpp in Sources */,
 				27ADF5AE1FA14E81002765D2 /* TGA.cpp in Sources */,
 				27ADF5A51FA14E81002765D2 /* Butter.cpp in Sources */,
