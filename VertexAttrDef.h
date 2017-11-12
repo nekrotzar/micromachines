@@ -1,6 +1,5 @@
-
 /// Types of Vertex Attributes
-	enum AttribType {
+enum AttribType {
 		VERTEX_COORD_ATTRIB,
 		NORMAL_ATTRIB,
 		TEXTURE_COORD_ATTRIB,

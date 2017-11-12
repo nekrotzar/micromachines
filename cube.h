@@ -1,6 +1,3 @@
-
-
-
 //int verticeCount = 24;
 int faceCount = 12;
 

@@ -2,21 +2,30 @@
 
 Table::Table(){
     setPosition(0.0, 0.0, 0.0);
+    
+    setAmbient(0.1f, 0.1f, 0.1f, 1.0f);
+    setDiffuse(0.1f, 0.5f, 0.1f, 1.0f);
+    setSpecular(0.1f, 0.1f, 0.1f, 1.0f);
+    setEmissive(0.0f, 0.0f, 0.0f, 1.0f);
+    setShininess(100.0f);
+    
+    _mesh = new Mesh();
+    _mesh->createCube();
+    _mesh->setMeshMaterial(0, getAmbient(), getDiffuse(), getSpecular(), getEmissive(), getShininess(), 2);
 
     glGenTextures(3, TextureArray);
     TGA_Texture(TextureArray, (char*) "data/textures/wood.tga", 0);
     TGA_Texture(TextureArray, (char*) "data/textures/floor_disp.tga", 1);
-    TGA_Texture(TextureArray, (char*) "data/textures/floor_diff.tga", 2);
+    TGA_Texture(TextureArray, (char*) "data/textures/floor_diff.tga", 2);    
 }
 
-void Table::draw_tile(VSShaderLib shader,GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformId, GLint texMode_uniformId , vec3 position, vec3 m_scale){
-    load(shader, 0);
+void Table::draw_tile(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformId, GLint texMode_uniformId , vec3 position, vec3 m_scale){
+    _mesh->loadMeshMaterial(shader, 0);
     pushMatrix(MODEL);
     translate(MODEL, position.getX(), position.getY(), position.getZ());
     scale(MODEL, m_scale.getX(), m_scale.getY(), m_scale.getZ());
-    renderMesh(pvm_uniformId, vm_uniformId, normal_uniformId, 0);
+    _mesh->renderMesh(shader,pvm_uniformId, vm_uniformId, normal_uniformId, 0);
     popMatrix(MODEL);
-
 }
 
 void Table::render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformId, GLint texMode_uniformId) {

@@ -1,35 +1,40 @@
 #include "Object.h"
 
-void Object::assignMesh(struct MyMesh * mesh){
-    _meshes.push_back(mesh);
-}
+float * Object::getAmbient(){return _ambient;}
+float * Object::getDiffuse(){return _diffuse;}
+float * Object::getSpecular(){return _specular;}
+float * Object::getEmissive(){return _emissive;}
+float Object::getShininess(){return _shininess;}
 
-void Object::renderMesh(GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformId, int myId){
-    computeDerivedMatrix(PROJ_VIEW_MODEL);
-    glUniformMatrix4fv(vm_uniformId, 1, GL_FALSE, mCompMatrix[VIEW_MODEL]);
-    glUniformMatrix4fv(pvm_uniformId, 1, GL_FALSE, mCompMatrix[PROJ_VIEW_MODEL]);
-    computeNormalMatrix3x3();
-    glUniformMatrix3fv(normal_uniformId, 1, GL_FALSE, mNormal3x3);
-    
-    glBindVertexArray(_meshes[myId]->vao);
-    glDrawElements(_meshes[myId]->type, _meshes[myId]->numIndexes, GL_UNSIGNED_INT, 0);
-    glBindVertexArray(0);
+void Object::setAmbient(float r, float g, float b, float a){
+    _ambient[0] = r;
+    _ambient[1] = g;
+    _ambient[2] = b;
+    _ambient[3] = a;
+}
+void Object::setDiffuse(float r, float g, float b, float a){
+    _diffuse[0] = r;
+    _diffuse[1] = g;
+    _diffuse[2] = b;
+    _diffuse[3] = a;
+}
+void Object::setSpecular(float r, float g, float b, float a){
+    _specular[0] = r;
+    _specular[1] = g;
+    _specular[2] = b;
+    _specular[3] = a;
+}
+void Object::setEmissive(float r, float g, float b, float a){
+    _emissive[0] = r;
+    _emissive[1] = g;
+    _emissive[2] = b;
+    _emissive[3] = a;
+}
+void Object::setShininess(float shininess){
+    _shininess = shininess;
 }
 
 void Object::render(VSShaderLib shader, GLint pvm_uniformId , GLint vm_uniformId, GLint normal_uniformdId, GLint texMode_uniformId){}
-
-void Object::load(VSShaderLib shader, int myId){
-    GLint loc;
-    
-    loc = glGetUniformLocation(shader.getProgramIndex(), "mat.ambient");
-    glUniform4fv(loc, 1, _meshes[myId]->mat.ambient);
-    loc = glGetUniformLocation(shader.getProgramIndex(), "mat.diffuse");
-    glUniform4fv(loc, 1, _meshes[myId]->mat.diffuse);
-    loc = glGetUniformLocation(shader.getProgramIndex(), "mat.specular");
-    glUniform4fv(loc, 1, _meshes[myId]->mat.specular);
-    loc = glGetUniformLocation(shader.getProgramIndex(), "mat.shininess");
-    glUniform1f(loc,_meshes[myId]->mat.shininess);
-}
 
 void Object::setRadius(double radius){
     _radius = radius;
