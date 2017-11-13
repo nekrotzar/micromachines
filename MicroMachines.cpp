@@ -33,12 +33,10 @@ void MicroMachines::init(){
     _lives.clear();
     _hud.clear();
     
-    for (int i = 0; i < 247; i++) {
-        keySpecialStates[i] = false;
-    }
     
+    _carUp = _carDown = _carLeft = _carRight = false;
     pause = false;
-    current_camera = 2;
+    current_camera = 0;
     
     // setup shaders
     if (!setupShaders()) {
@@ -48,6 +46,8 @@ void MicroMachines::init(){
     // create objects and meshes
     _car = new Car();
     _table = new Table();
+    _cup = new Cup();
+    _celery = new Celery();
     
     // create hud
     _hud.push_back(new Pause());
@@ -128,11 +128,11 @@ void MicroMachines::init(){
     _lights.push_back(new PointLight(vec3(9,3.25,-9)));        // Point Light #5
     _lights.push_back(new PointLight(vec3(-5,3.25,0)));        // Point Light #6
     
-    _spot1 = new Spotlight(vec3(0.0,1,0.0));
-    _spot2 = new Spotlight(vec3(0.0,1,0.0));
+    //_spot1 = new Spotlight(vec3(0.0,1,0.0));
+    //_spot2 = new Spotlight(vec3(0.0,1,0.0));
     
-    _lights.push_back(_spot1);            // Spot Light #7
-    _lights.push_back(_spot2);          // Spot Light #8
+    //_lights.push_back(_spot1);            // Spot Light #7
+    //_lights.push_back(_spot2);          // Spot Light #8
     
     // some GL settings
     glEnable(GL_DEPTH_TEST);
@@ -182,6 +182,7 @@ void MicroMachines::display()
     glUseProgram(shader.getProgramIndex());
     glUniform1i(tex_loc0, 0);
     glUniform1i(tex_loc1, 1);
+    glUniform1i(fog_loc, fog);
     
     // Send the light position in eye coordinates
     
@@ -193,19 +194,19 @@ void MicroMachines::display()
         _lights[i+1]->draw(shader, i);
     
     // draw spot lights
-    _spot1->setPosition(carX + 0.2*sin(angle), carY, carZ + 0.2*cos(angle));
-    _spot2->setPosition(carX + 0.2*sin(angle), carY, carZ + 0.2*cos(angle));
+    //_spot1->setPosition(carX + 0.2*sin(angle), carY, carZ + 0.2*cos(angle));
+    //_spot2->setPosition(carX + 0.2*sin(angle), carY, carZ + 0.2*cos(angle));
 
     if (current_camera == 2) {
-        _spot1->setDirection(vec3(carX + sin(angle), 2, carZ + cos(angle)));
-        _spot2->setDirection(vec3(carX + sin(angle), 2, carZ + cos(angle)));
+        //_spot1->setDirection(vec3(carX + sin(angle), 2, carZ + cos(angle)));
+        //_spot2->setDirection(vec3(carX + sin(angle), 2, carZ + cos(angle)));
 
     } else {
-        _spot1->setDirection(vec3(0, 4, 0));
-        _spot2->setDirection(vec3(0, 4, 0));
+        //_spot1->setDirection(vec3(0, 4, 0));
+        //_spot2->setDirection(vec3(0, 4, 0));
     }
-    _lights[7]->draw(shader, 0);
-    _lights[8]->draw(shader, 1);
+    //_lights[7]->draw(shader, 0);
+    //_lights[8]->draw(shader, 1);
     
     // render objects
     for (auto &object : _objects) {
@@ -218,7 +219,6 @@ void MicroMachines::display()
     }
     
     // render hud
-    
     pushMatrix(PROJECTION);
     loadIdentity(PROJECTION);
     pushMatrix(VIEW);
@@ -241,80 +241,85 @@ void MicroMachines::display()
     popMatrix(VIEW);
     popMatrix(PROJECTION);
     
-    if (!pause && !game_over)
-    {
-        if (keySpecialStates[GLUT_KEY_UP] == false
-            && keySpecialStates[GLUT_KEY_DOWN] == false) {
-            if (_car->getSpeed() < 0) {
-                if (_car->getSpeed() + 0.001 < 0) {
-                    _car->setSpeed(_car->getSpeed() + 0.001);
-                }
-                else {
-                    _car->setSpeed(0.0);
-                }
-            }
-            else if (_car->getSpeed() > 0) {
-                if (_car->getSpeed() - 0.001 > 0) {
-                    _car->setSpeed(_car->getSpeed() - 0.001);
-                }
-                else {
-                    _car->setSpeed(0.0);
-                }
-            }
-        }
-        for (int i = 0; i < _oranges.size(); i++) {
-            if (_oranges[i]->getPosition().getX() >= 13 || _oranges[i]->getPosition().getX() <= -13 || _oranges[i]->getPosition().getZ() >= 13 || _oranges[i]->getPosition().getZ() <= -13) {
-                _oranges[i]->setPosition((double)(rand() % 23 + (-13) + ((rand() % 99) / 100)), _oranges[i]->getPosition().getY(), (double)(rand() % 23 + (-13) + ((rand() % 99) / 100)));
-            }
-            else {
-                _oranges[i]->setPosition(
-                                         _oranges[i]->getSpeed()    * cos((_oranges[i]->getAngle() * PI / 180))    * glutGet(GLUT_ELAPSED_TIME) / 10000 + _oranges[i]->getPosition().getX(), _oranges[i]->getPosition().getY(), _oranges[i]->getSpeed() * sin((_oranges[i]->getAngle() * PI / 180)) * glutGet(GLUT_ELAPSED_TIME) / 10000 + _oranges[i]->getPosition().getZ());
-            }
-        }
-        
-        int object_collide;
-        object_collide = collides();
-        
-        if (object_collide != 10000) {
-            if (_car->getSpeed() > 0) {
-                _objects[object_collide]->setPosition(_objects[object_collide]->getPosition().getX() + 0.1 * sin((_car->getAngle() * PI / 180)),
-                                                      _objects[object_collide]->getPosition().getY(),
-                                                      _objects[object_collide]->getPosition().getZ() + 0.1 * cos((_car->getAngle() * PI / 180)));
-                
-            }
-            else if (_car->getSpeed() < 0) {
-                _objects[object_collide]->setPosition(_objects[object_collide]->getPosition().getX() - 0.1 * sin((_car->getAngle() * PI / 180)),
-                                                      _objects[object_collide]->getPosition().getY(),
-                                                      _objects[object_collide]->getPosition().getZ() - 0.1 * cos((_car->getAngle() * PI / 180)));
-            }
-            
-            keySpecialStates[GLUT_KEY_UP] = false;
-            keySpecialStates[GLUT_KEY_DOWN] = false;
-            _car->setSpeed(0.0);
-            
+    _celery->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
+    _cup->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
+}
+
+void MicroMachines::update(int delta_t){
+    
+    int t = delta_t;
+    
+    if (pause || game_over)
+        t = 0;
+    
+    keySpecialOperations();
+    vec3 tempPos = _car->getPosition();
+    
+    _car->update(delta_t);
+    
+    for (int i = 0; i < _oranges.size(); i++) {
+        if (_oranges[i]->getPosition().getX() >= 13 || _oranges[i]->getPosition().getX() <= -13 || _oranges[i]->getPosition().getZ() >= 13 || _oranges[i]->getPosition().getZ() <= -13) {
+            _oranges[i]->setPosition((double)(rand() % 23 + (-13) + ((rand() % 99) / 100)), _oranges[i]->getPosition().getY(), (double)(rand() % 23 + (-13) + ((rand() % 99) / 100)));
         }
         else {
-            _car->setPosition(_car->getSpeed() * sin((_car->getAngle() * PI / 180)) + _car->getPosition().getX(),
-                              _car->getPosition().getY(),
-                              _car->getSpeed() * cos((_car->getAngle() * PI / 180)) + _car->getPosition().getZ());
-        }
-        
-        
-        int orang = orange_collide();
-        if (orang == 1 || _car->getPosition().getX() > 15.5 || _car->getPosition().getZ() > 15.5
-            || _car->getPosition().getX() < -15.5 || _car->getPosition().getZ() < -15.5) {
-            _car->setSpeed(0.0);
-            _car->setPosition(1.4, 0.0, 9.8);
-            _car->setAngle(90);
-            if(!_lives.empty()){
-                _lives.pop_back();
-                orang = 10;
-            }
-            if(_lives.empty()){
-                game_over = true;
-            }
+            _oranges[i]->setPosition(_oranges[i]->getSpeed()    * cos((_oranges[i]->getAngle() * PI / 180))    * delta_t / 10000 + _oranges[i]->getPosition().getX(), _oranges[i]->getPosition().getY(), _oranges[i]->getSpeed() * sin((_oranges[i]->getAngle() * PI / 180)) * delta_t / 10000 + _oranges[i]->getPosition().getZ());
         }
     }
+    
+    // object collision
+    int object_collide;
+    object_collide = collides();
+    
+    if (object_collide != 10000) {
+        
+        if (_car->getSpeed() > 0) {
+            _objects[object_collide]->setPosition(_objects[object_collide]->getPosition().getX() + 0.1 * sin((_car->getAngle() * PI / 180)),
+                                                  _objects[object_collide]->getPosition().getY(),
+                                                  _objects[object_collide]->getPosition().getZ() + 0.1 * cos((_car->getAngle() * PI / 180)));
+        
+        }
+
+        // Reverse
+        else if (_car->getSpeed() < 0) {
+            _objects[object_collide]->setPosition(_objects[object_collide]->getPosition().getX() - 0.1 * sin((_car->getAngle() * PI / 180)),
+                                                  _objects[object_collide]->getPosition().getY(),
+                                                  _objects[object_collide]->getPosition().getZ() - 0.1 * cos((_car->getAngle() * PI / 180)));
+        }
+        _carUp = false;
+
+        _carDown = false;
+
+        _car->setAcceleration(0.0);
+        _car->setSpeed(0.0);
+
+        
+    }
+    else {
+        /*_car->setPosition(_car->getSpeed() * sin((_car->getAngle() * PI / 180)) + _car->getPosition().getX(),
+                          _car->getPosition().getY(),
+                          _car->getSpeed() * cos((_car->getAngle() * PI / 180)) + _car->getPosition().getZ());
+         */
+    }
+
+    
+    int orang = orange_collide();
+    
+    // check if car is out of the table
+    if (orang == 1 | abs(tempPos.getX()) > 15.5 || abs(tempPos.getZ()) > 15.5) {
+        _car->setSpeed(0.0);
+        _car->setAcceleration(0.0);
+        _car->setAngle(90);
+        _car->setPosition(1.4, 0.0, 9.8);
+
+        if (!_lives.empty()) {
+            _lives.pop_back();
+            orang = 10;
+        } else {
+            game_over = true;
+        }
+    }
+    
+    
 }
 
 int MicroMachines::collides() {
@@ -405,6 +410,7 @@ void MicroMachines::processKeys(unsigned char key, int xx, int yy){
                 init();
             }
         case 'f':
+            fog = !fog;
             break;
         default:
             break;
@@ -412,63 +418,63 @@ void MicroMachines::processKeys(unsigned char key, int xx, int yy){
 }
 
 void MicroMachines::processSpecialKeys(int key, int x, int y) {
-    if (key == GLUT_KEY_UP) {
-        keySpecialStates[key] = true;
-    } else if (key == GLUT_KEY_DOWN) {
-        keySpecialStates[key] = true;
+    switch (key) {
+        case GLUT_KEY_UP:
+            _carUp = true;
+            break;
+        case GLUT_KEY_DOWN:
+            _carDown = true;
+            break;
+        case GLUT_KEY_LEFT:
+            _carLeft = true;
+            break;
+        case GLUT_KEY_RIGHT:
+            _carRight = true;
+            break;
     }
-    if (key == GLUT_KEY_RIGHT) {
-        keySpecialStates[key] = true;
-    }
-    else if (key == GLUT_KEY_LEFT) {
-        keySpecialStates[key] = true;
-    }
-    
 }
 
 void MicroMachines::processSpecialUpKeys(int key, int x, int y) {
-    if (key == GLUT_KEY_UP) {
-        keySpecialStates[key] = false;
-    }
-    if (key == GLUT_KEY_DOWN) {
-        keySpecialStates[key] = false;
-    }
-    if (key == GLUT_KEY_RIGHT) {
-        keySpecialStates[key] = false;
-    }
-    if (key == GLUT_KEY_LEFT) {
-        keySpecialStates[key] = false;
+    switch (key) {
+        case GLUT_KEY_UP:
+            _carUp = false;
+            break;
+        case GLUT_KEY_DOWN:
+            _carDown = false;
+            break;
+        case GLUT_KEY_LEFT:
+            _carLeft = false;
+            break;
+        case GLUT_KEY_RIGHT:
+            _carRight = false;
+            break;
     }
 }
 
 void MicroMachines::keySpecialOperations() {
-
-    double angle = _car->getAngle();
-    if (keySpecialStates[GLUT_KEY_UP]) {
-        _car->setSpeed(_car->getSpeed() + 0.003);
-    }
-    else if (keySpecialStates[GLUT_KEY_DOWN]) {
-        _car->setSpeed(_car->getSpeed() - 0.003);
-    }
-
-    if (keySpecialStates[GLUT_KEY_RIGHT]) {
-        if(!pause){
-            angle -= 3;
-            _car->setAngle(angle);
-        }
-    }
-    else if (keySpecialStates[GLUT_KEY_LEFT]) {
-        if(!pause){
-            angle += 3;
-            _car->setAngle(angle);
+    if (!pause && !game_over) {
+        if (_carUp) {
+            _car->setAcceleration(0.0001);
+        } else if (_carDown) {
+            _car->setAcceleration(-0.00009);
+        } else if (_car->getSpeed() != 0) {
+            if (fabs(_car->getSpeed()) < 0.0001) {
+                _car->setSpeed(0);
+                _car->setAcceleration(0);
+            } else if (_car->getSpeed() < 0) {
+                _car->setAcceleration(0.000004);
+            } else {
+                _car->setAcceleration(-0.00004);
+            }
         }
     }
     
-    if (_car->getSpeed() >= 0.025) {
-        _car->setSpeed(0.025);
-    }
-    if (_car->getSpeed() <= -0.025) {
-        _car->setSpeed(-0.025);
+    if (_car->getSpeed() != 0 && !pause && !game_over) {
+        if (_carLeft) {
+            _car->setAngle(_car->getAngle() + 1);
+        } else if (_carRight) {
+            _car->setAngle(_car->getAngle() - 1);
+        }
     }
 }
 
@@ -571,6 +577,7 @@ GLuint MicroMachines::setupShaders(){
     texMode_uniformId = glGetUniformLocation(shader.getProgramIndex(), "texMode");
     tex_loc0 = glGetUniformLocation(shader.getProgramIndex(), "texmap0");
     tex_loc1 = glGetUniformLocation(shader.getProgramIndex(), "texmap1");
+    fog_loc = glGetUniformLocation(shader.getProgramIndex(), "fog");
     
     printf("InfoLog for Hello World Shader\n%s\n\n", shader.getAllInfoLogs().c_str());
     

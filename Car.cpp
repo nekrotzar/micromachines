@@ -1,7 +1,7 @@
 #include "Car.h"
 
 Car::Car(){
-    DynamicObject::setAngle(90);
+    DynamicObject::setAngle(0);
     DynamicObject::setSpeed(0.0);
     Entity::setPosition(1.4, 0.0, 9.8);
     Object::setRadius(1.15);
@@ -14,7 +14,6 @@ Car::Car(){
     
     _mesh = new Mesh();
     _mesh->createObject("data/models/Avent.obj");
-    
 }
 
 void Car::render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformdId, GLint texMode_uniformId){
@@ -23,8 +22,8 @@ void Car::render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, GL
     
     pushMatrix(MODEL);
     translate(MODEL, getPosition().getX(), getPosition().getY(), getPosition().getZ());
-    rotate(MODEL, getAngle(), 0, 1, 0);
-    scale(MODEL, 0.3, 0.3, 0.3);
+    rotate(MODEL, getAngle() + 90, 0, 1, 0);
+    scale(MODEL, 0.25, 0.25, 0.25);
     _mesh->renderMeshRecursive(shader,pvm_uniformId, vm_uniformId, normal_uniformdId, _mesh->getScene(), _mesh->getScene()->mRootNode);
     popMatrix(MODEL);
 }

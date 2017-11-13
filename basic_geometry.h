@@ -34,8 +34,7 @@
 #define aisgl_min(x,y) (x<y?x:y)
 #define aisgl_max(x,y) (y>x?y:x)
 
-extern float mCompMatrix[COUNT_COMPUTED_MATRICES][16];
-extern float mNormal3x3[9];
+
 
 struct Material{
 	float diffuse[4];

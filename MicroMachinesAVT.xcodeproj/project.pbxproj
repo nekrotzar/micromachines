@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		270354531FB8ED9600EDC946 /* Cup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 270354521FB8ED9600EDC946 /* Cup.cpp */; };
 		270FB3631FB81E5F00AC7D17 /* Avent.mtl in models */ = {isa = PBXBuildFile; fileRef = 270FB3601FB81E2500AC7D17 /* Avent.mtl */; };
 		270FB3641FB81E5F00AC7D17 /* Avent.obj in models */ = {isa = PBXBuildFile; fileRef = 270FB3591FB81E2400AC7D17 /* Avent.obj */; };
 		270FB3651FB81E5F00AC7D17 /* interior_lod0.tga in models */ = {isa = PBXBuildFile; fileRef = 270FB35F1FB81E2500AC7D17 /* interior_lod0.tga */; };
@@ -23,6 +24,9 @@
 		271C84BC1F87D9C000E3F947 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 271C84BB1F87D9C000E3F947 /* GLUT.framework */; };
 		271C84BE1F87D9D600E3F947 /* libGLEW.2.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 271C84BD1F87D9D600E3F947 /* libGLEW.2.1.0.dylib */; };
 		272BAA4F1FA1BDEE004AB084 /* libassimp.4.0.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 272BAA4E1FA1BDEE004AB084 /* libassimp.4.0.1.dylib */; };
+		2755C00E1FB9F55200984DFD /* l3dBillboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2755C00C1FB9F55100984DFD /* l3dBillboard.cpp */; };
+		2755C0111FB9F70800984DFD /* Celery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2755C0101FB9F70800984DFD /* Celery.cpp */; };
+		2755C0141FB9F7F300984DFD /* celery.tga in textures */ = {isa = PBXBuildFile; fileRef = 2755C0131FB9F7ED00984DFD /* celery.tga */; };
 		27ADF54E1FA14D09002765D2 /* pointlight.vert in shaders */ = {isa = PBXBuildFile; fileRef = 27ADF4F81FA14C88002765D2 /* pointlight.vert */; };
 		27ADF54F1FA14D09002765D2 /* pointlight.frag in shaders */ = {isa = PBXBuildFile; fileRef = 27ADF4F91FA14C88002765D2 /* pointlight.frag */; };
 		27ADF5501FA14D16002765D2 /* candle.tga in textures */ = {isa = PBXBuildFile; fileRef = 27ADF4EF1FA14C88002765D2 /* candle.tga */; };
@@ -116,6 +120,7 @@
 			dstPath = data/textures;
 			dstSubfolderSpec = 16;
 			files = (
+				2755C0141FB9F7F300984DFD /* celery.tga in textures */,
 				2718D4B31FA16211009211AC /* floor_diff.tga in textures */,
 				2718D4B41FA16211009211AC /* floor_disp.tga in textures */,
 				2718D4B01FA158D3009211AC /* cooker.tga in textures */,
@@ -133,6 +138,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		270354521FB8ED9600EDC946 /* Cup.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Cup.cpp; sourceTree = "<group>"; };
+		270354541FB8EDA300EDC946 /* Cup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cup.h; sourceTree = "<group>"; };
 		270FB3591FB81E2400AC7D17 /* Avent.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Avent.obj; sourceTree = "<group>"; };
 		270FB35A1FB81E2500AC7D17 /* lights.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = lights.tga; sourceTree = "<group>"; };
 		270FB35B1FB81E2500AC7D17 /* plastic3_nrm.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = plastic3_nrm.tga; sourceTree = "<group>"; };
@@ -150,6 +157,12 @@
 		271C84BB1F87D9C000E3F947 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		271C84BD1F87D9D600E3F947 /* libGLEW.2.1.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.2.1.0.dylib; path = ../../../../usr/local/Cellar/glew/2.1.0/lib/libGLEW.2.1.0.dylib; sourceTree = "<group>"; };
 		272BAA4E1FA1BDEE004AB084 /* libassimp.4.0.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.4.0.1.dylib; path = ../../../../usr/local/Cellar/assimp/4.0.1/lib/libassimp.4.0.1.dylib; sourceTree = "<group>"; };
+		2755C00C1FB9F55100984DFD /* l3dBillboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = l3dBillboard.cpp; sourceTree = "<group>"; };
+		2755C00D1FB9F55200984DFD /* l3DBillboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = l3DBillboard.h; sourceTree = "<group>"; };
+		2755C00F1FB9F59B00984DFD /* maths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = maths.h; sourceTree = "<group>"; };
+		2755C0101FB9F70800984DFD /* Celery.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Celery.cpp; sourceTree = "<group>"; };
+		2755C0121FB9F71500984DFD /* Celery.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Celery.h; sourceTree = "<group>"; };
+		2755C0131FB9F7ED00984DFD /* celery.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = celery.tga; sourceTree = "<group>"; };
 		27ADF4EF1FA14C88002765D2 /* candle.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = candle.tga; sourceTree = "<group>"; };
 		27ADF4F01FA14C88002765D2 /* butter.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = butter.tga; sourceTree = "<group>"; };
 		27ADF4F21FA14C88002765D2 /* wood.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = wood.tga; sourceTree = "<group>"; };
@@ -241,6 +254,13 @@
 		271C846D1F87D91C00E3F947 = {
 			isa = PBXGroup;
 			children = (
+				2755C0101FB9F70800984DFD /* Celery.cpp */,
+				2755C0121FB9F71500984DFD /* Celery.h */,
+				2755C00F1FB9F59B00984DFD /* maths.h */,
+				2755C00C1FB9F55100984DFD /* l3dBillboard.cpp */,
+				2755C00D1FB9F55200984DFD /* l3DBillboard.h */,
+				270354521FB8ED9600EDC946 /* Cup.cpp */,
+				270354541FB8EDA300EDC946 /* Cup.h */,
 				27D1B7231FB7CEF50082B7F9 /* basic_geometry.cpp */,
 				27D1B7221FB7CEF40082B7F9 /* basic_geometry.h */,
 				27BF78181FB0D6A80045EC44 /* AVTmathLib.cpp */,
@@ -338,6 +358,7 @@
 		27ADF4EE1FA14C88002765D2 /* textures */ = {
 			isa = PBXGroup;
 			children = (
+				2755C0131FB9F7ED00984DFD /* celery.tga */,
 				2718D4B21FA16204009211AC /* floor_diff.tga */,
 				2718D4B11FA16204009211AC /* floor_disp.tga */,
 				2718D4AF1FA158AF009211AC /* cooker.tga */,
@@ -455,6 +476,7 @@
 				27D1B7241FB7CEF50082B7F9 /* basic_geometry.cpp in Sources */,
 				27BF78341FB0D6AC0045EC44 /* Entity.cpp in Sources */,
 				27BF78381FB0D6AC0045EC44 /* Pause.cpp in Sources */,
+				270354531FB8ED9600EDC946 /* Cup.cpp in Sources */,
 				27BF783D1FB0D6AC0045EC44 /* Camera.cpp in Sources */,
 				27BF784B1FB0D6AC0045EC44 /* Candle.cpp in Sources */,
 				27BF78471FB0D6AC0045EC44 /* Car.cpp in Sources */,
@@ -463,6 +485,7 @@
 				27BF78491FB0D6AC0045EC44 /* Cheerio.cpp in Sources */,
 				27BF78371FB0D6AC0045EC44 /* Life.cpp in Sources */,
 				27BF78461FB0D6AC0045EC44 /* main.cpp in Sources */,
+				2755C0111FB9F70800984DFD /* Celery.cpp in Sources */,
 				27BF78351FB0D6AC0045EC44 /* Table.cpp in Sources */,
 				27BF783E1FB0D6AC0045EC44 /* TGA.cpp in Sources */,
 				27BF78401FB0D6AC0045EC44 /* Orange.cpp in Sources */,
@@ -474,6 +497,7 @@
 				27BF783A1FB0D6AC0045EC44 /* PerspectiveCamera.cpp in Sources */,
 				27BF783B1FB0D6AC0045EC44 /* Object.cpp in Sources */,
 				27BF78331FB0D6AC0045EC44 /* OrthogonalCamera.cpp in Sources */,
+				2755C00E1FB9F55200984DFD /* l3dBillboard.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

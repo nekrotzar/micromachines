@@ -37,8 +37,13 @@ void timerCallback(int value){
 }
 
 void refreshCallback(int value){
-		glutPostRedisplay();
-		glutTimerFunc(1000 / 60, refreshCallback, 0);    
+        int newTime = glutGet(GLUT_ELAPSED_TIME);
+        int delta_t = newTime - value;
+    
+        microMachines->update(delta_t);
+    
+        glutPostRedisplay();
+		glutTimerFunc(1000 / 60, refreshCallback, newTime);
 }
 
 void displayCallback(){

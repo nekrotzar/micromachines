@@ -1,6 +1,9 @@
 #include "basic_geometry.h"
 #include "cube.h"
 
+extern float mCompMatrix[COUNT_COMPUTED_MATRICES][16];
+extern float mNormal3x3[9];
+
 GLuint VboId[2];
 
 const aiScene * Mesh::getScene() {
@@ -67,7 +70,7 @@ void Mesh::loadMeshMaterial(VSShaderLib shader, int meshId) {
     glUniform4fv(loc, 1, myMeshes[meshId].mat.emissive);
 }
 
-void Mesh::setMeshMaterial(int meshId, float *ambient, float *diffuse, float *specular, float *emissive, float shininess, float texcount){
+void Mesh::setMeshMaterial(int meshId, float * ambient, float * diffuse, float * specular, float * emissive, float shininess, float texcount){
     memcpy(myMeshes[meshId].mat.ambient, ambient, 4 * sizeof(float));
     memcpy(myMeshes[meshId].mat.diffuse, diffuse, 4 * sizeof(float));
     memcpy(myMeshes[meshId].mat.specular, specular, 4 * sizeof(float));
@@ -394,7 +397,6 @@ void Mesh::createCube() {
     glVertexAttribPointer(NORMAL_ATTRIB, 4, GL_FLOAT, 0, 0, (void *)sizeof(vertices));
     glEnableVertexAttribArray(TEXTURE_COORD_ATTRIB);
     glVertexAttribPointer(TEXTURE_COORD_ATTRIB, 4, GL_FLOAT, 0, 0, (void *)(sizeof(vertices)+ sizeof(normals)));
-    
     
     //index buffer
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, VboId[1]);

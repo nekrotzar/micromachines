@@ -4,6 +4,7 @@ out vec4 colorOut;
 
 uniform sampler2D texmap0;
 uniform sampler2D texmap1;
+uniform bool fog;
 
 uniform int texMode;
 
@@ -139,6 +140,13 @@ void main() {
         }
     }
    vec4 texel, texel1;
+    
+    const float density = 0.1;
+    const float gradient = 2;
+    float distance = length(DataIn.position.xyz);
+    
+    float visibility = exp(-pow((distance*density), gradient));
+    visibility = clamp(visibility, 0.0, 1.0);
    
    // No textures
    if(texMode == 0){
@@ -158,4 +166,8 @@ void main() {
        texel1 = texture(texmap1, DataIn.texcoord);
        colorOut = max(scatteredLight * texel * texel1 + reflectedLight * mat.specular, 0.1 * texel * texel1);
    }
+    
+    if (fog) {
+        colorOut = mix(vec4(0.0,0.0,0.0,0.0),colorOut, visibility);
+    }
 }

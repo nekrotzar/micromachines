@@ -9,7 +9,7 @@ void DirectionalLight::draw(VSShaderLib shader, int num){
     multMatrixPoint(VIEW, lightPos, res);
     
     GLfloat diffuse[4] = {1.0f, 1.0f, 1.0f, 1.0f};
-    GLfloat specular[4] = {0.9f, 0.5f, 0.5f, 1.0f};
+    GLfloat specular[4] = {1.0f, 1.0f, 1.0f, 1.0f};
     
     GLint lPos_uniformId = glGetUniformLocation(shader.getProgramIndex(), "dirLight.direction");
     GLint lStatus_uniformId = glGetUniformLocation(shader.getProgramIndex(), "dirLight.status");
