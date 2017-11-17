@@ -35,6 +35,7 @@
 #include "Candle.h"
 #include "Cup.h"
 #include "Celery.h"
+#include "LensFlare.h"
 
 class MicroMachines{
 public:
@@ -77,11 +78,17 @@ protected:
     int startX, startY, tracking = 0;
     float alpha = 39.0f, beta = 51.0f;
     float r = 10.0f;
+    int SCREENwidth = 640;
+    int SCREENheight = 480;
+    int xFlare = 10;
+    int yFlare = 10;
+
     
     Car *_car;
 	Table *_table;
     Cup *_cup;
     Celery *_celery;
+    LensFlare *_lensFlare;
     
     
     Spotlight * _spot1;

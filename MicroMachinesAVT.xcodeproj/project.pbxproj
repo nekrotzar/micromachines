@@ -67,6 +67,22 @@
 		27BF784F1FB0D6DB0045EC44 /* libIL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 27BF784E1FB0D6DB0045EC44 /* libIL.dylib */; };
 		27D1B7241FB7CEF50082B7F9 /* basic_geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27D1B7231FB7CEF50082B7F9 /* basic_geometry.cpp */; };
 		27D5EB971FA179890015B813 /* life.tga in hud */ = {isa = PBXBuildFile; fileRef = 27D5EB961FA179810015B813 /* life.tga */; };
+		D1256A531FBF5E1300FF6C18 /* tex1.tga in textures */ = {isa = PBXBuildFile; fileRef = D1256A511FBF5E0700FF6C18 /* tex1.tga */; };
+		D1256A541FBF5E1300FF6C18 /* tex2.tga in textures */ = {isa = PBXBuildFile; fileRef = D1256A521FBF5E0800FF6C18 /* tex2.tga */; };
+		D1256A551FBF5E1300FF6C18 /* tex3.tga in textures */ = {isa = PBXBuildFile; fileRef = D1256A4D1FBF5E0600FF6C18 /* tex3.tga */; };
+		D1256A561FBF5E1300FF6C18 /* tex4.tga in textures */ = {isa = PBXBuildFile; fileRef = D1256A4E1FBF5E0700FF6C18 /* tex4.tga */; };
+		D1256A571FBF5E1300FF6C18 /* tex5.tga in textures */ = {isa = PBXBuildFile; fileRef = D1256A4C1FBF5E0600FF6C18 /* tex5.tga */; };
+		D1256A581FBF5E1300FF6C18 /* tex6.tga in textures */ = {isa = PBXBuildFile; fileRef = D1256A4B1FBF5E0600FF6C18 /* tex6.tga */; };
+		D1256A591FBF5E1300FF6C18 /* tex7.tga in textures */ = {isa = PBXBuildFile; fileRef = D1256A4F1FBF5E0700FF6C18 /* tex7.tga */; };
+		D1256A5A1FBF5E1300FF6C18 /* tex9.tga in textures */ = {isa = PBXBuildFile; fileRef = D1256A501FBF5E0700FF6C18 /* tex9.tga */; };
+		D16A9E401FBA164700E890ED /* Coffe cup.mtl in models */ = {isa = PBXBuildFile; fileRef = D16A9E3F1FBA162300E890ED /* Coffe cup.mtl */; };
+		D16A9E411FBA164700E890ED /* Coffe cup.obj in models */ = {isa = PBXBuildFile; fileRef = D16A9E3E1FBA162300E890ED /* Coffe cup.obj */; };
+		D181FBCC1FBCAD6D00E3A500 /* flare3.tga in textures */ = {isa = PBXBuildFile; fileRef = D181FBCA1FBCAD6100E3A500 /* flare3.tga */; };
+		D181FBCD1FBCAD6D00E3A500 /* sun.tga in textures */ = {isa = PBXBuildFile; fileRef = D181FBCB1FBCAD6200E3A500 /* sun.tga */; };
+		D19136351FBB362A0093366E /* billboard.frag in shaders */ = {isa = PBXBuildFile; fileRef = D19136341FBB36190093366E /* billboard.frag */; };
+		D19136361FBB362A0093366E /* billboard.vert in shaders */ = {isa = PBXBuildFile; fileRef = D19136331FBB36180093366E /* billboard.vert */; };
+		D19136381FBB36820093366E /* particula.bmp in textures */ = {isa = PBXBuildFile; fileRef = D19136371FBB36760093366E /* particula.bmp */; };
+		D191363B1FBB385E0093366E /* LensFlare.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19136391FBB385E0093366E /* LensFlare.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -76,6 +92,8 @@
 			dstPath = data/models;
 			dstSubfolderSpec = 16;
 			files = (
+				D16A9E401FBA164700E890ED /* Coffe cup.mtl in models */,
+				D16A9E411FBA164700E890ED /* Coffe cup.obj in models */,
 				270FB3631FB81E5F00AC7D17 /* Avent.mtl in models */,
 				270FB3641FB81E5F00AC7D17 /* Avent.obj in models */,
 				270FB3651FB81E5F00AC7D17 /* interior_lod0.tga in models */,
@@ -95,6 +113,8 @@
 			dstPath = data/shaders;
 			dstSubfolderSpec = 16;
 			files = (
+				D19136351FBB362A0093366E /* billboard.frag in shaders */,
+				D19136361FBB362A0093366E /* billboard.vert in shaders */,
 				27ADF54E1FA14D09002765D2 /* pointlight.vert in shaders */,
 				27ADF54F1FA14D09002765D2 /* pointlight.frag in shaders */,
 			);
@@ -120,6 +140,17 @@
 			dstPath = data/textures;
 			dstSubfolderSpec = 16;
 			files = (
+				D1256A531FBF5E1300FF6C18 /* tex1.tga in textures */,
+				D1256A541FBF5E1300FF6C18 /* tex2.tga in textures */,
+				D1256A551FBF5E1300FF6C18 /* tex3.tga in textures */,
+				D1256A561FBF5E1300FF6C18 /* tex4.tga in textures */,
+				D1256A571FBF5E1300FF6C18 /* tex5.tga in textures */,
+				D1256A581FBF5E1300FF6C18 /* tex6.tga in textures */,
+				D1256A591FBF5E1300FF6C18 /* tex7.tga in textures */,
+				D1256A5A1FBF5E1300FF6C18 /* tex9.tga in textures */,
+				D181FBCC1FBCAD6D00E3A500 /* flare3.tga in textures */,
+				D181FBCD1FBCAD6D00E3A500 /* sun.tga in textures */,
+				D19136381FBB36820093366E /* particula.bmp in textures */,
 				2755C0141FB9F7F300984DFD /* celery.tga in textures */,
 				2718D4B31FA16211009211AC /* floor_diff.tga in textures */,
 				2718D4B41FA16211009211AC /* floor_disp.tga in textures */,
@@ -233,6 +264,23 @@
 		27D1B7221FB7CEF40082B7F9 /* basic_geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = basic_geometry.h; sourceTree = "<group>"; };
 		27D1B7231FB7CEF50082B7F9 /* basic_geometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = basic_geometry.cpp; sourceTree = "<group>"; };
 		27D5EB961FA179810015B813 /* life.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = life.tga; sourceTree = "<group>"; };
+		D1256A4B1FBF5E0600FF6C18 /* tex6.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = tex6.tga; sourceTree = "<group>"; };
+		D1256A4C1FBF5E0600FF6C18 /* tex5.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = tex5.tga; sourceTree = "<group>"; };
+		D1256A4D1FBF5E0600FF6C18 /* tex3.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = tex3.tga; sourceTree = "<group>"; };
+		D1256A4E1FBF5E0700FF6C18 /* tex4.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = tex4.tga; sourceTree = "<group>"; };
+		D1256A4F1FBF5E0700FF6C18 /* tex7.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = tex7.tga; sourceTree = "<group>"; };
+		D1256A501FBF5E0700FF6C18 /* tex9.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = tex9.tga; sourceTree = "<group>"; };
+		D1256A511FBF5E0700FF6C18 /* tex1.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = tex1.tga; sourceTree = "<group>"; };
+		D1256A521FBF5E0800FF6C18 /* tex2.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = tex2.tga; sourceTree = "<group>"; };
+		D16A9E3E1FBA162300E890ED /* Coffe cup.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Coffe cup.obj"; sourceTree = "<group>"; };
+		D16A9E3F1FBA162300E890ED /* Coffe cup.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Coffe cup.mtl"; sourceTree = "<group>"; };
+		D181FBCA1FBCAD6100E3A500 /* flare3.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = flare3.tga; sourceTree = "<group>"; };
+		D181FBCB1FBCAD6200E3A500 /* sun.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = sun.tga; sourceTree = "<group>"; };
+		D19136331FBB36180093366E /* billboard.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = billboard.vert; path = ../../../../../Downloads/snow_fireworks/shaders/billboard.vert; sourceTree = "<group>"; };
+		D19136341FBB36190093366E /* billboard.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = billboard.frag; path = ../../../../../Downloads/snow_fireworks/shaders/billboard.frag; sourceTree = "<group>"; };
+		D19136371FBB36760093366E /* particula.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = particula.bmp; sourceTree = "<group>"; };
+		D19136391FBB385E0093366E /* LensFlare.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LensFlare.cpp; sourceTree = "<group>"; };
+		D191363A1FBB385E0093366E /* LensFlare.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LensFlare.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,6 +302,8 @@
 		271C846D1F87D91C00E3F947 = {
 			isa = PBXGroup;
 			children = (
+				D19136391FBB385E0093366E /* LensFlare.cpp */,
+				D191363A1FBB385E0093366E /* LensFlare.h */,
 				2755C0101FB9F70800984DFD /* Celery.cpp */,
 				2755C0121FB9F71500984DFD /* Celery.h */,
 				2755C00F1FB9F59B00984DFD /* maths.h */,
@@ -358,6 +408,17 @@
 		27ADF4EE1FA14C88002765D2 /* textures */ = {
 			isa = PBXGroup;
 			children = (
+				D1256A511FBF5E0700FF6C18 /* tex1.tga */,
+				D1256A521FBF5E0800FF6C18 /* tex2.tga */,
+				D1256A4D1FBF5E0600FF6C18 /* tex3.tga */,
+				D1256A4E1FBF5E0700FF6C18 /* tex4.tga */,
+				D1256A4C1FBF5E0600FF6C18 /* tex5.tga */,
+				D1256A4B1FBF5E0600FF6C18 /* tex6.tga */,
+				D1256A4F1FBF5E0700FF6C18 /* tex7.tga */,
+				D1256A501FBF5E0700FF6C18 /* tex9.tga */,
+				D181FBCA1FBCAD6100E3A500 /* flare3.tga */,
+				D181FBCB1FBCAD6200E3A500 /* sun.tga */,
+				D19136371FBB36760093366E /* particula.bmp */,
 				2755C0131FB9F7ED00984DFD /* celery.tga */,
 				2718D4B21FA16204009211AC /* floor_diff.tga */,
 				2718D4B11FA16204009211AC /* floor_disp.tga */,
@@ -376,6 +437,8 @@
 		27ADF4F71FA14C88002765D2 /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				D19136341FBB36190093366E /* billboard.frag */,
+				D19136331FBB36180093366E /* billboard.vert */,
 				27ADF4F81FA14C88002765D2 /* pointlight.vert */,
 				27ADF4F91FA14C88002765D2 /* pointlight.frag */,
 			);
@@ -395,6 +458,8 @@
 		27BF77F51FB0D68B0045EC44 /* models */ = {
 			isa = PBXGroup;
 			children = (
+				D16A9E3F1FBA162300E890ED /* Coffe cup.mtl */,
+				D16A9E3E1FBA162300E890ED /* Coffe cup.obj */,
 				270FB3601FB81E2500AC7D17 /* Avent.mtl */,
 				270FB3591FB81E2400AC7D17 /* Avent.obj */,
 				270FB35F1FB81E2500AC7D17 /* interior_lod0.tga */,
@@ -485,6 +550,7 @@
 				27BF78491FB0D6AC0045EC44 /* Cheerio.cpp in Sources */,
 				27BF78371FB0D6AC0045EC44 /* Life.cpp in Sources */,
 				27BF78461FB0D6AC0045EC44 /* main.cpp in Sources */,
+				D191363B1FBB385E0093366E /* LensFlare.cpp in Sources */,
 				2755C0111FB9F70800984DFD /* Celery.cpp in Sources */,
 				27BF78351FB0D6AC0045EC44 /* Table.cpp in Sources */,
 				27BF783E1FB0D6AC0045EC44 /* TGA.cpp in Sources */,
@@ -614,6 +680,13 @@
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				HEADER_SEARCH_PATHS = /usr/local/include;
 				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/glew/2.1.0/lib,
+					/usr/local/lib,
+					/usr/local/Cellar/assimp/4.0.1/lib,
+					/usr/local/Cellar/devil/1.8.0_1/lib,
+				);
+				"LIBRARY_SEARCH_PATHS[arch=*]" = (
 					"$(inherited)",
 					/usr/local/Cellar/glew/2.1.0/lib,
 					/usr/local/lib,

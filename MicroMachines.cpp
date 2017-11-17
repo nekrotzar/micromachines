@@ -48,6 +48,7 @@ void MicroMachines::init(){
     _table = new Table();
     _cup = new Cup();
     _celery = new Celery();
+    _lensFlare = new LensFlare();
     
     // create hud
     _hud.push_back(new Pause());
@@ -237,12 +238,33 @@ void MicroMachines::display()
     if (game_over) {
         _hud[1]->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
     }
+ 
+   // _lensFlare->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
     
     popMatrix(VIEW);
     popMatrix(PROJECTION);
     
+    
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+    computeDerivedMatrix(PROJ_VIEW_MODEL);
+
+    
+    SCREENwidth = glutGet( GLUT_WINDOW_WIDTH );
+    SCREENheight = glutGet( GLUT_WINDOW_HEIGHT );
+    pushMatrix(PROJECTION);
+    loadIdentity(PROJECTION);
+    pushMatrix(VIEW);
+    loadIdentity(VIEW);   //viewer looking down at  negative z direction
+    ortho(0, SCREENwidth, 0, SCREENheight, -10.0f, 100.0f);
+    _lensFlare->render_flare(shader, xFlare, yFlare, SCREENwidth/2, SCREENheight/2, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
+    popMatrix(PROJECTION);
+    popMatrix(VIEW);
+    
+    
+    
     _celery->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
     _cup->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
+    
 }
 
 void MicroMachines::update(int delta_t){
@@ -540,6 +562,8 @@ void MicroMachines::processMouseMotion(int xx, int yy)
     
     //  uncomment this if not using an idle func
     //    glutPostRedisplay();
+    xFlare = deltaX * SCREENwidth/glutGet(GLUT_WINDOW_WIDTH);
+    yFlare = deltaY * SCREENheight/glutGet(GLUT_WINDOW_HEIGHT);
 }
 
 void MicroMachines::processMouseWheel(int wheel, int direction, int x, int y){
