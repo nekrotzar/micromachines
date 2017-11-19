@@ -67,8 +67,8 @@ void main() {
     
     float attenuation;                  // attenuation
     
-    vec4 scatteredLight = vec4(0.0);
-    vec4 reflectedLight = vec4(0.0);
+    vec3 totalSpecular = vec3(0.0);
+    vec3 totalDiffuse = vec3(0.0);
     
     // Directional Light contribution
     if (dirLight.status){
@@ -76,16 +76,16 @@ void main() {
         l = normalize(vec3(dirLight.direction));
         
         float intensity = max(dot(n,l), 0.0);
-        vec4 diff = dirLight.diffuse * intensity;
-        vec4 spec = vec4(0.0);
+        vec3 diff = dirLight.diffuse.rgb * intensity;
+        vec3 spec = vec3(0.0);
         
         if (intensity > 0.0){
             vec3 h = normalize(l + e);
             float intSpec = max(dot(h,n), 0.0);
-            spec = dirLight.specular * pow(intSpec, mat.shininess);
+            spec = dirLight.specular.rgb * pow(intSpec, mat.shininess);
         }
-        scatteredLight += diff * attenuation;
-        reflectedLight += spec * attenuation;
+        totalDiffuse += diff * attenuation;
+        totalSpecular += spec * attenuation;
     }
     
     // Point Light contribution
@@ -98,16 +98,16 @@ void main() {
             attenuation = 1.0 / (pointlights[i].quadratic * (distance*distance));
             
             float intensity = max(dot(n,l), 0.0);
-            vec4 diff = dirLight.diffuse * intensity;
-            vec4 spec = vec4(0.0);
+            vec3 diff = dirLight.diffuse.rgb * intensity;
+            vec3 spec = vec3(0.0);
             
             if (intensity > 0.0){
                 vec3 h = normalize(l + e);
                 float intSpec = max(dot(h,n), 0.0);
-                spec = dirLight.specular * pow(intSpec, mat.shininess);
+                spec = dirLight.specular.rgb * pow(intSpec, mat.shininess);
             }
-            scatteredLight += diff * attenuation;
-            reflectedLight += spec * attenuation;
+            totalDiffuse += diff * attenuation;
+            totalSpecular += spec * attenuation;
         }
     }
     
@@ -129,19 +129,20 @@ void main() {
                attenuation = 0.0;
            
            float intensity = max(dot(n,l), 0.0);
-           vec4 diff = dirLight.diffuse * intensity;
-           vec4 spec = vec4(0.0);
+           vec3 diff = dirLight.diffuse.rgb * intensity;
+           vec3 spec = vec3(0.0);
                
            if (intensity > 0.0){
                vec3 h = normalize(l + e);
                float intSpec = max(dot(h,n), 0.0);
-               spec = dirLight.specular * pow(intSpec, mat.shininess);
+               spec = dirLight.specular.rgb * pow(intSpec, mat.shininess);
            }
-           scatteredLight += diff * attenuation;
-           reflectedLight += spec * attenuation;
+           totalDiffuse += diff * attenuation;
+           totalSpecular += spec * attenuation;
         }
     }
-   vec4 texel, texel1;
+    
+    vec4 texel, texel1;
     
     const float density = 0.3;
     const float gradient = 2;
@@ -150,23 +151,35 @@ void main() {
     float visibility = exp(-pow((distance*density), gradient));
     visibility = clamp(visibility, 0.0, 1.0);
    
-   // No textures
+   // No textures (Phong Color)
    if(texMode == 0){
-       colorOut = max(scatteredLight * mat.diffuse + reflectedLight * mat.specular, mat.ambient);
+       colorOut = max(vec4(totalDiffuse, 1.0) * mat.diffuse + vec4(totalSpecular,1.0) * mat.specular, mat.ambient);
    }
    // Diffuse color and texture
    else if (texMode == 1){
        texel = texture(texmap0, DataIn.texcoord);
-       colorOut = max(scatteredLight * mat.diffuse * texel + reflectedLight * mat.specular, mat.ambient * texel);
+       colorOut = max(vec4(totalDiffuse, 1.0) * mat.diffuse * texel + vec4(totalSpecular,1.0) * mat.specular, mat.ambient * texel);
    }
    else if (texMode == 2){
        texel = texture(texmap0, DataIn.texcoord);
-       colorOut = max(scatteredLight * texel + reflectedLight * mat.specular, 0.1 * texel);
+       
+       if (texel.a == 0)
+           discard;
+       else
+           colorOut = max(vec4(totalDiffuse,1.0) * texel + vec4(totalSpecular, 1.0) * mat.specular, 0.1 * texel);
    }
    else if (texMode == 3){
        texel = texture(texmap0, DataIn.texcoord);
+       
+       if (texel.a == 0)
+           discard;
+       else
+           colorOut = mat.diffuse * texel;
+   }
+   else if (texMode == 4){
+       texel = texture(texmap0, DataIn.texcoord);
        texel1 = texture(texmap1, DataIn.texcoord);
-       colorOut = max(scatteredLight * texel * texel1 + reflectedLight * mat.specular, 0.1 * texel * texel1);
+       colorOut = max(vec4(totalDiffuse, 1.0) * texel * texel1 + vec4(totalSpecular, 1.0) * mat.specular, 0.1 * texel * texel1);
    }
     
     if (fog) {

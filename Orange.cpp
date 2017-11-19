@@ -10,7 +10,7 @@ Orange::Orange(double x, double z){
     setShininess(100.0f);
     
     _mesh = new Mesh();
-    _mesh->createSphere(1.0, 70);
+    _mesh->createSphere(1.0, 200);
     _mesh->setMeshMaterial(0, getAmbient(), getDiffuse(), getSpecular(), getEmissive(), getShininess(), 1);
     
     glGenTextures(1, TextureArray);

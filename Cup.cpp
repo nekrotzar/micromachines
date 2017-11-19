@@ -1,7 +1,7 @@
 #include "Cup.h"
 
 Cup::Cup() {
-    Entity::setPosition(0.0, 0.0, 0.0);
+    Entity::setPosition(10.0, 0.0, 9.0);
     
     setAmbient(0.0f, 0.0f, 0.0f, 0.5f);
     setDiffuse(1.0f, 1.0f, 0.9f, 0.5f);

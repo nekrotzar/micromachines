@@ -34,7 +34,7 @@
 #include "Butter.h"
 #include "Candle.h"
 #include "Cup.h"
-#include "Celery.h"
+#include "Vase.h"
 #include "LensFlare.h"
 #include "Fireworks.h"
 #include "Ground.h"
@@ -93,7 +93,7 @@ protected:
     Car *_car;
 	Table *_table;
     Cup *_cup;
-    Celery *_celery;
+    Vase *_vase;
     LensFlare *_lensFlare;
     Ground *_ground;
     

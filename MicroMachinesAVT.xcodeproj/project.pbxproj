@@ -27,8 +27,9 @@
 		274F06991FC1BB58006A139C /* billboard.frag in shaders */ = {isa = PBXBuildFile; fileRef = 274F06981FC1BB52006A139C /* billboard.frag */; };
 		274F069A1FC1BB58006A139C /* billboard.vert in shaders */ = {isa = PBXBuildFile; fileRef = 274F06971FC1BB52006A139C /* billboard.vert */; };
 		274F069C1FC1BF9E006A139C /* Ground.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 274F069B1FC1BF9E006A139C /* Ground.cpp */; };
+		274F06A31FC2099E006A139C /* vase.tga in textures */ = {isa = PBXBuildFile; fileRef = 274F06A21FC2098E006A139C /* vase.tga */; };
+		274F06A61FC209E7006A139C /* Vase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 274F06A41FC209E7006A139C /* Vase.cpp */; };
 		2755C00E1FB9F55200984DFD /* l3dBillboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2755C00C1FB9F55100984DFD /* l3dBillboard.cpp */; };
-		2755C0111FB9F70800984DFD /* Celery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2755C0101FB9F70800984DFD /* Celery.cpp */; };
 		2755C0141FB9F7F300984DFD /* celery.tga in textures */ = {isa = PBXBuildFile; fileRef = 2755C0131FB9F7ED00984DFD /* celery.tga */; };
 		27ADF54E1FA14D09002765D2 /* pointlight.vert in shaders */ = {isa = PBXBuildFile; fileRef = 27ADF4F81FA14C88002765D2 /* pointlight.vert */; };
 		27ADF54F1FA14D09002765D2 /* pointlight.frag in shaders */ = {isa = PBXBuildFile; fileRef = 27ADF4F91FA14C88002765D2 /* pointlight.frag */; };
@@ -143,6 +144,7 @@
 			dstPath = data/textures;
 			dstSubfolderSpec = 16;
 			files = (
+				274F06A31FC2099E006A139C /* vase.tga in textures */,
 				D14ADE701FC20183005E4299 /* fireball.tga in textures */,
 				D1256A531FBF5E1300FF6C18 /* tex1.tga in textures */,
 				D1256A541FBF5E1300FF6C18 /* tex2.tga in textures */,
@@ -196,11 +198,12 @@
 		274F06981FC1BB52006A139C /* billboard.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = billboard.frag; sourceTree = "<group>"; };
 		274F069B1FC1BF9E006A139C /* Ground.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Ground.cpp; sourceTree = "<group>"; };
 		274F069D1FC1BFA8006A139C /* Ground.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Ground.h; sourceTree = "<group>"; };
+		274F06A21FC2098E006A139C /* vase.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = vase.tga; sourceTree = "<group>"; };
+		274F06A41FC209E7006A139C /* Vase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vase.cpp; sourceTree = "<group>"; };
+		274F06A51FC209E7006A139C /* Vase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vase.h; sourceTree = "<group>"; };
 		2755C00C1FB9F55100984DFD /* l3dBillboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = l3dBillboard.cpp; sourceTree = "<group>"; };
 		2755C00D1FB9F55200984DFD /* l3DBillboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = l3DBillboard.h; sourceTree = "<group>"; };
 		2755C00F1FB9F59B00984DFD /* maths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = maths.h; sourceTree = "<group>"; };
-		2755C0101FB9F70800984DFD /* Celery.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Celery.cpp; sourceTree = "<group>"; };
-		2755C0121FB9F71500984DFD /* Celery.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Celery.h; sourceTree = "<group>"; };
 		2755C0131FB9F7ED00984DFD /* celery.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = celery.tga; sourceTree = "<group>"; };
 		27ADF4EF1FA14C88002765D2 /* candle.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = candle.tga; sourceTree = "<group>"; };
 		27ADF4F01FA14C88002765D2 /* butter.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = butter.tga; sourceTree = "<group>"; };
@@ -311,14 +314,14 @@
 		271C846D1F87D91C00E3F947 = {
 			isa = PBXGroup;
 			children = (
+				274F06A41FC209E7006A139C /* Vase.cpp */,
+				274F06A51FC209E7006A139C /* Vase.h */,
 				D14ADE6C1FC200D5005E4299 /* Fireworks.cpp */,
 				D14ADE6D1FC200D5005E4299 /* Fireworks.h */,
 				274F069D1FC1BFA8006A139C /* Ground.h */,
 				274F069B1FC1BF9E006A139C /* Ground.cpp */,
 				D19136391FBB385E0093366E /* LensFlare.cpp */,
 				D191363A1FBB385E0093366E /* LensFlare.h */,
-				2755C0101FB9F70800984DFD /* Celery.cpp */,
-				2755C0121FB9F71500984DFD /* Celery.h */,
 				2755C00F1FB9F59B00984DFD /* maths.h */,
 				2755C00C1FB9F55100984DFD /* l3dBillboard.cpp */,
 				2755C00D1FB9F55200984DFD /* l3DBillboard.h */,
@@ -421,6 +424,7 @@
 		27ADF4EE1FA14C88002765D2 /* textures */ = {
 			isa = PBXGroup;
 			children = (
+				274F06A21FC2098E006A139C /* vase.tga */,
 				D14ADE6F1FC20155005E4299 /* fireball.tga */,
 				D1256A511FBF5E0700FF6C18 /* tex1.tga */,
 				D1256A521FBF5E0800FF6C18 /* tex2.tga */,
@@ -556,6 +560,7 @@
 				27D1B7241FB7CEF50082B7F9 /* basic_geometry.cpp in Sources */,
 				27BF78341FB0D6AC0045EC44 /* Entity.cpp in Sources */,
 				27BF78381FB0D6AC0045EC44 /* Pause.cpp in Sources */,
+				274F06A61FC209E7006A139C /* Vase.cpp in Sources */,
 				270354531FB8ED9600EDC946 /* Cup.cpp in Sources */,
 				27BF783D1FB0D6AC0045EC44 /* Camera.cpp in Sources */,
 				274F069C1FC1BF9E006A139C /* Ground.cpp in Sources */,
@@ -567,7 +572,6 @@
 				27BF78371FB0D6AC0045EC44 /* Life.cpp in Sources */,
 				27BF78461FB0D6AC0045EC44 /* main.cpp in Sources */,
 				D191363B1FBB385E0093366E /* LensFlare.cpp in Sources */,
-				2755C0111FB9F70800984DFD /* Celery.cpp in Sources */,
 				27BF78351FB0D6AC0045EC44 /* Table.cpp in Sources */,
 				27BF783E1FB0D6AC0045EC44 /* TGA.cpp in Sources */,
 				27BF78401FB0D6AC0045EC44 /* Orange.cpp in Sources */,

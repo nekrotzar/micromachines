@@ -79,6 +79,13 @@ void Mesh::setMeshMaterial(int meshId, float * ambient, float * diffuse, float *
     myMeshes[meshId].mat.texCount = texcount;
 }
 
+void Mesh::setMeshMaterial(int meshId,float *specular, float *emissive, float shininess, float texcount) {
+    memcpy(myMeshes[meshId].mat.specular, specular, 4 * sizeof(float));
+    memcpy(myMeshes[meshId].mat.emissive, emissive, 4 * sizeof(float));
+    myMeshes[meshId].mat.shininess = shininess;
+    myMeshes[meshId].mat.texCount = texcount;
+}
+
 void Mesh::renderMesh(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformId, int meshId){    
     computeDerivedMatrix(PROJ_VIEW_MODEL);
     glUniformMatrix4fv(vm_uniformId, 1, GL_FALSE, mCompMatrix[VIEW_MODEL]);

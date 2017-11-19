@@ -48,7 +48,7 @@ void MicroMachines::init(){
     _car = new Car();
     _table = new Table();
     _cup = new Cup();
-    _celery = new Celery();
+    _vase = new Vase();
     _lensFlare = new LensFlare();
     _ground = new Ground();
     
@@ -335,9 +335,9 @@ void MicroMachines::display()
     popMatrix(PROJECTION);
     popMatrix(VIEW);
     
+    float camPos[3] = {camX, camY, camZ};
     
-    
-    _celery->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
+    _vase->renderBillboard(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId, camPos, 3);
     _cup->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
     
 }

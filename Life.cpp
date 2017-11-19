@@ -24,7 +24,7 @@ void Life::render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, G
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, TextureArray[0]);
-    glUniform1i(texMode_uniformId, 2);
+    glUniform1i(texMode_uniformId, 1);
     
     _mesh->loadMeshMaterial(shader, 0);
 

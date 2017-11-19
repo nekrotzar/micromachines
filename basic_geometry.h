@@ -63,8 +63,8 @@ protected:
     float scaleFactor;
     
     std::map<std::string, GLuint> textureIdMap;
-    std::vector<struct MyMesh> myMeshes;
 public:
+    std::vector<struct MyMesh> myMeshes;
     const aiScene * getScene();
     void set_float4(float f[4], float a, float b, float c, float d);
     void color4_to_float4(const aiColor4D *c, float f[4]);
@@ -87,5 +87,6 @@ public:
     int revSmoothNormal2(float *p, float *nx, float *ny, float smoothCos, int beginEnd);
     float *circularProfile(float minAngle, float maxAngle, float radius, int divisions, float transX= 0.0f, float transY = 0.0f);
     void setMeshMaterial(int meshId, float ambient[], float diffuse[], float specular[], float emissive[], float shininess, float texcount);
+    void setMeshMaterial(int meshId,float *specular, float *emissive, float shininess, float texcount);
 };
 #endif /* basic_geometry_h */

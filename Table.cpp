@@ -39,7 +39,7 @@ void Table::render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, 
     // Draw 1st cube with wooden texture
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, TextureArray[0]);
-    glUniform1i(texMode_uniformId, 2);
+    glUniform1i(texMode_uniformId, 1);
     
     
     // Draw table sides
@@ -85,7 +85,7 @@ void Table::render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, 
     glBindTexture(GL_TEXTURE_2D, TextureArray[1]);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, TextureArray[2]);
-    glUniform1i(texMode_uniformId, 3);
+    glUniform1i(texMode_uniformId, 4);
     
     // Ground
     for (int x = 15.0; x >= -30; x-=15) {

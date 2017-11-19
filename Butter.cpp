@@ -21,7 +21,7 @@ Butter::Butter(double x, double z){
 void Butter::render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformId, GLint texMode_uniformId){
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, TextureArray[0]);
-    glUniform1i(texMode_uniformId, 2);
+    glUniform1i(texMode_uniformId, 1);
     
     // Load body mesh
     _mesh->loadMeshMaterial(shader, 0);
