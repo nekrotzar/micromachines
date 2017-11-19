@@ -78,6 +78,8 @@
 		D1256A581FBF5E1300FF6C18 /* tex6.tga in textures */ = {isa = PBXBuildFile; fileRef = D1256A4B1FBF5E0600FF6C18 /* tex6.tga */; };
 		D1256A591FBF5E1300FF6C18 /* tex7.tga in textures */ = {isa = PBXBuildFile; fileRef = D1256A4F1FBF5E0700FF6C18 /* tex7.tga */; };
 		D1256A5A1FBF5E1300FF6C18 /* tex9.tga in textures */ = {isa = PBXBuildFile; fileRef = D1256A501FBF5E0700FF6C18 /* tex9.tga */; };
+		D14ADE6E1FC200D5005E4299 /* Fireworks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D14ADE6C1FC200D5005E4299 /* Fireworks.cpp */; };
+		D14ADE701FC20183005E4299 /* fireball.tga in textures */ = {isa = PBXBuildFile; fileRef = D14ADE6F1FC20155005E4299 /* fireball.tga */; };
 		D16A9E401FBA164700E890ED /* Coffe cup.mtl in models */ = {isa = PBXBuildFile; fileRef = D16A9E3F1FBA162300E890ED /* Coffe cup.mtl */; };
 		D16A9E411FBA164700E890ED /* Coffe cup.obj in models */ = {isa = PBXBuildFile; fileRef = D16A9E3E1FBA162300E890ED /* Coffe cup.obj */; };
 		D181FBCC1FBCAD6D00E3A500 /* flare3.tga in textures */ = {isa = PBXBuildFile; fileRef = D181FBCA1FBCAD6100E3A500 /* flare3.tga */; };
@@ -141,6 +143,7 @@
 			dstPath = data/textures;
 			dstSubfolderSpec = 16;
 			files = (
+				D14ADE701FC20183005E4299 /* fireball.tga in textures */,
 				D1256A531FBF5E1300FF6C18 /* tex1.tga in textures */,
 				D1256A541FBF5E1300FF6C18 /* tex2.tga in textures */,
 				D1256A551FBF5E1300FF6C18 /* tex3.tga in textures */,
@@ -277,6 +280,9 @@
 		D1256A501FBF5E0700FF6C18 /* tex9.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = tex9.tga; sourceTree = "<group>"; };
 		D1256A511FBF5E0700FF6C18 /* tex1.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = tex1.tga; sourceTree = "<group>"; };
 		D1256A521FBF5E0800FF6C18 /* tex2.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = tex2.tga; sourceTree = "<group>"; };
+		D14ADE6C1FC200D5005E4299 /* Fireworks.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Fireworks.cpp; sourceTree = "<group>"; };
+		D14ADE6D1FC200D5005E4299 /* Fireworks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Fireworks.h; sourceTree = "<group>"; };
+		D14ADE6F1FC20155005E4299 /* fireball.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = fireball.tga; sourceTree = "<group>"; };
 		D16A9E3E1FBA162300E890ED /* Coffe cup.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Coffe cup.obj"; sourceTree = "<group>"; };
 		D16A9E3F1FBA162300E890ED /* Coffe cup.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Coffe cup.mtl"; sourceTree = "<group>"; };
 		D181FBCA1FBCAD6100E3A500 /* flare3.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = flare3.tga; sourceTree = "<group>"; };
@@ -305,6 +311,8 @@
 		271C846D1F87D91C00E3F947 = {
 			isa = PBXGroup;
 			children = (
+				D14ADE6C1FC200D5005E4299 /* Fireworks.cpp */,
+				D14ADE6D1FC200D5005E4299 /* Fireworks.h */,
 				274F069D1FC1BFA8006A139C /* Ground.h */,
 				274F069B1FC1BF9E006A139C /* Ground.cpp */,
 				D19136391FBB385E0093366E /* LensFlare.cpp */,
@@ -413,6 +421,7 @@
 		27ADF4EE1FA14C88002765D2 /* textures */ = {
 			isa = PBXGroup;
 			children = (
+				D14ADE6F1FC20155005E4299 /* fireball.tga */,
 				D1256A511FBF5E0700FF6C18 /* tex1.tga */,
 				D1256A521FBF5E0800FF6C18 /* tex2.tga */,
 				D1256A4D1FBF5E0600FF6C18 /* tex3.tga */,
@@ -539,6 +548,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				27BF78411FB0D6AC0045EC44 /* StaticObject.cpp in Sources */,
+				D14ADE6E1FC200D5005E4299 /* Fireworks.cpp in Sources */,
 				27BF78451FB0D6AC0045EC44 /* LightSource.cpp in Sources */,
 				27BF78321FB0D6AC0045EC44 /* vsShaderLib.cpp in Sources */,
 				27BF78441FB0D6AC0045EC44 /* PointLight.cpp in Sources */,

@@ -32,6 +32,7 @@ void MicroMachines::init(){
     _cameras.clear();
     _lives.clear();
     _hud.clear();
+    _fireworks.clear();
     
     
     _carUp = _carDown = _carLeft = _carRight = false;
@@ -79,6 +80,11 @@ void MicroMachines::init(){
     // create candles
     for (int i = 0; i < 6; i++){
         _objects.push_back(new Candle());
+    }
+    
+    //create fireworks
+    for(int i=0;i<MAX_PARTICULAS;i++){
+        _fireworks.push_back(new Fireworks(0.8*frand() + 0.2 , frand()*M_PI , 2.0*frand()*M_PI));
     }
     
     _objects[7]->setPosition(5 , 1.5,  0);
@@ -141,6 +147,25 @@ void MicroMachines::init(){
     glEnable(GL_CULL_FACE);
     glEnable(GL_MULTISAMPLE);
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);    
+}
+
+void MicroMachines::explosion(){
+    int i;
+    float h;
+    h = 0.125f;
+    for (i = 0; i < MAX_PARTICULAS; i++)
+    {
+        if(_fireworks[i]->life <= 0){
+            kaboom=false;
+        }
+        _fireworks[i]->setPosition(_fireworks[i]->getPosition().getX() + h *_fireworks[i]->vx,
+                                   _fireworks[i]->getPosition().getY() + h * _fireworks[i]->vy,
+                                   _fireworks[i]->getPosition().getZ() + h *_fireworks[i]->vz);
+        //_fireworks[i]->vx = h * _fireworks[i]->ax;
+        //_fireworks[i]->vy = h * _fireworks[i]->ay;
+        _fireworks[i]->vz = h * _fireworks[i]->az;
+        _fireworks[i]->life -= _fireworks[i]->fade;
+    }
 }
 
 void MicroMachines::display()
@@ -294,6 +319,22 @@ void MicroMachines::display()
     popMatrix(PROJECTION);
     popMatrix(VIEW);
     
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+    computeDerivedMatrix(PROJ_VIEW_MODEL);
+    
+    pushMatrix(PROJECTION);
+    loadIdentity(PROJECTION);
+    pushMatrix(VIEW);
+    loadIdentity(VIEW);   //viewer looking down at  negative z direction
+    ortho(-15.0f, 15.0f, -15.0f, 15.0f, -15.0f, 100.0f);
+    if(kaboom){
+        for (auto &fireworks : _fireworks) {
+            fireworks->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
+        }
+    }
+    popMatrix(PROJECTION);
+    popMatrix(VIEW);
+    
     
     
     _celery->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
@@ -375,6 +416,9 @@ void MicroMachines::update(int delta_t){
         }
     }
     
+    if(kaboom){
+        explosion();
+    }
     
 }
 
@@ -467,6 +511,21 @@ void MicroMachines::processKeys(unsigned char key, int xx, int yy){
             }
         case 'f':
             fog = !fog;
+            break;
+        case 'e':
+            //            _fireworks->fireworks = 1;
+            //            _fireworks->iniParticulas();
+            //            _fireworks->iterate(1);
+            //            //glutTimerFunc(0, _fireworks->iterate, 0);  //timer for particle system
+            if(kaboom){
+                kaboom = false;
+                _fireworks.clear();
+            }else{
+                for(int i=0;i<MAX_PARTICULAS;i++){
+                    _fireworks.push_back(new Fireworks(0.8*frand() + 0.2 , frand()*M_PI , 2.0*frand()*M_PI));
+                }
+                kaboom = true;
+            }
             break;
         default:
             break;

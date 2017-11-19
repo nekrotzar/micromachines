@@ -36,6 +36,7 @@
 #include "Cup.h"
 #include "Celery.h"
 #include "LensFlare.h"
+#include "Fireworks.h"
 #include "Ground.h"
 
 class MicroMachines{
@@ -56,6 +57,7 @@ public:
     int collides();
     int orange_collide();
     GLuint setupShaders();
+    void explosion();
 
 protected:
     bool fog = false;
@@ -74,6 +76,9 @@ protected:
     GLint texMode_uniformId;
     GLint tex_loc0, tex_loc1;
     GLint fog_loc, fogColor_loc;
+
+    GLfloat v, theta, phi;
+    bool kaboom;
     
     float camX, camY, camZ;
     int startX, startY, tracking = 0;
@@ -102,6 +107,7 @@ protected:
     std::vector<LightSource*> _lights;
     std::vector<Object*> _hud;
     std::vector<Life*> _lives;
+    std::vector<Fireworks*> _fireworks;
 };
 
 
