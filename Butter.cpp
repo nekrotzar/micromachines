@@ -4,9 +4,9 @@ Butter::Butter(double x, double z){
     Object::setRadius(0.9);
     Entity::setPosition(x, 0.0, z);
     
-    setAmbient(0.3, 0.3f, 0.1f, 1.0f);
-    setDiffuse(1.0f, 1.0f, 0.0f, 1.0f);
-    setSpecular(1.0f, 1.0f, 0.0f, 1.0f);
+    setAmbient(0.1, 0.1f, 0.1f, 1.0f);
+    setDiffuse(0.7f, 0.7f, 0.0f, 1.0f);
+    setSpecular(0.7f, 0.7f, 0.0f, 1.0f);
     setEmissive(0.0f, 0.0f, 0.0f, 1.0f);
     setShininess(100.0f);
     

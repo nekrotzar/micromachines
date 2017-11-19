@@ -163,7 +163,7 @@ void main() {
    else if (texMode == 2){
        texel = texture(texmap0, DataIn.texcoord);
        
-       if (texel.a == 0)
+       if (texel.a < 0.1)
            discard;
        else
            colorOut = max(vec4(totalDiffuse,1.0) * texel + vec4(totalSpecular, 1.0) * mat.specular, 0.1 * texel);
@@ -171,7 +171,7 @@ void main() {
    else if (texMode == 3){
        texel = texture(texmap0, DataIn.texcoord);
        
-       if (texel.a == 0)
+       if (texel.a < 0.1)
            discard;
        else
            colorOut = mat.diffuse * texel;

@@ -9,7 +9,7 @@ extern float mNormal3x3[9];
 Vase::Vase() {
     Entity::setPosition(0.0, 1.5, 0.0);
     
-    setAmbient(0.1f, 0.1f, 0.1f, 0.0f);
+    setAmbient(0.1f, 0.1f, 0.1f, 1.0f);
     setDiffuse(0.5f, 0.5f, 0.5f, 1.0f);
     setSpecular(0.5, 0.5f, 0.5f, 1.0f);
     setEmissive(0.0f, 0.0f, 0.0f, 1.0f);
@@ -29,10 +29,7 @@ void Vase::renderBillboard(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uni
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, TextureArray[0]);
     
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    
-    glUniform1i(texMode_uniformId, 3);
+    glUniform1i(texMode_uniformId, 2);
     
     pushMatrix(MODEL);
     translate(MODEL, getPosition().getX(), getPosition().getY(), getPosition().getZ());
@@ -69,7 +66,5 @@ void Vase::renderBillboard(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uni
         BillboardEnd(modelview);
     }
     
-    popMatrix(MODEL);
-    
-    glDisable(GL_BLEND);
+    popMatrix(MODEL);    
 }

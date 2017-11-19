@@ -7,7 +7,7 @@
 
 class LensFlare : public Object {
 protected:
-    float relativePositions[3] = {0.7f, 0.8f, 0.9f};
+    float relativePositions[4] = {0.7f, 0.8f, 0.9f, 1.0f};
 public:
     LensFlare();
     void render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformdId, GLint texMode_uniformId);
@@ -15,3 +15,4 @@ public:
 };
 
 #endif /* LensFlare_h */
+

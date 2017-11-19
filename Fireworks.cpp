@@ -29,8 +29,6 @@ Fireworks::Fireworks(GLfloat v,GLfloat phi, GLfloat theta) {
 void Fireworks::render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformdId, GLint texMode_uniformId) {
     
     glDisable(GL_DEPTH_TEST);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, TextureArray[0]);
@@ -52,7 +50,7 @@ void Fireworks::render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniform
         _mesh->renderMesh(shader, pvm_uniformId, vm_uniformId, normal_uniformdId, 0);
         popMatrix(MODEL);
     }
-    glDisable(GL_BLEND);
+    
     glEnable(GL_DEPTH_TEST);
 }
 

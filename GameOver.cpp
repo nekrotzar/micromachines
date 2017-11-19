@@ -23,9 +23,8 @@ GameOver::~GameOver(){
 }
 
 void GameOver::render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformdId, GLint texMode_uniformId) {
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
+    glEnable(GL_BLEND);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, TextureArray[0]);
     glUniform1i(texMode_uniformId, 1);
@@ -39,6 +38,4 @@ void GameOver::render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformI
     popMatrix(MODEL);
     
     glDisable(GL_BLEND);
- 
-    
 }

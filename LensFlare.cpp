@@ -13,28 +13,26 @@ LensFlare::LensFlare() {
     _mesh->createQuad(2, 2);
     _mesh->setMeshMaterial(0, getAmbient(), getDiffuse(), getSpecular(), getEmissive(), getShininess(), 1);
     
-    glGenTextures(3, TextureArray);
+    glGenTextures( 4, TextureArray);
     TGA_Texture(TextureArray, (char*) "data/textures/tex9.tga", 0);
     TGA_Texture(TextureArray, (char*) "data/textures/flare3.tga", 1);
     //TGA_Texture(TextureArray, (char*) "data/textures/tex7.tga", 2);
     TGA_Texture(TextureArray, (char*) "data/textures/tex6.tga", 2);
-//    TGA_Texture(TextureArray, (char*) "data/textures/tex5.tga", 4);
-//    TGA_Texture(TextureArray, (char*) "data/textures/tex4.tga", 5);
-//    TGA_Texture(TextureArray, (char*) "data/textures/tex3.tga", 6);
-//    TGA_Texture(TextureArray, (char*) "data/textures/tex2.tga", 7);
-//    TGA_Texture(TextureArray, (char*) "data/textures/tex1.tga", 8);
-
-    //TGA_Texture(TextureArray, (char*) "data/textures/sun.tga", 3);
+    //    TGA_Texture(TextureArray, (char*) "data/textures/tex5.tga", 4);
+    //    TGA_Texture(TextureArray, (char*) "data/textures/tex4.tga", 5);
+    //    TGA_Texture(TextureArray, (char*) "data/textures/tex3.tga", 6);
+    //    TGA_Texture(TextureArray, (char*) "data/textures/tex2.tga", 7);
+    //    TGA_Texture(TextureArray, (char*) "data/textures/tex1.tga", 8);
+    
+    TGA_Texture(TextureArray, (char*) "data/textures/sun.tga", 3);
 }
 
 void LensFlare::render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformdId, GLint texMode_uniformId) {
-
+    
     
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_LIGHTING);
     glDisable(GL_CULL_FACE);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, TextureArray[0]);
@@ -57,9 +55,6 @@ void LensFlare::render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniform
     _mesh->renderMesh(shader, pvm_uniformId, vm_uniformId, normal_uniformdId, 0);
     popMatrix(MODEL);
     
-    
-    
-    glDisable(GL_BLEND);
     glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
     
@@ -67,16 +62,16 @@ void LensFlare::render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniform
 
 void LensFlare::render_flare(VSShaderLib shader, int lx, int ly, int cx, int cy, GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformdId, GLint texMode_uniformId)
 {
-
+    
     int     dx, dy;          // Screen coordinates of "destination"
     int     px, py;          // Screen coordinates of flare element
     int     maxflaredist, flaredist, flaremaxsize, flarescale;
     int     width, height, alpha;    // Piece parameters;
     int     i;
-
+    
     float fScale = 0.2f;
     float fMaxSize = 0.5f;
-
+    
     
     // Compute how far off-center the flare source is.
     maxflaredist = sqrt(cx * cx + cy * cy);
@@ -90,7 +85,7 @@ void LensFlare::render_flare(VSShaderLib shader, int lx, int ly, int cx, int cy,
     dy = cy + (cy - ly);
     
     // Render each element.
-    for (i = 0; i < 3; i++)
+    for (i = 0; i < 4; i++)
     {
         
         // Position is interpolated along line between start and destination.
@@ -115,8 +110,6 @@ void LensFlare::render_flare(VSShaderLib shader, int lx, int ly, int cx, int cy,
         alpha = (flaredist*(relativePositions[i] > 24)) / maxflaredist;
         
         glDisable(GL_DEPTH_TEST);
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, TextureArray[i]);
@@ -129,9 +122,9 @@ void LensFlare::render_flare(VSShaderLib shader, int lx, int ly, int cx, int cy,
         _mesh->renderMesh(shader, pvm_uniformId, vm_uniformId, normal_uniformdId, 0);
         popMatrix(MODEL);
         
-        glDisable(GL_BLEND);
         glEnable(GL_CULL_FACE);
         glEnable(GL_DEPTH_TEST);
         
     }
 }
+

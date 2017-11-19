@@ -19,7 +19,6 @@ Life::Life() {
 
 void Life::render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformdId, GLint texMode_uniformId) {
     glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
 
     glActiveTexture(GL_TEXTURE0);
@@ -33,6 +32,6 @@ void Life::render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, G
     scale(MODEL, 1.0, 1.0, 1.0);
     _mesh->renderMesh(shader,pvm_uniformId, vm_uniformId, normal_uniformdId, 0);
     popMatrix(MODEL);
-    
     glDisable(GL_BLEND);
+    
 }

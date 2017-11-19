@@ -37,6 +37,7 @@ void MicroMachines::init(){
     
     _carUp = _carDown = _carLeft = _carRight = false;
     pause = false;
+    kaboom = false;
     current_camera = 0;
     
     // setup shaders
@@ -146,7 +147,9 @@ void MicroMachines::init(){
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
     glEnable(GL_MULTISAMPLE);
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);    
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);  
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 void MicroMachines::explosion(){
@@ -237,6 +240,9 @@ void MicroMachines::display()
     //_lights[7]->draw(shader, 0);
     //_lights[8]->draw(shader, 1);
     
+    
+    // Draw opaque objects
+    
     // render objects
     for (auto &object : _objects) {
       object->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
@@ -246,7 +252,6 @@ void MicroMachines::display()
     for (auto &orange : _oranges) {
         orange->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
     }
-    
     
     glEnable(GL_STENCIL_TEST);
     
@@ -277,33 +282,14 @@ void MicroMachines::display()
     popMatrix(MODEL);
     glDisable(GL_STENCIL_TEST);
 
+    
 
-    // render hud
-    pushMatrix(PROJECTION);
-    loadIdentity(PROJECTION);
-    pushMatrix(VIEW);
-    loadIdentity(VIEW);
-    
-    ortho(-10.0f, 10.0f, -10.0f, 10.0f, -10.0f, 100.0f);
-    
-    if (pause) {
-        _hud[0]->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
-    }
-    
-    for (auto &life : _lives) {
-        life->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
-    }
-    
-    if (game_over) {
-        _hud[1]->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
-    }
  
    // _lensFlare->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
     
-    popMatrix(VIEW);
-    popMatrix(PROJECTION);
+
     
-    
+    glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
     computeDerivedMatrix(PROJ_VIEW_MODEL);
 
@@ -334,12 +320,37 @@ void MicroMachines::display()
     }
     popMatrix(PROJECTION);
     popMatrix(VIEW);
+    glDisable(GL_BLEND);
     
     float camPos[3] = {camX, camY, camZ};
-    
+
     _vase->renderBillboard(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId, camPos, 3);
+
+    glEnable(GL_BLEND);
     _cup->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
+    glDisable(GL_BLEND);
+    // render hud
+    pushMatrix(PROJECTION);
+    loadIdentity(PROJECTION);
+    pushMatrix(VIEW);
+    loadIdentity(VIEW);
     
+    ortho(-10.0f, 10.0f, -10.0f, 10.0f, -10.0f, 100.0f);
+    
+    if (pause) {
+        _hud[0]->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
+    }
+    
+    for (auto &life : _lives) {
+        life->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
+    }
+    
+    if (game_over) {
+        _hud[1]->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
+    }
+    
+    popMatrix(VIEW);
+    popMatrix(PROJECTION);
 }
 
 void MicroMachines::update(int delta_t){
@@ -383,9 +394,7 @@ void MicroMachines::update(int delta_t){
                                                   _objects[object_collide]->getPosition().getZ() - 0.1 * cos((_car->getAngle() * PI / 180)));
         }
         _carUp = false;
-
         _carDown = false;
-
         _car->setAcceleration(0.0);
         _car->setSpeed(0.0);
 
@@ -509,6 +518,7 @@ void MicroMachines::processKeys(unsigned char key, int xx, int yy){
                 game_over = false;
                 init();
             }
+            break;
         case 'f':
             fog = !fog;
             break;
@@ -522,7 +532,15 @@ void MicroMachines::processKeys(unsigned char key, int xx, int yy){
                 _fireworks.clear();
             }else{
                 for(int i=0;i<MAX_PARTICULAS;i++){
-                    _fireworks.push_back(new Fireworks(0.8*frand() + 0.2 , frand()*M_PI , 2.0*frand()*M_PI));
+                    v = 0.8*frand() + 0.2;
+                    phi = frand()*M_PI;
+                    theta = 2.0*frand()*M_PI;
+                    _fireworks.push_back(new Fireworks( v, phi , theta));
+                    _fireworks[i]->life = 1.0f;
+                    _fireworks[i]->fade = 0.005f;
+                    _fireworks[i]->ax = 0.1f;
+                    _fireworks[i]->ay = -0.15f;
+                    _fireworks[i]->az = 0.0f;
                 }
                 kaboom = true;
             }
