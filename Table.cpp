@@ -11,7 +11,10 @@ Table::Table(){
     
     _mesh = new Mesh();
     _mesh->createCube();
+    _mesh->createQuad(30, 1.0);
     _mesh->setMeshMaterial(0, getAmbient(), getDiffuse(), getSpecular(), getEmissive(), getShininess(), 2);
+    _mesh->setMeshMaterial(1, getAmbient(), getDiffuse(), getSpecular(), getEmissive(), getShininess(), 2);
+
 
     glGenTextures(3, TextureArray);
     TGA_Texture(TextureArray, (char*) "data/textures/wood.tga", 0);
@@ -38,11 +41,38 @@ void Table::render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, 
     glBindTexture(GL_TEXTURE_2D, TextureArray[0]);
     glUniform1i(texMode_uniformId, 2);
     
+    
+    // Draw table sides
+    _mesh->loadMeshMaterial(shader, 1);
+    pushMatrix(MODEL);
+    translate(MODEL, 0, -0.5, 15);
+    _mesh->renderMesh(shader, pvm_uniformId, vm_uniformId, normal_uniformId, 1);
+    popMatrix(MODEL);
+    
+    _mesh->loadMeshMaterial(shader, 1);
+    pushMatrix(MODEL);
+    translate(MODEL, 0, -0.5, -15);
+    rotate(MODEL, 180, 0, 1, 0);
+    _mesh->renderMesh(shader, pvm_uniformId, vm_uniformId, normal_uniformId, 1);
+    popMatrix(MODEL);
+    
+    pushMatrix(MODEL);
+    translate(MODEL, 15, -0.5, 0);
+    rotate(MODEL, 90, 0, 1, 0);
+    _mesh->renderMesh(shader, pvm_uniformId, vm_uniformId, normal_uniformId, 1);
+    popMatrix(MODEL);
+    
+    pushMatrix(MODEL);
+    translate(MODEL, -15, -0.5, 0);
+    rotate(MODEL, -90, 0, 1, 0);
+    _mesh->renderMesh(shader, pvm_uniformId, vm_uniformId, normal_uniformId, 1);
+    popMatrix(MODEL);
+    
     // Draw table top
-    draw_tile(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId ,vec3(0.0f, -1.0f, 0.0f), vec3(15.0f, 1.0f, 15.0f));
-    draw_tile(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId ,vec3(-15.0f, -1.0f, 0.0f), vec3(15.0f, 1.0f, 15.0f));
-    draw_tile(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId ,vec3(-15.0f, -1.0f, -15.0f), vec3(15.0f, 1.0f, 15.0f));
-    draw_tile(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId ,vec3(0.0f, -1.0f, -15.0f), vec3(15.0f, 1.0f, 15.0f));
+    //draw_tile(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId ,vec3(0.0f, -1.0f, 0.0f), vec3(15.0f, 1.0f, 15.0f));
+    //draw_tile(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId ,vec3(-15.0f, -1.0f, 0.0f), vec3(15.0f, 1.0f, 15.0f));
+    //draw_tile(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId ,vec3(-15.0f, -1.0f, -15.0f), vec3(15.0f, 1.0f, 15.0f));
+    //draw_tile(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId ,vec3(0.0f, -1.0f, -15.0f), vec3(15.0f, 1.0f, 15.0f));
     
     // Draw table legs
     draw_tile(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId ,vec3(14.0f, -9.5f, 14.0f), vec3(1.0f, 8.5f, 1.0f));

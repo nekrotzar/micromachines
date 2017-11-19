@@ -24,6 +24,9 @@
 		271C84BC1F87D9C000E3F947 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 271C84BB1F87D9C000E3F947 /* GLUT.framework */; };
 		271C84BE1F87D9D600E3F947 /* libGLEW.2.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 271C84BD1F87D9D600E3F947 /* libGLEW.2.1.0.dylib */; };
 		272BAA4F1FA1BDEE004AB084 /* libassimp.4.0.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 272BAA4E1FA1BDEE004AB084 /* libassimp.4.0.1.dylib */; };
+		274F06991FC1BB58006A139C /* billboard.frag in shaders */ = {isa = PBXBuildFile; fileRef = 274F06981FC1BB52006A139C /* billboard.frag */; };
+		274F069A1FC1BB58006A139C /* billboard.vert in shaders */ = {isa = PBXBuildFile; fileRef = 274F06971FC1BB52006A139C /* billboard.vert */; };
+		274F069C1FC1BF9E006A139C /* Ground.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 274F069B1FC1BF9E006A139C /* Ground.cpp */; };
 		2755C00E1FB9F55200984DFD /* l3dBillboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2755C00C1FB9F55100984DFD /* l3dBillboard.cpp */; };
 		2755C0111FB9F70800984DFD /* Celery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2755C0101FB9F70800984DFD /* Celery.cpp */; };
 		2755C0141FB9F7F300984DFD /* celery.tga in textures */ = {isa = PBXBuildFile; fileRef = 2755C0131FB9F7ED00984DFD /* celery.tga */; };
@@ -60,7 +63,7 @@
 		27BF78471FB0D6AC0045EC44 /* Car.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27BF78221FB0D6A90045EC44 /* Car.cpp */; };
 		27BF78481FB0D6AC0045EC44 /* DynamicObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27BF78251FB0D6AA0045EC44 /* DynamicObject.cpp */; };
 		27BF78491FB0D6AC0045EC44 /* Cheerio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27BF78261FB0D6AA0045EC44 /* Cheerio.cpp */; };
-		27BF784A1FB0D6AC0045EC44 /* MicroMachines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27BF78281FB0D6AA0045EC44 /* MicroMachines.cpp */; settings = {COMPILER_FLAGS = "-Wno-deprected"; }; };
+		27BF784A1FB0D6AC0045EC44 /* MicroMachines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27BF78281FB0D6AA0045EC44 /* MicroMachines.cpp */; settings = {COMPILER_FLAGS = "-Wno-deprecated"; }; };
 		27BF784B1FB0D6AC0045EC44 /* Candle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27BF782A1FB0D6AB0045EC44 /* Candle.cpp */; };
 		27BF784C1FB0D6AC0045EC44 /* DirectionalLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27BF782C1FB0D6AB0045EC44 /* DirectionalLight.cpp */; };
 		27BF784D1FB0D6AC0045EC44 /* Butter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27BF78311FB0D6AC0045EC44 /* Butter.cpp */; };
@@ -79,8 +82,6 @@
 		D16A9E411FBA164700E890ED /* Coffe cup.obj in models */ = {isa = PBXBuildFile; fileRef = D16A9E3E1FBA162300E890ED /* Coffe cup.obj */; };
 		D181FBCC1FBCAD6D00E3A500 /* flare3.tga in textures */ = {isa = PBXBuildFile; fileRef = D181FBCA1FBCAD6100E3A500 /* flare3.tga */; };
 		D181FBCD1FBCAD6D00E3A500 /* sun.tga in textures */ = {isa = PBXBuildFile; fileRef = D181FBCB1FBCAD6200E3A500 /* sun.tga */; };
-		D19136351FBB362A0093366E /* billboard.frag in shaders */ = {isa = PBXBuildFile; fileRef = D19136341FBB36190093366E /* billboard.frag */; };
-		D19136361FBB362A0093366E /* billboard.vert in shaders */ = {isa = PBXBuildFile; fileRef = D19136331FBB36180093366E /* billboard.vert */; };
 		D19136381FBB36820093366E /* particula.bmp in textures */ = {isa = PBXBuildFile; fileRef = D19136371FBB36760093366E /* particula.bmp */; };
 		D191363B1FBB385E0093366E /* LensFlare.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19136391FBB385E0093366E /* LensFlare.cpp */; };
 /* End PBXBuildFile section */
@@ -113,8 +114,8 @@
 			dstPath = data/shaders;
 			dstSubfolderSpec = 16;
 			files = (
-				D19136351FBB362A0093366E /* billboard.frag in shaders */,
-				D19136361FBB362A0093366E /* billboard.vert in shaders */,
+				274F06991FC1BB58006A139C /* billboard.frag in shaders */,
+				274F069A1FC1BB58006A139C /* billboard.vert in shaders */,
 				27ADF54E1FA14D09002765D2 /* pointlight.vert in shaders */,
 				27ADF54F1FA14D09002765D2 /* pointlight.frag in shaders */,
 			);
@@ -188,6 +189,10 @@
 		271C84BB1F87D9C000E3F947 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		271C84BD1F87D9D600E3F947 /* libGLEW.2.1.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.2.1.0.dylib; path = ../../../../usr/local/Cellar/glew/2.1.0/lib/libGLEW.2.1.0.dylib; sourceTree = "<group>"; };
 		272BAA4E1FA1BDEE004AB084 /* libassimp.4.0.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.4.0.1.dylib; path = ../../../../usr/local/Cellar/assimp/4.0.1/lib/libassimp.4.0.1.dylib; sourceTree = "<group>"; };
+		274F06971FC1BB52006A139C /* billboard.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = billboard.vert; sourceTree = "<group>"; };
+		274F06981FC1BB52006A139C /* billboard.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = billboard.frag; sourceTree = "<group>"; };
+		274F069B1FC1BF9E006A139C /* Ground.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Ground.cpp; sourceTree = "<group>"; };
+		274F069D1FC1BFA8006A139C /* Ground.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Ground.h; sourceTree = "<group>"; };
 		2755C00C1FB9F55100984DFD /* l3dBillboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = l3dBillboard.cpp; sourceTree = "<group>"; };
 		2755C00D1FB9F55200984DFD /* l3DBillboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = l3DBillboard.h; sourceTree = "<group>"; };
 		2755C00F1FB9F59B00984DFD /* maths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = maths.h; sourceTree = "<group>"; };
@@ -276,8 +281,6 @@
 		D16A9E3F1FBA162300E890ED /* Coffe cup.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Coffe cup.mtl"; sourceTree = "<group>"; };
 		D181FBCA1FBCAD6100E3A500 /* flare3.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = flare3.tga; sourceTree = "<group>"; };
 		D181FBCB1FBCAD6200E3A500 /* sun.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = sun.tga; sourceTree = "<group>"; };
-		D19136331FBB36180093366E /* billboard.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = billboard.vert; path = ../../../../../Downloads/snow_fireworks/shaders/billboard.vert; sourceTree = "<group>"; };
-		D19136341FBB36190093366E /* billboard.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = billboard.frag; path = ../../../../../Downloads/snow_fireworks/shaders/billboard.frag; sourceTree = "<group>"; };
 		D19136371FBB36760093366E /* particula.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = particula.bmp; sourceTree = "<group>"; };
 		D19136391FBB385E0093366E /* LensFlare.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LensFlare.cpp; sourceTree = "<group>"; };
 		D191363A1FBB385E0093366E /* LensFlare.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LensFlare.h; sourceTree = "<group>"; };
@@ -302,6 +305,8 @@
 		271C846D1F87D91C00E3F947 = {
 			isa = PBXGroup;
 			children = (
+				274F069D1FC1BFA8006A139C /* Ground.h */,
+				274F069B1FC1BF9E006A139C /* Ground.cpp */,
 				D19136391FBB385E0093366E /* LensFlare.cpp */,
 				D191363A1FBB385E0093366E /* LensFlare.h */,
 				2755C0101FB9F70800984DFD /* Celery.cpp */,
@@ -437,8 +442,8 @@
 		27ADF4F71FA14C88002765D2 /* shaders */ = {
 			isa = PBXGroup;
 			children = (
-				D19136341FBB36190093366E /* billboard.frag */,
-				D19136331FBB36180093366E /* billboard.vert */,
+				274F06981FC1BB52006A139C /* billboard.frag */,
+				274F06971FC1BB52006A139C /* billboard.vert */,
 				27ADF4F81FA14C88002765D2 /* pointlight.vert */,
 				27ADF4F91FA14C88002765D2 /* pointlight.frag */,
 			);
@@ -543,6 +548,7 @@
 				27BF78381FB0D6AC0045EC44 /* Pause.cpp in Sources */,
 				270354531FB8ED9600EDC946 /* Cup.cpp in Sources */,
 				27BF783D1FB0D6AC0045EC44 /* Camera.cpp in Sources */,
+				274F069C1FC1BF9E006A139C /* Ground.cpp in Sources */,
 				27BF784B1FB0D6AC0045EC44 /* Candle.cpp in Sources */,
 				27BF78471FB0D6AC0045EC44 /* Car.cpp in Sources */,
 				27BF784A1FB0D6AC0045EC44 /* MicroMachines.cpp in Sources */,

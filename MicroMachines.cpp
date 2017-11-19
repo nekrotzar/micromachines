@@ -49,6 +49,7 @@ void MicroMachines::init(){
     _cup = new Cup();
     _celery = new Celery();
     _lensFlare = new LensFlare();
+    _ground = new Ground();
     
     // create hud
     _hud.push_back(new Pause());
@@ -139,8 +140,7 @@ void MicroMachines::init(){
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
     glEnable(GL_MULTISAMPLE);
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-    
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);    
 }
 
 void MicroMachines::display()
@@ -185,6 +185,9 @@ void MicroMachines::display()
     glUniform1i(tex_loc1, 1);
     glUniform1i(fog_loc, fog);
     
+    float fogColor[4] = {0.7, 0.7, 0.7, 1.0};
+    glUniform4fv(fogColor_loc,1,fogColor);
+    
     // Send the light position in eye coordinates
     
     // draw directional light
@@ -211,14 +214,45 @@ void MicroMachines::display()
     
     // render objects
     for (auto &object : _objects) {
-        object->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
+      object->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
     }
-    
+
     // render oranges
     for (auto &orange : _oranges) {
         orange->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
     }
     
+    
+    glEnable(GL_STENCIL_TEST);
+    
+    // Draw the ground
+    glStencilFunc(GL_ALWAYS, 1, 0xFF);
+    glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+    glStencilMask(0xFF);
+    glDepthMask(GL_FALSE);
+    glClear(GL_STENCIL_BUFFER_BIT);
+    
+    _ground->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
+    
+    // Draw all the other objects as reflection
+    glStencilFunc(GL_EQUAL, 1, 0xFF);
+    glStencilMask(0x00);
+    glDepthMask(GL_TRUE);
+
+    pushMatrix(MODEL);
+    scale(MODEL, 1, -1, 1);
+    for (int i = 1; i < _objects.size(); i++) {
+        _objects[i]->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
+    }
+    
+    for (auto &orange : _oranges) {
+        orange->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
+    }
+    
+    popMatrix(MODEL);
+    glDisable(GL_STENCIL_TEST);
+
+
     // render hud
     pushMatrix(PROJECTION);
     loadIdentity(PROJECTION);
@@ -542,8 +576,8 @@ void MicroMachines::processMouseMotion(int xx, int yy)
         
         if (betaAux > 85.0f)
             betaAux = 85.0f;
-        else if (betaAux < 15.0f)
-            betaAux = 15.0f;
+        else if (betaAux < -85.0f)
+            betaAux = -85.0f;
         rAux = r;
     }
     // right mouse button: zoom
@@ -602,6 +636,8 @@ GLuint MicroMachines::setupShaders(){
     tex_loc0 = glGetUniformLocation(shader.getProgramIndex(), "texmap0");
     tex_loc1 = glGetUniformLocation(shader.getProgramIndex(), "texmap1");
     fog_loc = glGetUniformLocation(shader.getProgramIndex(), "fog");
+    fogColor_loc = glGetUniformLocation(shader.getProgramIndex(), "fogColor");
+
     
     printf("InfoLog for Hello World Shader\n%s\n\n", shader.getAllInfoLogs().c_str());
     

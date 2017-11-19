@@ -1,7 +1,7 @@
 #include "Cheerio.h"
 
 Cheerio::Cheerio(double x, double z) {
-	Entity::setPosition(x, getPosition().getY(), z);
+	Entity::setPosition(x, 0.035, z);
     
     setAmbient(0.05f, 0.05f, 0.1f, 1.0f);
     setDiffuse(0.0f, 0.0f, 0.0f, 1.0f);

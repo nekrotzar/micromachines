@@ -36,6 +36,7 @@
 #include "Cup.h"
 #include "Celery.h"
 #include "LensFlare.h"
+#include "Ground.h"
 
 class MicroMachines{
 public:
@@ -72,7 +73,7 @@ protected:
     GLint normal_uniformId;
     GLint texMode_uniformId;
     GLint tex_loc0, tex_loc1;
-    GLint fog_loc;
+    GLint fog_loc, fogColor_loc;
     
     float camX, camY, camZ;
     int startX, startY, tracking = 0;
@@ -89,6 +90,7 @@ protected:
     Cup *_cup;
     Celery *_celery;
     LensFlare *_lensFlare;
+    Ground *_ground;
     
     
     Spotlight * _spot1;

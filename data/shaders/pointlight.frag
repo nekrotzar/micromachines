@@ -6,6 +6,8 @@ uniform sampler2D texmap0;
 uniform sampler2D texmap1;
 uniform bool fog;
 
+uniform vec4 fogColor;
+
 uniform int texMode;
 
 struct Materials {
@@ -141,7 +143,7 @@ void main() {
     }
    vec4 texel, texel1;
     
-    const float density = 0.1;
+    const float density = 0.3;
     const float gradient = 2;
     float distance = length(DataIn.position.xyz);
     
@@ -168,6 +170,6 @@ void main() {
    }
     
     if (fog) {
-        colorOut = mix(vec4(0.0,0.0,0.0,0.0),colorOut, visibility);
+        colorOut = mix(fogColor, colorOut, visibility);
     }
 }
