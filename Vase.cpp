@@ -29,7 +29,7 @@ void Vase::renderBillboard(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uni
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, TextureArray[0]);
     
-    glUniform1i(texMode_uniformId, 2);
+    glUniform1i(texMode_uniformId, 3);
     
     pushMatrix(MODEL);
     translate(MODEL, getPosition().getX(), getPosition().getY(), getPosition().getZ());
@@ -55,6 +55,9 @@ void Vase::renderBillboard(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uni
         } else {
             BillboardCheatCylindricalBegin();
         }
+        
+        computeDerivedMatrix_PVM();
+        
     } else {
         computeDerivedMatrix(PROJ_VIEW_MODEL);
     }

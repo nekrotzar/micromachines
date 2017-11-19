@@ -4,8 +4,8 @@ GameOver::GameOver() {
     setPosition(2.5, -2.5, 0.0);
     
     setAmbient(1.0f, 1.0f, 1.0f, 1.0f );
-    setDiffuse(0.0f, 0.0f, 0.0f, 1.0f);
-    setSpecular(0.0f, 0.0f, 0.0f, 1.0f );
+    setDiffuse(1.0f, 1.0f, 1.0f, 1.0f);
+    setSpecular(1.0f, 1.0f, 1.0f, 1.0f );
     setEmissive(0.0f, 0.0f, 0.0f, 1.0f);
     setShininess(10.0f);
     
@@ -27,7 +27,7 @@ void GameOver::render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformI
     glEnable(GL_BLEND);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, TextureArray[0]);
-    glUniform1i(texMode_uniformId, 1);
+    glUniform1i(texMode_uniformId, 3);
     
     _mesh->loadMeshMaterial(shader, 0);
     pushMatrix(MODEL);

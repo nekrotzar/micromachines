@@ -2,11 +2,12 @@
 
 Spotlight::Spotlight(vec3 position) : LightSource(1.0, position){
     _direction = vec3(0.0, 1.0 ,0.0);
-    _cutoff = 15.0f;
+    _cutoff = 10.0f;
     _exponent = 10.0f;
     _constant = 1.5f;
     _linear = .0015f;
     _quadratic = 0.00001f;
+    _isOn = false;
 }
 
 Spotlight::Spotlight(vec3 position, float cutoff, float exponent) : LightSource(1.0, position) {

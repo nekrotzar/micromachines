@@ -69,7 +69,7 @@ void MicroMachines::init(){
     // create oranges
     for (int i = 0; i < 5; i++){
         _oranges.push_back(new Orange((double)(rand() % 23 + (-13) + ((rand() % 99) / 100)), (double)(rand() % 23 + (-13) + ((rand() % 99) / 100))));
-        _oranges[i]->setSpeed((rand() % 15)*0.001);
+        _oranges[i]->setSpeed(0);
         _oranges[i]->setAngle(rand() % 360);
     }
     
@@ -137,19 +137,18 @@ void MicroMachines::init(){
     _lights.push_back(new PointLight(vec3(9,3.25,-9)));        // Point Light #5
     _lights.push_back(new PointLight(vec3(-5,3.25,0)));        // Point Light #6
     
-    //_spot1 = new Spotlight(vec3(0.0,1,0.0));
-    //_spot2 = new Spotlight(vec3(0.0,1,0.0));
+    _spot1 = new Spotlight(vec3(0.0,1,0.0));
+    _spot2 = new Spotlight(vec3(0.0,1,0.0));
     
-    //_lights.push_back(_spot1);            // Spot Light #7
-    //_lights.push_back(_spot2);          // Spot Light #8
+    _lights.push_back(_spot1);            // Spot Light #7
+    _lights.push_back(_spot2);          // Spot Light #8
     
     // some GL settings
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
     glEnable(GL_MULTISAMPLE);
     glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);  
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void MicroMachines::explosion(){
@@ -173,6 +172,20 @@ void MicroMachines::explosion(){
 
 void MicroMachines::display()
 {
+    float backgroundColor[3];
+    
+    if(!night){
+        backgroundColor[0] =1.0-0.19607;
+        backgroundColor[1] =1-0.013333f;
+        backgroundColor[2] =1-0.0432f;
+    } else {
+        backgroundColor[0] =0.1;
+        backgroundColor[1] =0.1;
+        backgroundColor[2] =0.1;
+    }
+    
+    glClearColor(backgroundColor[0], backgroundColor[1] , backgroundColor[2], 1.0f);
+    
     keySpecialOperations();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     loadIdentity(VIEW);
@@ -192,12 +205,12 @@ void MicroMachines::display()
             lookAt(0, 20, 0, 0, 0, 0, 1, 0, 0);
             break;
         case 1:
-            lookAt(camX, camY, camZ, 0, 0, 0, 0, 1, 0);
+            lookAt(camX, camY , camZ, 0, 0, 0, 0, 1, 0);
             break;
         case 2:
-            lookAt(carX - 2 * sin(angle),
-                   carY + 2,
-                   carZ - 2 * cos(angle),
+            lookAt(carX - 1 * sin(angle),
+                   carY + 0.6,
+                   carZ - 1 * cos(angle),
                    carX,
                    carY,
                    carZ ,
@@ -213,7 +226,15 @@ void MicroMachines::display()
     glUniform1i(tex_loc1, 1);
     glUniform1i(fog_loc, fog);
     
-    float fogColor[4] = {0.7, 0.7, 0.7, 1.0};
+    float fogColor[4];
+    if(!night){
+         fogColor[0] = 0.7, fogColor[1] = 0.7, fogColor[2] = 0.7, fogColor[3] = 1.0;
+    } else {
+        fogColor[0] = 0.051, fogColor[1] = 0.05, fogColor[2] = 0.05, fogColor[3] = 1.0;
+
+    }
+    
+    
     glUniform4fv(fogColor_loc,1,fogColor);
     
     // Send the light position in eye coordinates
@@ -226,19 +247,19 @@ void MicroMachines::display()
         _lights[i+1]->draw(shader, i);
     
     // draw spot lights
-    //_spot1->setPosition(carX + 0.2*sin(angle), carY, carZ + 0.2*cos(angle));
-    //_spot2->setPosition(carX + 0.2*sin(angle), carY, carZ + 0.2*cos(angle));
+    _spot1->setPosition(carX, carY - 0.2, carZ);
+    _spot1->setPosition(carX, carY - 0.2, carZ);
 
     if (current_camera == 2) {
-        //_spot1->setDirection(vec3(carX + sin(angle), 2, carZ + cos(angle)));
-        //_spot2->setDirection(vec3(carX + sin(angle), 2, carZ + cos(angle)));
+        _spot1->setDirection(vec3((carX + 0.5) + sin(angle), 0.9, (carZ+0.5) + cos(angle)));
+        _spot2->setDirection(vec3((carX + 0.5) + sin(angle), 0.9, (carZ-0.5) + cos(angle)));
 
     } else {
-        //_spot1->setDirection(vec3(0, 4, 0));
-        //_spot2->setDirection(vec3(0, 4, 0));
+        _spot1->setDirection(vec3(0, 1, 0));
+        _spot2->setDirection(vec3(0, 1, 0));
     }
-    //_lights[7]->draw(shader, 0);
-    //_lights[8]->draw(shader, 1);
+    _lights[7]->draw(shader, 0);
+    _lights[8]->draw(shader, 1);
     
     
     // Draw opaque objects
@@ -322,9 +343,22 @@ void MicroMachines::display()
     popMatrix(VIEW);
     glDisable(GL_BLEND);
     
-    float camPos[3] = {camX, camY, camZ};
+    float camPos[3];
+    if(current_camera == 2){
+        camPos[0] = _car->getPosition().getX();
+        camPos[1] = _car->getPosition().getY();
+        camPos[2] = _car->getPosition().getZ();
+        _vase->renderBillboard(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId, camPos, 3);
 
-    _vase->renderBillboard(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId, camPos, 3);
+    }
+    else if (current_camera == 1){
+        camPos[0] = camX;
+        camPos[1] = camY;
+        camPos[2] = camZ;
+        _vase->renderBillboard(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId, camPos, 2);
+    }
+    
+    
 
     glEnable(GL_BLEND);
     _cup->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
@@ -363,14 +397,18 @@ void MicroMachines::update(int delta_t){
     keySpecialOperations();
     vec3 tempPos = _car->getPosition();
     
-    _car->update(delta_t);
+    _car->update(t);
+    
     
     for (int i = 0; i < _oranges.size(); i++) {
-        if (_oranges[i]->getPosition().getX() >= 13 || _oranges[i]->getPosition().getX() <= -13 || _oranges[i]->getPosition().getZ() >= 13 || _oranges[i]->getPosition().getZ() <= -13) {
+        _oranges[i]->setAcceleration(_oranges[i]->getAcceleration() + (rand() % 10) * 0.00000000001);
+        _oranges[i]->update(t);
+        
+        if (_oranges[i]->getPosition().getX() >= 15 || _oranges[i]->getPosition().getX() <= -15 || _oranges[i]->getPosition().getZ() >= 15 || _oranges[i]->getPosition().getZ() <= -15) {
             _oranges[i]->setPosition((double)(rand() % 23 + (-13) + ((rand() % 99) / 100)), _oranges[i]->getPosition().getY(), (double)(rand() % 23 + (-13) + ((rand() % 99) / 100)));
         }
         else {
-            _oranges[i]->setPosition(_oranges[i]->getSpeed()    * cos((_oranges[i]->getAngle() * PI / 180))    * delta_t / 10000 + _oranges[i]->getPosition().getX(), _oranges[i]->getPosition().getY(), _oranges[i]->getSpeed() * sin((_oranges[i]->getAngle() * PI / 180)) * delta_t / 10000 + _oranges[i]->getPosition().getZ());
+            _oranges[i]->setPosition(_oranges[i]->getSpeed()    * cos((_oranges[i]->getAngle() * PI / 180))    * t / 10000 + _oranges[i]->getPosition().getX(), _oranges[i]->getPosition().getY(), _oranges[i]->getSpeed() * sin((_oranges[i]->getAngle() * PI / 180)) * t / 10000 + _oranges[i]->getPosition().getZ());
         }
     }
     
@@ -417,10 +455,12 @@ void MicroMachines::update(int delta_t){
         _car->setAngle(90);
         _car->setPosition(1.4, 0.0, 9.8);
 
-        if (!_lives.empty()) {
+        if (n_lives > 1) {
             _lives.pop_back();
             orang = 10;
-        } else {
+            n_lives--;
+        } else{
+            _lives.pop_back();
             game_over = true;
         }
     }
@@ -508,6 +548,7 @@ void MicroMachines::processKeys(unsigned char key, int xx, int yy){
             glEnable(GL_MULTISAMPLE);
             break;
         case 'n':
+            night = !night;
             _lights[0]->setState(!_lights[0]->getState());
             break;
 		case 's':
@@ -604,9 +645,9 @@ void MicroMachines::keySpecialOperations() {
     
     if (_car->getSpeed() != 0 && !pause && !game_over) {
         if (_carLeft) {
-            _car->setAngle(_car->getAngle() + 1);
+            _car->setAngle(_car->getAngle() + 2);
         } else if (_carRight) {
-            _car->setAngle(_car->getAngle() - 1);
+            _car->setAngle(_car->getAngle() - 2);
         }
     }
 }
@@ -651,10 +692,10 @@ void MicroMachines::processMouseMotion(int xx, int yy)
         alphaAux = alpha + deltaX;
         betaAux = beta + deltaY;
         
-        if (betaAux > 85.0f)
-            betaAux = 85.0f;
-        else if (betaAux < -85.0f)
-            betaAux = -85.0f;
+        if (betaAux > 45.0f)
+            betaAux = 45.0f;
+        else if (betaAux < 15.0f)
+            betaAux = 15.0f;
         rAux = r;
     }
     // right mouse button: zoom

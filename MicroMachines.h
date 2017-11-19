@@ -60,6 +60,7 @@ public:
     void explosion();
 
 protected:
+    bool night = false;
     bool fog = false;
 	bool pause = false;
     bool game_over = false;
