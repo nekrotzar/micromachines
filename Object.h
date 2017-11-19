@@ -20,7 +20,7 @@ protected:
     int _texCount;
     
     double _radius;
-    GLuint TextureArray[3];
+    GLuint TextureArray[8];
     Mesh * _mesh;
 public:
     float * getAmbient();

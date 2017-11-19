@@ -37,6 +37,7 @@ void MicroMachines::init(){
     
     _carUp = _carDown = _carLeft = _carRight = false;
     pause = false;
+    kaboom = false;
     current_camera = 0;
     
     // setup shaders
@@ -335,8 +336,6 @@ void MicroMachines::display()
     popMatrix(PROJECTION);
     popMatrix(VIEW);
     
-    
-    
     _celery->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
     _cup->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
     
@@ -383,9 +382,7 @@ void MicroMachines::update(int delta_t){
                                                   _objects[object_collide]->getPosition().getZ() - 0.1 * cos((_car->getAngle() * PI / 180)));
         }
         _carUp = false;
-
         _carDown = false;
-
         _car->setAcceleration(0.0);
         _car->setSpeed(0.0);
 
@@ -431,7 +428,23 @@ int MicroMachines::collides() {
             return i;
         }
     }
-    for (int i = 13; i < 94; i++) {
+    for (int i = 13; i < 94; i++) {#ifndef LensFlare_h
+#define LensFlare_h
+        
+#include <stdio.h>
+#include "Object.h"
+        
+        
+        class LensFlare : public Object {
+        protected:
+            float relativePositions[4] = {0.7f, 0.8f, 0.9f, 1.0f};
+        public:
+            LensFlare();
+            void render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformdId, GLint texMode_uniformId);
+            void render_flare(VSShaderLib shader, int lx, int ly, int cx, int cy, GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformdId, GLint texMode_uniformId);
+        };
+        
+#endif /* LensFlare_h */
         if ((_objects[i]->getPosition().getX() - 0.4 < _car->getPosition().getX()) &&
             (_car->getPosition().getX() < _objects[i]->getPosition().getX() + 0.4) &&
             (_objects[i]->getPosition().getZ() - 0.4 < _car->getPosition().getZ()) &&
@@ -522,7 +535,15 @@ void MicroMachines::processKeys(unsigned char key, int xx, int yy){
                 _fireworks.clear();
             }else{
                 for(int i=0;i<MAX_PARTICULAS;i++){
-                    _fireworks.push_back(new Fireworks(0.8*frand() + 0.2 , frand()*M_PI , 2.0*frand()*M_PI));
+                    v = 0.8*frand() + 0.2;
+                    phi = frand()*M_PI;
+                    theta = 2.0*frand()*M_PI;
+                    _fireworks.push_back(new Fireworks( v, phi , theta));
+                    _fireworks[i]->life = 1.0f;
+                    _fireworks[i]->fade = 0.005f;
+                    _fireworks[i]->ax = 0.1f;
+                    _fireworks[i]->ay = -0.15f;
+                    _fireworks[i]->az = 0.0f;
                 }
                 kaboom = true;
             }

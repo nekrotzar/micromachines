@@ -1,7 +1,7 @@
 #include "Car.h"
 
 Car::Car(){
-    DynamicObject::setAngle(0);
+    DynamicObject::setAngle(90);
     DynamicObject::setSpeed(0.0);
     Entity::setPosition(1.4, 0.0, 9.8);
     Object::setRadius(1.15);
