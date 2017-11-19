@@ -716,6 +716,14 @@ void MicroMachines::processMouseMotion(int xx, int yy)
     //    glutPostRedisplay();
     xFlare = deltaX * SCREENwidth/glutGet(GLUT_WINDOW_WIDTH);
     yFlare = deltaY * SCREENheight/glutGet(GLUT_WINDOW_HEIGHT);
+    if ( xFlare >= SCREENwidth )
+        xFlare = SCREENwidth - 1;
+    if ( xFlare < 0 )
+        xFlare = 0;
+    if ( yFlare >= SCREENheight )
+        yFlare = SCREENheight - 1;
+    if ( yFlare < 0 )
+        yFlare = 0;
 }
 
 void MicroMachines::processMouseWheel(int wheel, int direction, int x, int y){
