@@ -355,7 +355,7 @@ void MicroMachines::display()
         camPos[0] = camX;
         camPos[1] = camY;
         camPos[2] = camZ;
-        _vase->renderBillboard(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId, camPos, 2);
+        _vase->renderBillboard(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId, camPos, 3);
     }
     
     
@@ -455,12 +455,11 @@ void MicroMachines::update(int delta_t){
         _car->setAngle(90);
         _car->setPosition(1.4, 0.0, 9.8);
 
-        if (n_lives > 1) {
+        if (!_lives.empty()) {
             _lives.pop_back();
             orang = 10;
             n_lives--;
         } else{
-            _lives.pop_back();
             game_over = true;
         }
     }

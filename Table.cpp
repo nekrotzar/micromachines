@@ -3,7 +3,7 @@
 Table::Table(){
     setPosition(0.0, 0.0, 0.0);
     
-    setAmbient(0.1f, 0.1f, 0.1f, 1.0f);
+    setAmbient(0.1f, 0.4f, 0.1f, 1.0f);
     setDiffuse(0.1f, 0.5f, 0.1f, 1.0f);
     setSpecular(0.1f, 0.1f, 0.1f, 1.0f);
     setEmissive(0.0f, 0.0f, 0.0f, 1.0f);
