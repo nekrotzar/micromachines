@@ -1,8 +1,8 @@
 #include "Fireworks.h"
 
-Fireworks::Fireworks(GLfloat v,GLfloat phi, GLfloat theta) {
+Fireworks::Fireworks(GLfloat v,GLfloat phi, GLfloat theta, float x, float y, float z) {
     
-    setPosition(2.0, 2.0, 2.0);
+    setPosition(x, y, z);
     setAmbient(1.0f, 1.0f, 1.0f, 1.0f);
     setDiffuse(1.0f, 1.0f, 1.0f, 1.0f);
     setSpecular(0.0f, 0.0f, 0.0f, 0.0f);

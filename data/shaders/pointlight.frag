@@ -7,6 +7,7 @@ uniform sampler2D texmap1;
 uniform bool fog;
 
 uniform vec4 fogColor;
+uniform bool darkReflections;
 
 uniform int texMode;
 
@@ -181,6 +182,9 @@ void main() {
        texel1 = texture(texmap1, DataIn.texcoord);
        colorOut = max(vec4(totalDiffuse, 1.0) * texel * texel1 + vec4(totalSpecular, 1.0) * mat.specular, 0.1 * texel * texel1);
    }
+    if(darkReflections) {
+        colorOut *= vec4(0.3,0.3,0.3,1.0);
+    }
     
     if (fog) {
         colorOut = mix(fogColor, colorOut, visibility);

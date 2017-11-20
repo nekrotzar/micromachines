@@ -38,6 +38,7 @@
 #include "LensFlare.h"
 #include "Fireworks.h"
 #include "Ground.h"
+#include "Sun.h"
 
 class MicroMachines{
 public:
@@ -77,6 +78,7 @@ protected:
     GLint texMode_uniformId;
     GLint tex_loc0, tex_loc1;
     GLint fog_loc, fogColor_loc;
+    GLint reflect_loc;
 
     GLfloat v, theta, phi;
     bool kaboom;
@@ -97,7 +99,7 @@ protected:
     Vase *_vase;
     LensFlare *_lensFlare;
     Ground *_ground;
-    
+    Sun * _sun;
     
     Spotlight * _spot1;
     Spotlight * _spot2;

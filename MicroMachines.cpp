@@ -52,6 +52,7 @@ void MicroMachines::init(){
     _vase = new Vase();
     _lensFlare = new LensFlare();
     _ground = new Ground();
+    _sun = new Sun();
     
     // create hud
     _hud.push_back(new Pause());
@@ -85,7 +86,7 @@ void MicroMachines::init(){
     
     //create fireworks
     for(int i=0;i<MAX_PARTICULAS;i++){
-        _fireworks.push_back(new Fireworks(0.8*frand() + 0.2 , frand()*M_PI , 2.0*frand()*M_PI));
+        _fireworks.push_back(new Fireworks(0.8*frand() + 0.2 , frand()*M_PI , 2.0*frand()*M_PI, _car->getPosition().getX(), _car->getPosition().getY(), _car->getPosition().getZ()));
     }
     
     _objects[7]->setPosition(5 , 1.5,  0);
@@ -108,16 +109,16 @@ void MicroMachines::init(){
     
     //======= Exterior Elipse ======
     while (g < 45) {
-        x = 9.3 * cos((angle * PI) / 180);
-        y = 9.3 * sin((angle * PI) / 180);
+        x = 9.0 * cos((angle * PI) / 180);
+        y = 9.0 * sin((angle * PI) / 180);
         _objects.push_back(new Cheerio(x, y));
         angle += 8;
         g++;
     }
     //======= Interior Elipse ======
     while (j < 36) {
-        x1 = 11.0 * cos((angle1 * PI) / 180);
-        y1 = 11.0 * sin((angle1 * PI) / 180);
+        x1 = 12.0 * cos((angle1 * PI) / 180);
+        y1 = 10.5 * sin((angle1 * PI) / 180);
         _objects.push_back(new Cheerio(x1, y1));
         angle1 += 10;
         j++;
@@ -237,6 +238,9 @@ void MicroMachines::display()
     
     glUniform4fv(fogColor_loc,1,fogColor);
     
+    _spot1->setPosition(carX + sin(angle) , carY + 0.1,  carZ + cos(angle));
+    _spot2->setPosition(carX + sin(angle) , carY + 0.1,  carZ + cos(angle));
+
     // Send the light position in eye coordinates
     
     // draw directional light
@@ -247,16 +251,14 @@ void MicroMachines::display()
         _lights[i+1]->draw(shader, i);
     
     // draw spot lights
-    _spot1->setPosition(carX, carY - 0.2, carZ);
-    _spot1->setPosition(carX, carY - 0.2, carZ);
 
     if (current_camera == 2) {
-        _spot1->setDirection(vec3((carX + 0.5) + sin(angle), 0.9, (carZ+0.5) + cos(angle)));
-        _spot2->setDirection(vec3((carX + 0.5) + sin(angle), 0.9, (carZ-0.5) + cos(angle)));
+        _spot1->setDirection(vec3(carX + sin(angle),0.4,carZ + cos(angle)));
+        _spot2->setDirection(vec3(carX + sin(angle),0.4,carZ + cos(angle)));
 
     } else {
-        _spot1->setDirection(vec3(0, 1, 0));
-        _spot2->setDirection(vec3(0, 1, 0));
+        _spot1->setDirection(vec3(sin(angle), 8, cos(angle)));
+        _spot2->setDirection(vec3(sin(angle), 8, cos(angle)));
     }
     _lights[7]->draw(shader, 0);
     _lights[8]->draw(shader, 1);
@@ -289,7 +291,10 @@ void MicroMachines::display()
     glStencilFunc(GL_EQUAL, 1, 0xFF);
     glStencilMask(0x00);
     glDepthMask(GL_TRUE);
+    glDisable(GL_CULL_FACE);
 
+    glUniform1i(reflect_loc, true);
+    
     pushMatrix(MODEL);
     scale(MODEL, 1, -1, 1);
     for (int i = 1; i < _objects.size(); i++) {
@@ -301,13 +306,27 @@ void MicroMachines::display()
     }
     
     popMatrix(MODEL);
+    glEnable(GL_CULL_FACE);
     glDisable(GL_STENCIL_TEST);
+    
+    glUniform1i(reflect_loc, false);
 
     
 
  
    // _lensFlare->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId);
-    
+    float camPos[3];
+    if(current_camera == 2){
+        camPos[0] = _car->getPosition().getX();
+        camPos[1] = _car->getPosition().getY();
+        camPos[2] = _car->getPosition().getZ();
+    }
+    else if (current_camera == 1){
+        camPos[0] = camX;
+        camPos[1] = camY;
+        camPos[2] = camZ;
+    }
+    _sun->render(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId, camPos, 3);
 
     
     glEnable(GL_BLEND);
@@ -343,7 +362,7 @@ void MicroMachines::display()
     popMatrix(VIEW);
     glDisable(GL_BLEND);
     
-    float camPos[3];
+    
     if(current_camera == 2){
         camPos[0] = _car->getPosition().getX();
         camPos[1] = _car->getPosition().getY();
@@ -355,7 +374,7 @@ void MicroMachines::display()
         camPos[0] = camX;
         camPos[1] = camY;
         camPos[2] = camZ;
-        _vase->renderBillboard(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId, camPos, 3);
+        _vase->renderBillboard(shader, pvm_uniformId, vm_uniformId, normal_uniformId, texMode_uniformId, camPos, 2);
     }
     
     
@@ -517,13 +536,13 @@ void MicroMachines::reshape(int width, int height)
 
 void MicroMachines::processKeys(unsigned char key, int xx, int yy){
     switch (key) {
-        case 49:
+        case 52:
             current_camera = 0;
             break;
-        case 50:
+        case 53:
             current_camera = 1;
             break;
-        case 51:
+        case 54:
             current_camera = 2;
             break;
         case 27:
@@ -575,7 +594,7 @@ void MicroMachines::processKeys(unsigned char key, int xx, int yy){
                     v = 0.8*frand() + 0.2;
                     phi = frand()*M_PI;
                     theta = 2.0*frand()*M_PI;
-                    _fireworks.push_back(new Fireworks( v, phi , theta));
+                    _fireworks.push_back(new Fireworks( v, phi , theta, _car->getPosition().getX(), _car->getPosition().getY(), _car->getPosition().getZ()));
                     _fireworks[i]->life = 1.0f;
                     _fireworks[i]->fade = 0.005f;
                     _fireworks[i]->ax = 0.1f;
@@ -584,8 +603,6 @@ void MicroMachines::processKeys(unsigned char key, int xx, int yy){
                 }
                 kaboom = true;
             }
-            break;
-        default:
             break;
     }
 }
@@ -691,8 +708,8 @@ void MicroMachines::processMouseMotion(int xx, int yy)
         alphaAux = alpha + deltaX;
         betaAux = beta + deltaY;
         
-        if (betaAux > 45.0f)
-            betaAux = 45.0f;
+        if (betaAux > 60)
+            betaAux = 60;
         else if (betaAux < 15.0f)
             betaAux = 15.0f;
         rAux = r;
@@ -713,16 +730,22 @@ void MicroMachines::processMouseMotion(int xx, int yy)
     
     //  uncomment this if not using an idle func
     //    glutPostRedisplay();
-    xFlare = deltaX * SCREENwidth/glutGet(GLUT_WINDOW_WIDTH);
-    yFlare = deltaY * SCREENheight/glutGet(GLUT_WINDOW_HEIGHT);
-    if ( xFlare >= SCREENwidth )
-        xFlare = SCREENwidth - 1;
-    if ( xFlare < 0 )
-        xFlare = 0;
-    if ( yFlare >= SCREENheight )
-        yFlare = SCREENheight - 1;
-    if ( yFlare < 0 )
-        yFlare = 0;
+    
+    if (current_camera == 1) {
+        xFlare = deltaX * SCREENwidth/glutGet(GLUT_WINDOW_WIDTH);
+        yFlare = deltaY * SCREENheight/glutGet(GLUT_WINDOW_HEIGHT);
+        if ( xFlare >= SCREENwidth )
+            xFlare = SCREENwidth - 1;
+        if ( xFlare < 0 )
+            xFlare = 0;
+        if ( yFlare >= SCREENheight )
+            yFlare = SCREENheight - 1;
+        if ( yFlare < 0 )
+            yFlare = 0;
+    } else {
+        
+    }
+
 }
 
 void MicroMachines::processMouseWheel(int wheel, int direction, int x, int y){
@@ -762,6 +785,7 @@ GLuint MicroMachines::setupShaders(){
     tex_loc1 = glGetUniformLocation(shader.getProgramIndex(), "texmap1");
     fog_loc = glGetUniformLocation(shader.getProgramIndex(), "fog");
     fogColor_loc = glGetUniformLocation(shader.getProgramIndex(), "fogColor");
+    reflect_loc = glGetUniformLocation(shader.getProgramIndex(), "darkReflections");
 
     
     printf("InfoLog for Hello World Shader\n%s\n\n", shader.getAllInfoLogs().c_str());

@@ -9,15 +9,15 @@ extern float mNormal3x3[9];
 Vase::Vase() {
     Entity::setPosition(0.0, 1.5, 0.0);
     
-    setAmbient(0.1f, 0.1f, 0.1f, 1.0f);
-    setDiffuse(0.5f, 0.5f, 0.5f, 1.0f);
-    setSpecular(0.5, 0.5f, 0.5f, 1.0f);
+    setAmbient(0.3f, 0.3f, 0.3f, 1.0f);
+    setDiffuse(0.4f, 0.4f, 0.4f, 1.0f);
+    setSpecular(0.9, 0.9f, 0.9f, 1.0f);
     setEmissive(0.0f, 0.0f, 0.0f, 1.0f);
     setShininess(10.0f);
     
     _mesh = new Mesh();
     _mesh->createQuad(5, 5);
-    _mesh->setMeshMaterial(0, getAmbient(), getDiffuse(), getSpecular(), getEmissive(), getShininess(), 1);
+    _mesh->setMeshMaterial(0, getSpecular(), getEmissive(), getShininess(), 1);
     glGenTextures(1, TextureArray);
     TGA_Texture(TextureArray, (char*) "data/textures/vase.tga", 0);
 }
@@ -43,7 +43,13 @@ void Vase::renderBillboard(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uni
         l3dBillboardCylindricalBegin(camPos, pos);
     }
     
-    _mesh->loadMeshMaterial(shader, 0);
+    GLint loc;
+    
+    loc = glGetUniformLocation(shader.getProgramIndex(), "mat.specular");
+    glUniform4fv(loc, 1, _mesh->myMeshes[0].mat.specular);
+    loc = glGetUniformLocation(shader.getProgramIndex(), "mat.emissive");
+    glUniform4fv(loc, 1, _mesh->myMeshes[0].mat.emissive);
+    
     pushMatrix(MODEL);
     
     if (type == 0 | type == 1) {

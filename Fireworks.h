@@ -27,7 +27,7 @@ protected:
     //        Particle particula[MAX_PARTICULAS];
 public:
     
-    Fireworks(GLfloat v,GLfloat phi, GLfloat theta);
+    Fireworks(GLfloat v,GLfloat phi, GLfloat theta, float x, float y, float z);
     void render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformdId, GLint texMode_uniformId);
     float vx,vy,vz,ax,ay,az,life,fade;
     //        void iniParticulas(void);

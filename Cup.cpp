@@ -3,8 +3,8 @@
 Cup::Cup() {
     Entity::setPosition(3.0, 0.0, -3.0);
     
-    setAmbient(0.1f, 0.1f, 0.1f, 0.3f);
-    setDiffuse(0.1f, 0.1f, 0.4f, 0.1f);
+    setAmbient(0.1f, 0.1f, 0.1f, 0.4f);
+    setDiffuse(0.1f, 0.1f, 0.4f, 0.2f);
     setSpecular(0.9f, 0.9f, 0.9f, 0.2f);
     setEmissive(0.0f, 0.0f, 0.0f, 0.4f);
     setShininess(100.0f);

@@ -21,8 +21,8 @@ void PointLight::draw(VSShaderLib shader, int num){
     float res[4];
     float lightPos[4] = {(float) getPosition().getX(), (float) getPosition().getY(), (float)getPosition().getZ(), 1.0f};
     
-    GLfloat diffuse[] = { 0.8f, 0.8f, 0.8f, 1.0f };
-    GLfloat specular[] = { 0.7f, 0.7f, 0.4f, 1.0f };
+    GLfloat diffuse[] = { 0.9f, 0.9f, 0.9f, 1.0f };
+    GLfloat specular[] = { 0.75f, 0.75f, 0.75f, 1.0f };
     
     std::stringstream ss;
     

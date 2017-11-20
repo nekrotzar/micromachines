@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		270354531FB8ED9600EDC946 /* Cup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 270354521FB8ED9600EDC946 /* Cup.cpp */; };
+		270B5B0B1FC28DCB00AEB9C8 /* Sun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 270B5B0A1FC28DCB00AEB9C8 /* Sun.cpp */; };
 		270FB3631FB81E5F00AC7D17 /* Avent.mtl in models */ = {isa = PBXBuildFile; fileRef = 270FB3601FB81E2500AC7D17 /* Avent.mtl */; };
 		270FB3641FB81E5F00AC7D17 /* Avent.obj in models */ = {isa = PBXBuildFile; fileRef = 270FB3591FB81E2400AC7D17 /* Avent.obj */; };
 		270FB3651FB81E5F00AC7D17 /* interior_lod0.tga in models */ = {isa = PBXBuildFile; fileRef = 270FB35F1FB81E2500AC7D17 /* interior_lod0.tga */; };
@@ -177,6 +178,8 @@
 /* Begin PBXFileReference section */
 		270354521FB8ED9600EDC946 /* Cup.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Cup.cpp; sourceTree = "<group>"; };
 		270354541FB8EDA300EDC946 /* Cup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cup.h; sourceTree = "<group>"; };
+		270B5B0A1FC28DCB00AEB9C8 /* Sun.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Sun.cpp; sourceTree = "<group>"; };
+		270B5B0C1FC28DD600AEB9C8 /* Sun.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Sun.h; sourceTree = "<group>"; };
 		270FB3591FB81E2400AC7D17 /* Avent.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Avent.obj; sourceTree = "<group>"; };
 		270FB35A1FB81E2500AC7D17 /* lights.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = lights.tga; sourceTree = "<group>"; };
 		270FB35B1FB81E2500AC7D17 /* plastic3_nrm.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = plastic3_nrm.tga; sourceTree = "<group>"; };
@@ -315,6 +318,8 @@
 			isa = PBXGroup;
 			children = (
 				274F06A41FC209E7006A139C /* Vase.cpp */,
+				270B5B0A1FC28DCB00AEB9C8 /* Sun.cpp */,
+				270B5B0C1FC28DD600AEB9C8 /* Sun.h */,
 				274F06A51FC209E7006A139C /* Vase.h */,
 				D14ADE6C1FC200D5005E4299 /* Fireworks.cpp */,
 				D14ADE6D1FC200D5005E4299 /* Fireworks.h */,
@@ -577,6 +582,7 @@
 				27BF78401FB0D6AC0045EC44 /* Orange.cpp in Sources */,
 				27BF784C1FB0D6AC0045EC44 /* DirectionalLight.cpp in Sources */,
 				27BF784D1FB0D6AC0045EC44 /* Butter.cpp in Sources */,
+				270B5B0B1FC28DCB00AEB9C8 /* Sun.cpp in Sources */,
 				27BF78431FB0D6AC0045EC44 /* GameOver.cpp in Sources */,
 				27BF78481FB0D6AC0045EC44 /* DynamicObject.cpp in Sources */,
 				27BF78421FB0D6AC0045EC44 /* AVTmathLib.cpp in Sources */,
