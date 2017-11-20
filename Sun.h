@@ -1,13 +1,13 @@
-//
-//  Sun.h
-//  MicroMachinesAVT
-//
-//  Created by Luís Miguel Moreira Fonseca on 20/11/17.
-//  Copyright © 2017 group08. All rights reserved.
-//
-
 #ifndef Sun_h
 #define Sun_h
 
+#include "Object.h"
+#include "l3DBillboard.h"
+
+class Sun : public Object {
+public:
+    Sun();
+    void render(VSShaderLib shader, GLint pvm_uniformId, GLint vm_uniformId, GLint normal_uniformdId, GLint texMode_uniformId,float camPos[], int type);
+};
 
 #endif /* Sun_h */
