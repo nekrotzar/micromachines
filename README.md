@@ -1,18 +1,20 @@
 
 <img src="http://web.ist.utl.pt/ist162490/pics/tecnico_logo.png" alt="Drawing" height="50px"/>
 
-# Three-Dimensional Vizualization and Animation 2017/2018
-This repository will hold all the course exercises and its final project, divided in three checkpoints. Our main goal is to create the game MicroMachines.
+# MicroMachines
 
-## Group Info
+![](https://github.com/nekrotzar/avt1718/blob/master/doc/run.gif?raw=true)
 
-| Name | Id | Email |
-| ---- | -- | ----- |
-| Diogo Torres|76935| |
-| Catarina Jorge| 79726| |
-| Luís Fonseca|79770|lmoreira100@hotmail.com|
+A basic MicroMachines implementation using **OpenGL** and **GLUT**. In this project we explore the OpenGL rendering pipeline, implementing multiple effects such as transparency and reflections.
 
-### Checkpoint Deadlines:
-1. *23/10/2017* (20%)
-2. *20/11/2017* (30%)
-3. *11/12/2017* (30%)
+### Requirements
+- Assimp 4.1.0
+- Glew 2.1.0
+- DevIL 1.8.0 
+
+## Contributors
+Project for the course Three-Dimensional Vizualization and Animation.
+
+- Diogo Torres
+- Catarina Jorge
+- Luís Fonseca
